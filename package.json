@@ -1,0 +1,20 @@
+{
+  "name": "webdevecom",
+  "version": "1.0.0",
+  "description": "A Project By Omer Nir and Aviv",
+  "main": "app.js",
+  "scripts": {
+    "test": "test",
+    "run": "run"
+  },
+  "keywords": [
+    "ECommerce"
+  ],
+  "author": "WebDev-A-O-N",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "mongoose": "^7.2.2"
+  },
+  "type": "module"
+}
