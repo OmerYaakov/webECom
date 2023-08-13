@@ -36,5 +36,8 @@ router.route('/cart').get((req, res) => {
 router.route('/wishlist').get((req, res) => {
     res.render('wishlist');
 });
+router.route('/catalog').get((req, res) => {
+    res.render('catalog');
+});
 
 module.exports = router;
