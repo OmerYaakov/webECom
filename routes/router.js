@@ -39,5 +39,14 @@ router.route('/wishlist').get((req, res) => {
 router.route('/catalog').get((req, res) => {
     res.render('catalog');
 });
+router.route('/contact').get((req, res) => {
+    res.render('contact');
+});
+router.route('/terms').get((req, res) => {
+    res.render('terms');
+});
+router.route('/locations').get((req, res) => {
+    res.render('locations');
+});
 
 module.exports = router;
