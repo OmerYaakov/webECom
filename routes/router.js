@@ -48,5 +48,8 @@ router.route('/terms').get((req, res) => {
 router.route('/locations').get((req, res) => {
     res.render('locations');
 });
+router.route('/signup').get((req, res) => {
+    res.render('signup');
+});
 
 module.exports = router;
