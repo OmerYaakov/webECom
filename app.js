@@ -1,13 +1,17 @@
-import express from 'express';
-import routes from "./routes/routes.js";
-
+const express = require('express');
+const path = require('path');
+const mainRouter = require('./routes/router'); // Require the router file
 const app = express();
 
-// Set up EJS as view engine
+// Set up EJS as the view engine
 app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
 
-app.use('/', routes);
+// Static files
+app.use(express.static(path.join(__dirname, 'public')));
 
-app.listen(3000, () => {
-    console.log('Server is running on port 3000');
-});
+// Use the router
+app.use('/', mainRouter); // Use the router for the main path
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

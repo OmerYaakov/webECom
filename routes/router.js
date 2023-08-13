@@ -1,5 +1,7 @@
-import express from 'express';
+const express = require("express")
 const router = express.Router();
+
+
 
 // Home page
 router.route('/').get((req, res) => {
@@ -25,5 +27,11 @@ router.route('/user/settings').get((req, res) => {
 router.route('/about').get((req, res) => {
     res.render('about');
 });
+router.route('/login').get((req, res) => {
+    res.render('login');
+});
+router.route('/cart').get((req, res) => {
+    res.render('cart');
+});
 
-export default router;
+module.exports = router;
