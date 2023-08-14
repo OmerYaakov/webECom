@@ -14,6 +14,11 @@ exports.create = async (req, res) => {
         //get product by id
         const product = await Product.findById(req.body.productId);
 
+        // checks if the product exist before doing all the other staff - aviv changes
+        if(!product){
+            return res.status(404).json({ message: 'Product not found with the provided productId' });
+        }
+        else{
         //create a cartProduct
         const cartProduct = new CartProduct({
             productId: req.body.productId,
@@ -40,6 +45,7 @@ exports.create = async (req, res) => {
                     message: err.message || "Some error occurred while creating the cartProduct."
                 });
             });
+        }
     } catch (error) {
         return res.status(400).send({
             message: error.message || "Some error occurred while creating the cartProduct."

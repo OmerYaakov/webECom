@@ -8,9 +8,11 @@ const DEFAULT_TOTAL_PRICE = 0;
 
 exports.create = async (req, res) => {
     try {
-        // Validate Request 
+        // Validate Request
         await validateBody(req.body);
         //create a user
+
+
 
         const salt = bcrypt.genSaltSync(10);
         const hash = bcrypt.hashSync(req.body.password, salt);
@@ -61,6 +63,11 @@ exports.create = async (req, res) => {
                     message: err.message || "Some error occurred while creating the user."
                 });
             });
+
+        // changes of aviv - set session to the user
+        req.session.isAuthenticated= true;
+        req.session.userId = req.body.idNumber
+
     } catch (error) {
         return res.status(400).send({
             message: error.message || "Some error occurred while creating the User."
@@ -215,4 +222,10 @@ exports.findByUserNameAndPassword = (req, res) => {
                 message: "Error retrieving user with username " + req.query.userName
             });
         });
+}
+
+exports.logout =(req,res)=>{
+    req.session.destroy(()=>{
+        res.send({ message: 'Logged out successfully' })
+    });
 }

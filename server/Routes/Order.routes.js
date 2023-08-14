@@ -1,21 +1,26 @@
-module.exports = (app) => {
+    const express = require('express')
+    const router = express.Router()
     const orders = require('../Controller/order.controller');
+    const isAuthenticated = require('../middlewares/isAuthenticated')
 
     // Create a new order
-    app.post('/orders', orders.create);
+    router.post('/orders', isAuthenticated,orders.create);
 
     // Retrieve all orders
-    app.get('/orders', orders.findAll);
+    router.get('/orders', isAuthenticated, orders.findAll);
 
     //Retrieve all orders with userId
-    app.get('/orders/:userId', orders.findAllByUserId);
+    router.get('/orders/:userId', isAuthenticated, orders.findAllByUserId);
 
     // Retrieve a single order with orderId
-    app.get('/orders/:orderId', orders.findOne);
+    router.get('/orders/:orderId', isAuthenticated, orders.findOne);
 
     // Update a order with orderId
-    app.put('/orders/:orderId', orders.update);
+    router.put('/orders/:orderId', isAuthenticated, orders.update);
 
     // Delete a order with orderId
-    app.delete('/orders/:orderId', orders.delete);
-}
+    router.delete('/orders/:orderId', isAuthenticated, orders.delete);
+
+
+
+    module.exports= router;

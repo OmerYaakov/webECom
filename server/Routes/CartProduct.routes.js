@@ -1,18 +1,22 @@
-module.exports = (app) => {
+    const express = require('express')
+    const router = express.Router()
     const cartsProducts = require('../Controller/cartProduct.controller');
+    const e = require("express");
 
     // Create a new cartProduct
-    app.post('/cartsProducts', cartsProducts.create);
+    router.post('/cartsProducts', cartsProducts.create);
 
     // Retrieve all cartsProducts
-    app.get('/cartsProducts', cartsProducts.findAll);
+    router.get('/cartsProducts', cartsProducts.findAll);
 
     // Retrieve a single cartProduct with cartProductId
-    app.get('/cartsProducts/:cartProductId', cartsProducts.findOne);
+    router.get('/cartsProducts/:cartProductId', cartsProducts.findOne);
 
     // Update a cartProduct with cartProductId
-    app.put('/cartsProducts/:cartProductId', cartsProducts.update);
+    router.put('/cartsProducts/:cartProductId', cartsProducts.update);
 
     // Delete a cartProduct with cartProductId
-    app.delete('/cartsProducts/:cartProductId', cartsProducts.delete);
-}
+    router.delete('/cartsProducts/:cartProductId', cartsProducts.delete);
+
+
+    module.exports=router;
