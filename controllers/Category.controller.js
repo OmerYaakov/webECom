@@ -1,16 +1,19 @@
-import Categoty from '../models/Category.model.js';
 
-exports.create = async (req, res) => {
+
+const create = async (req, res) => {
 };
 
-exports.findAll = (req, res) => {
+const findAll = (req, res) => {
 };
 
-exports.findOne = (req, res) => {
+const findOne = (req, res) => {
 };
 
-exports.update = (req, res) => {
+const update = (req, res) => {
 };
 
-exports.delete = (req, res) => {
+const remove = (req, res) => {
+}
+export {
+    remove,update,findAll,findOne,create
 }

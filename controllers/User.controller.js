@@ -2,7 +2,7 @@ import bcrypt from 'bcrypt';
 import User from '../models/User.model.js';
 
 
-exports.create = async (req, res) => {
+const create = async (req, res) => {
     try {
         const salt = bcrypt.genSaltSync(10);
         const hash = bcrypt.hashSync(req.body.password, salt);
@@ -16,10 +16,10 @@ exports.create = async (req, res) => {
             city: req.body.city,
             street: req.body.street,
             role: req.body.role || 'user',
-            cartId: OBJECT_ID_DEAFAULT
+            cartId: 0
         });
         //save user in the database
-        user.save()
+        // user.save()
         // TODO: add cartId to user -------------------------------------------------------------
     } catch (error) {
         return res.status(400).send({
@@ -28,23 +28,34 @@ exports.create = async (req, res) => {
     }
 };
 
-exports.findAll = (req, res) => {
+const findAll = (req, res) => {
 };
 
-exports.findOne = (req, res) => {
+const findOne = (req, res) => {
 };
 
-exports.update = (req, res) => {
+const update = (req, res) => {
 };
 
-exports.delete = (req, res) => {
+const remove = (req, res) => {
 }
 
-exports.findByUserName = (req, res) => {
+const findByUserName = (req, res) => {
 }
 
-exports.findByIdNumber = (req, res) => {
+const findByIdNumber = (req, res) => {
 }
 
-exports.findByUserNameAndPassword = (req, res) => {
+const findByUserNameAndPassword = (req, res) => {
+}
+
+export {
+    create,
+    findByUserNameAndPassword,
+    findByUserName,
+    update,
+    findOne,
+    findAll,
+    findByIdNumber,
+    remove
 }
