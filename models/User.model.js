@@ -9,9 +9,7 @@ const UserSchema = mongoose.Schema({
     city: String,
     street: String,
     role: String,
-    cartId: { type: mongoose.Schema.Types.ObjectId, ref: 'Cart' },
-}, {
-    timestamps: true
+    cartId: String
 });
 const userModel = mongoose.model('User', UserSchema);
 export default userModel;

@@ -1,17 +1,19 @@
 import mongoose from 'mongoose';
 
-
 const OrderSchema = mongoose.Schema({
-    userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-    cartId: { type: mongoose.Schema.Types.ObjectId, ref: 'Cart' },
+    // user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    // cartId: { type: mongoose.Schema.Types.ObjectId, ref: 'Cart' },
+    id: Number,
+    userId: Number,
+    cartId: Number,
     totalPrice: Number,
     city: String,
     street: String,
-    shippingDate: Date,
-    orderCreated: Date,
+    shippingDate: String,
+    orderCreated: String,
     creditCard: Number
-}, {
-    timestamps: true
 });
 
-module.exports = mongoose.model('Order', OrderSchema);
+const OrderModel = mongoose.model('Order', OrderSchema);
+
+export default OrderModel;
