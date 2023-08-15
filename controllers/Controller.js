@@ -1,6 +1,6 @@
-export default class ControllerProducts {
-    constructor() {
+// export default class ControllerProducts {
+//     constructor() {
 
-    }
-// Create Update Read Delete
-}
+//     }
+// // Create Update Read Delete
+// }k
