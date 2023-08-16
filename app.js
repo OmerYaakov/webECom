@@ -6,7 +6,7 @@ import bodyParser from 'body-parser';
 
 const app = express();
 
-mongoose.connect('mongodb://localhost:27017/store', {
+mongoose.connect('mongodb+srv://AvivNat:AvivKaved@shagal.jaexhqx.mongodb.net/', {
     useNewUrlParser: true,
     useUnifiedTopology: true
 }).then(() => {
@@ -28,3 +28,5 @@ app.use('/api', apiRoutes);
 app.listen(3000, () => {
     console.log('Server is running on port 3000');
 });
+
+const date = new Date()
