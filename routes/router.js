@@ -50,6 +50,8 @@ router.route('/locations').get((req, res) => {
 });
 router.route('/signup').get((req, res) => {
     res.render('signup');
+});router.route('/admin/branches').get((req, res) => {
+    res.render('branches');
 });
 
 module.exports = router;
