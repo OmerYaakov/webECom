@@ -1,56 +1,17 @@
 <!DOCTYPE html>
-<html data-bs-theme="auto" lang="en">
+<html data-bs-theme="auto" lang="he">
+<%- include('partials/head') %>
+  <body>
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>ShagalColman</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
-</head>
+  <%- include('partials/nav') %>
 
-<body>
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container-fluid d-flex justify-content-between">
+  <%- include('partials/components/hero') %>
 
-        <div class="collapse navbar-collapse d-flex" id="navbarNavLeft">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" href="/">Shop</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/catalog">Weddings</a>
-                </li>
-            </ul>
-        </div>
+  <%- include('partials/components/productcollection') %>
 
-        <a class="navbar-brand mx-auto" href="/">ShagalColman</a>
+  <%- include('partials/components/quickcatalog') %>
 
-        <div class="collapse navbar-collapse d-flex justify-content-end" id="navbarNavRight">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" href="/login">Log In</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/signup">Sign Up</a>
-                </li>
-            </ul>
-        </div>
+  <%- include('partials/footer') %>
 
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavLeft, #navbarNavRight"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-    </div>
-</nav>
-<div>
-    <img src="/photos/IMG_1296.JPG"/>
-</div>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"
-        defer></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js" defer></script>
-
-</body>
-
+  </body>
 </html>

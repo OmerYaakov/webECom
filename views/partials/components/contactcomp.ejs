@@ -1,0 +1,26 @@
+<div class="login-container" style="max-width: 300px; margin: auto;">
+    <form action="/login" method="post">
+        <div class="form-group-contact">
+            <label for="nameLbl" class="text-right d-block">:שם</label>
+            <input type="text" id="nameLbl" name="fullName" class="form-control" placeholder="הכנס שם מלא" required>
+        </div>
+        <div class="form-group-contact">
+            <label for="numLbl" class="text-right d-block">:טלפון</label>
+            <input type="tel" id="numLbl" name="phoneNum" class="form-control" placeholder="הכנס מספר טלפון" required>
+        </div>
+        <div class="form-group-contact">
+            <label for="email" class="text-right d-block">:אימייל</label>
+            <input type="email" id="email" name="email" class="form-control" placeholder="הכנס אימייל" required>
+        </div>
+        <div class="form-group-contact">
+            <label for="massage" class="text-right d-block">:הודעה</label>
+            <textarea id="message" name="message" class="form-control" placeholder="הכנס הודעה" required></textarea>
+        </div>
+        <div class="form-group text-right">
+            <button type="button" class="btn btn-primary">שלח</button>
+        </div>
+        <div class="text-right">
+            <a href="/forgot-password">שכחת סיסמה?</a>
+        </div>
+    </form>
+</div>
