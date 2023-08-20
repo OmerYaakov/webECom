@@ -5,6 +5,7 @@
 <!-- Import jQuery -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
+    const bcrypt = require('bcrypt')
     $(document).ready(function () {
         console.log("ready!");
         $("#sign-in").click(function () {
@@ -21,8 +22,8 @@
                 url: url,
                 type: "GET",
                 data: {
-                    username: username,
-                    password: password
+                    username: bcrypt.genSalt(username),
+                    password: bcrypt.hashSync(password)
                 },
                 success: function (res) {
                     console.log("Login success:", res);
