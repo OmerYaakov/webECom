@@ -1,18 +1,12 @@
-// module.exports = (app) => {
-//     const cartsProducts = require('../Controller/cartProduct.controller');
+import express from 'express';
+const router = express.Router();
+import { create, findAll, remove, findOne, update } from '../../controllers/CartProduct.controller.js';
 
-//     // Create a new cartProduct
-//     app.post('/cartsProducts', cartsProducts.create);
+router.post('/', create);
+router.get('/', findAll);
+router.get('/:id', findOne);
+router.delete('/:id', remove);
+router.put('/:id', update);
 
-//     // Retrieve all cartsProducts
-//     app.get('/cartsProducts', cartsProducts.findAll);
 
-//     // Retrieve a single cartProduct with cartProductId
-//     app.get('/cartsProducts/:cartProductId', cartsProducts.findOne);
-
-//     // Update a cartProduct with cartProductId
-//     app.put('/cartsProducts/:cartProductId', cartsProducts.update);
-
-//     // Delete a cartProduct with cartProductId
-//     app.delete('/cartsProducts/:cartProductId', cartsProducts.delete);
-// }
+export default router;

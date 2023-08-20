@@ -1,18 +1,12 @@
-// module.exports = (app) => {
-//     const categories = require('../Controller/category.controller');
+import express from 'express';
+const router = express.Router();
+import { create, findAll, remove, findOne, update } from '../../controllers/Category.controller.js';
 
-//     // Create a new category
-//     app.post('/categories', categories.create);
+router.post('/', create);
+router.get('/', findAll);
+router.get('/:id', findOne);
+router.delete('/:id', remove);
+router.put('/:id', update);
 
-//     // Retrieve all categories
-//     app.get('/categories', categories.findAll);
 
-//     // Retrieve a single category with categoryId
-//     app.get('/categories/:categoryId', categories.findOne);
-
-//     // Update a category with categoryId
-//     app.put('/categories/:categoryId', categories.update);
-
-//     // Delete a category with categoryId
-//     app.delete('/categories/:categoryId', categories.delete);
-// }
+export default router;
