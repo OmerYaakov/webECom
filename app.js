@@ -1,8 +1,4 @@
-
-const express = require('express');
-const path = require('path');
-const mainRouter = require('./routes/router'); // Require the router file
-
+import  express from "express";
 import routes from "./routes/routes.js";
 import apiRoutes from "./routes/apiRoutes/index.js";
 import mongoose from 'mongoose';
