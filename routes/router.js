@@ -1,7 +1,5 @@
-const express = require("express")
+import express from 'express';
 const router = express.Router();
-
-
 
 // Home page
 router.route('/').get((req, res) => {
@@ -50,8 +48,8 @@ router.route('/locations').get((req, res) => {
 });
 router.route('/signup').get((req, res) => {
     res.render('signup');
-});router.route('/admin/branches').get((req, res) => {
+}); router.route('/admin/branches').get((req, res) => {
     res.render('branches');
 });
 
-module.exports = router;
+export default router;
