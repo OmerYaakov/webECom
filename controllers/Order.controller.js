@@ -64,6 +64,16 @@ const remove = (req, res) => {
     });
 }
 
+const ordersGroupByUserId = (req, res) => {
+    OrderModel.aggregate([{ $group: { _id: "$userId", totalAmount: { $sum: "$totalPrice" } } }]).then((orders) => {
+        res.status(200).send(orders);
+    }).catch((error) => {
+        console.log(error);
+        res.status(500).send({ message: "Error in Fetching Orders Grouped By User" });
+    });
+};
+
+
 export {
-    remove, update, findAll, findOne, create
+    remove, update, findAll, findOne, create, ordersGroupByUserId
 }

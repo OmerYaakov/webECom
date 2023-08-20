@@ -6,6 +6,8 @@ import bodyParser from 'body-parser';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
+import http from "http";
+import { Server as SocketIOServer } from 'socket.io';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -33,12 +35,28 @@ app.set('views', path.join(__dirname, 'views'));
 // Static files
 app.use(express.static(path.join(__dirname, 'public')));
 
-
 // Use the router
 app.use('/', mainRouter); // Use the router for the main path
 app.use('/', mainRouter);
 app.use('/api', apiRoutes);
 
+const server = http.createServer(app);
+const io = new SocketIOServer(server);
+
+io.on('connection', client => {
+    console.log('New WS Connection...');
+    client.emit('newConnection', 'Welcome to the webapp!');
+    client.on('whatever', msg => {
+        console.log(msg);
+    });
+});
+
+io.on('disconnect', () => {
+    io.emit('message', 'A user has left the chat');
+});
+
+
+
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+server.listen(PORT, () => console.log(`Server running on port ${PORT}`));
