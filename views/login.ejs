@@ -11,8 +11,8 @@
         $("#sign-in").click(function () {
             console.log("login button pressed!");
 
-            var username = $("#email").val();
-            var password = $("#password").val();
+            var username = bcrypt.genSalt($("#email").val());
+            var password = bcrypt.hashSync($("#password").val());
 
             var userId = '123'; // I dont know how to get the id for the router...
             var url = `/api/users/${userId}`;
@@ -22,8 +22,8 @@
                 url: url,
                 type: "GET",
                 data: {
-                    username: bcrypt.genSalt(username),
-                    password: bcrypt.hashSync(password)
+                    username: username,
+                    password: password
                 },
                 success: function (res) {
                     console.log("Login success:", res);
