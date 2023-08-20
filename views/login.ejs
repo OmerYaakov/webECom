@@ -2,11 +2,58 @@
 <html data-bs-theme="auto" lang="he">
 
 <%- include('partials/head') %>
+<!-- Import jQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    const bcrypt = require('bcrypt')
+    $(document).ready(function () {
+        console.log("ready!");
+        $("#sign-in").click(function () {
+            console.log("login button pressed!");
 
+            var username = $("#email").val();
+            var password = $("#password").val();
+
+            var userId = '123'; // I dont know how to get the id for the router...
+            var url = `/api/users/${userId}`;
+
+            // Make the AJAX GET request
+            $.ajax({
+                url: url,
+                type: "GET",
+                data: {
+                    username: bcrypt.genSalt(username),
+                    password: bcrypt.hashSync(password)
+                },
+                success: function (res) {
+                    console.log("Login success:", res);
+                },
+                error: function (err) {
+                    console.error("Login error:", err);
+                }
+            });
+        });
+        $("#sign-up").click(function () {
+            console.log("sign-up button pressed!");
+            // Make the AJAX GET request
+            $.ajax({
+                url: "/signup" ,
+                type: "GET",
+                data: {},
+                success: function (res) {
+                    console.log("sign-up navigation success:", res);
+                },
+                error: function (err) {
+                    console.error("sign-up navigation error:", err);
+                }
+            });
+        });
+    });
+</script>
 <body>
-  <%- include('partials/nav') %>
-  <%- include('partials/components/logincomponent.ejs') %>
-  <%- include('partials/footer') %>
+<%- include('partials/nav') %>
+<%- include('partials/components/logincomponent.ejs') %>
+<%- include('partials/footer') %>
 </body>
 
 </html>

@@ -7,7 +7,7 @@
 <script>
   $(document).ready(function () {
     console.log("ready!");
-    $("#btn1").click(function () {
+      $("#btn1").click(function () {
       $.ajax({
         url: "demo_test.txt", success: function (result) {
           $("#div1").html(result);

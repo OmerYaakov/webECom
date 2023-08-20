@@ -37,7 +37,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Use the router
 app.use('/', mainRouter); // Use the router for the main path
-app.use('/', mainRouter);
 app.use('/api', apiRoutes);
 
 const server = http.createServer(app);
