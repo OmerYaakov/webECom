@@ -2,58 +2,59 @@
 <html data-bs-theme="auto" lang="he">
 
 <%- include('partials/head') %>
-<!-- Import jQuery -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script>
-    const bcrypt = require('bcrypt')
-    $(document).ready(function () {
-        console.log("ready!");
-        $("#sign-in").click(function () {
-            console.log("login button pressed!");
+    <!-- Import jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            console.log("ready!");
+            $("#sign-in").click(function () {
+                console.log("login button pressed!");
 
-            var username = bcrypt.genSalt($("#email").val());
-            var password = bcrypt.hashSync($("#password").val());
+                const url = `/api/users/`;
+                const username = $("#email").val();
+                const password = $("#password").val();
 
-            var userId = '123'; // I dont know how to get the id for the router...
-            var url = `/api/users/${userId}`;
+                console.log(username, password)
 
-            // Make the AJAX GET request
-            $.ajax({
-                url: url,
-                type: "GET",
-                data: {
-                    username: username,
-                    password: password
-                },
-                success: function (res) {
-                    console.log("Login success:", res);
-                },
-                error: function (err) {
-                    console.error("Login error:", err);
-                }
+                // Make the AJAX GET request
+                $.ajax({
+                    url: url,
+                    type: "GET",
+                    data: {
+                        username: username,
+                        password: password
+                    },
+                    success: function (res) {
+                        console.log("Login success:", res);
+                    },
+                    error: function (err) {
+                        console.error("Login error:", err);
+                    }
+                });
+            });
+            $("#sign-up-nav").click(function () {
+                console.log("sign-up button pressed!");
+                // Make the AJAX GET request
+                $.ajax({
+                    url: "/signup",
+                    type: "GET",
+                    data: {},
+                    success: function (res) {
+                        //navigate to sign-up page
+                        window.location.href = "/signup";
+                    },
+                    error: function (err) {
+                        console.error("sign-up navigation error:", err);
+                    }
+                });
             });
         });
-        $("#sign-up").click(function () {
-            console.log("sign-up button pressed!");
-            // Make the AJAX GET request
-            $.ajax({
-                url: "/signup" ,
-                type: "GET",
-                data: {},
-                success: function (res) {
-                    console.log("sign-up navigation success:", res);
-                },
-                error: function (err) {
-                    console.error("sign-up navigation error:", err);
-                }
-            });
-        });
-    });
-</script>
-<body>
-<%- include('partials/nav') %>
-<%- include('partials/components/logincomponent.ejs') %>
-<%- include('partials/footer') %>
-</body>
+    </script>
+
+    <body>
+        <%- include('partials/nav') %>
+            <%- include('partials/components/logincomponent.ejs') %>
+                <%- include('partials/footer') %>
+    </body>
 
 </html>
