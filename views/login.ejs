@@ -10,22 +10,25 @@
             $("#sign-in").click(function () {
                 console.log("login button pressed!");
 
-                const url = `/api/users/`;
-                const username = $("#email").val();
-                const password = $("#password").val();
+                const username = $("#email-in").val();
+                const password = $("#password-in").val();
 
+                const url = `/api/users/?username=${username}&password=${password}`;
                 console.log(username, password)
 
                 // Make the AJAX GET request
                 $.ajax({
                     url: url,
                     type: "GET",
-                    data: {
+                    data: JSON.stringify({
                         username: username,
                         password: password
-                    },
+                    }),
+                    contentType: "application/json",
                     success: function (res) {
                         console.log("Login success:", res);
+                        //navigate to home page
+                        window.location.href = "/";
                     },
                     error: function (err) {
                         console.error("Login error:", err);

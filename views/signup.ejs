@@ -9,11 +9,11 @@
     $(document).ready(function () {
       console.log("ready!");
       $("#sign-up").click(function () {
-        console.log("sign up button pressed!");
 
+        console.log("sign up button pressed!");
         const url = `/api/users/`;
         const username = $("#email").val();
-        const password = $("#password").val();
+        const password = $("#password-up").val();
 
         console.log(username, password)
 
@@ -21,20 +21,21 @@
         $.ajax({
           url: url,
           type: "POST",
-          salt: "123456789",
-          data: {
+          data: JSON.stringify({
             username: username,
-            password: password,
-          },
+            password: password
+          }),
+          contentType: "application/json",
           success: function (res) {
             console.log("Sign up success:", res);
+            window.location.href = "/login";
           },
           error: function (err) {
             console.error("Sign up! error:", err);
           }
         });
-        });
       });
+    });
   </script>
 
   <body>

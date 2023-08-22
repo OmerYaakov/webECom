@@ -4,10 +4,16 @@ import User from '../models/User.model.js';
 
 const create = async (req, res) => {
     try {
+        console.log("body: ", req.body);
+
+        console.log("create salt");
         const salt = bcrypt.genSaltSync(10);
+        console.log("create hash");
         const hash = bcrypt.hashSync(req.body.password, salt);
 
+        console.log("create user");
         const user = new User({
+            userId: Math.floor(Math.random() * 1000000000),
             firstName: req.body.firstName,
             lastName: req.body.lastName,
             username: req.body.username,
@@ -19,6 +25,7 @@ const create = async (req, res) => {
             cartId: "0"
         });
         //save user in the database
+        console.log("save user");
         user.save()
             .then(data => {
                 res.send(data);
@@ -91,12 +98,35 @@ const remove = (req, res) => {
 // const findByIdNumber = (req, res) => {
 // }
 
-// const findByUserNameAndPassword = (req, res) => {
-// }
+const findByUserNameAndPassword = (req, res) => {
+    console.log(req.body);
+    User.find({ username: req.query.username }).then(user => {
+        console.log(user);
+        if (user.length == 0) {
+            res.status(404).send({
+                message: "User not found"
+            });
+        } else {
+            if (bcrypt.compareSync(req.query.password, user[0].password)) {
+                res.send(user);
+            } else {
+                res.status(401).send({
+                    message: "Wrong password"
+                });
+            }
+        }
+    }
+    ).catch(err => {
+        res.status(500).send({
+            message: err.message || "Some error occurred while retrieving users."
+        });
+    }
+    );
+}
 
 export {
     create,
-    // findByUserNameAndPassword,
+    findByUserNameAndPassword,
     // findByUserName,
     update,
     findOne,
