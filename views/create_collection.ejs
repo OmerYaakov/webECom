@@ -2,10 +2,42 @@
 <html data-bs-theme="auto" lang="he">
 
 <%- include('partials/head') %>
+    <!-- Import jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#create_collectionbtt').click(() => {
+                const url = `/api/categories/`;
 
-<body>
-<%- include('partials/nav') %>
-<%- include('partials/components/create_collectioncomp.ejs') %>
-<%- include('partials/footer') %>
-</body>
+                const req = {
+                    categoryName: $('#collectName').val(),
+                    categoryImage: "test",
+                };
+
+                // Make the AJAX GET request
+                $.ajax({
+                    url: url,
+                    type: "POST",
+                    data: JSON.stringify(req),
+                    contentType: "application/json",
+                    success: function (res) {
+                        console.log("create collection success:", res);
+                        //navigate to admin page
+                        window.location.href = "/admin";
+                    },
+                    error: function (err) {
+                        console.error("error:", err);
+                    }
+                });
+            });
+        })
+    </script>
+
+
+    <body>
+        <%- include('partials/nav') %>
+            <%- include('partials/components/create_collectioncomp.ejs') %>
+                <%- include('partials/footer') %>
+    </body>
+
 </html>

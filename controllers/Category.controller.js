@@ -2,7 +2,7 @@ import CategoryModel from '../models/Category.model.js';
 
 const create = async (req, res) => {
     const category = new CategoryModel({
-        id: req.body.id,
+        id: 123 || Math.floor(Math.random() * 1000) + 1,
         categoryName: req.body.categoryName,
         categoryImage: req.body.categoryImage,
     });

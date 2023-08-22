@@ -2,10 +2,38 @@
 <html data-bs-theme="auto" lang="he">
 
 <%- include('partials/head') %>
+    <!-- Import jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#delete_collectioncompbtt').click(() => {
 
-<body>
-<%- include('partials/nav') %>
-<%- include('partials/components/delete_collectioncomp.ejs')%>
-<%- include('partials/footer') %>
-</body>
+                console.log("delete_collectioncompbtt clicked");
+                const categoryId = 123;
+                const url = `/api/categories/${categoryId}`;
+                // Make the AJAX GET request
+                $.ajax({
+                    url: url,
+                    type: "DELETE",
+                    contentType: "application/json",
+                    success: function (res) {
+                        console.log("delete collection success:", res);
+                        //navigate to admin page
+                        window.location.href = "/admin";
+                    },
+                    error: function (err) {
+                        console.error("error:", err);
+                    }
+                });
+            });
+        })
+    </script>
+
+
+    <body>
+        <%- include('partials/nav') %>
+            <%- include('partials/components/delete_collectioncomp.ejs')%>
+                <%- include('partials/footer') %>
+    </body>
+
 </html>
