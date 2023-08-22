@@ -50,6 +50,9 @@ router.route('/terms').get((req, res) => {
 router.route('/signup').get((req, res) => {
     res.render('signup');
 });
+router.route('/account').get((req, res) => {
+    res.render('account');
+});
 router.route('/branches').get((req, res) => {
     res.render('branches');
 });

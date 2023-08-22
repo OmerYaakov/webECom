@@ -1,3 +1,5 @@
+import dotenv from 'dotenv'
+dotenv.config();
 import express from "express";
 import mainRouter from "./routes/router.js";
 import apiRoutes from "./routes/apiRoutes/index.js";
@@ -14,7 +16,6 @@ const __dirname = dirname(__filename);
 
 
 const app = express();
-
 
 // Set up EJS as the view engine
 mongoose.connect('mongodb+srv://AvivNat:AvivKaved@shagal.jaexhqx.mongodb.net/', {
