@@ -65,4 +65,7 @@ router.route('/admin/create_collection').get((req, res) => {
 router.route('/admin/delete_collection').get((req, res) => {
     res.render('delete_collection');
 });
+router.route('/wishlist').get((req, res) => {
+    res.render('wishlist');
+});
 
