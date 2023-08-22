@@ -1,5 +1,6 @@
 import express from 'express';
 const router = express.Router();
+export default router;
 
 // Home page
 router.route('/').get((req, res) => {
@@ -43,13 +44,25 @@ router.route('/contact').get((req, res) => {
 router.route('/terms').get((req, res) => {
     res.render('terms');
 });
-router.route('/locations').get((req, res) => {
-    res.render('locations');
-});
+// router.route('/locations').get((req, res) => {
+//     res.render('locations');
+// });
 router.route('/signup').get((req, res) => {
     res.render('signup');
-}); router.route('/admin/branches').get((req, res) => {
+});
+router.route('/branches').get((req, res) => {
     res.render('branches');
 });
+router.route('/admin/editbranches').get((req, res) => {
+    res.render('editbranches');
+});
+router.route('/admin/salestrack').get((req, res) => {
+    res.render('salestrack');
+});
+router.route('/admin/create_collection').get((req, res) => {
+    res.render('create_collection');
+});
+router.route('/admin/delete_collection').get((req, res) => {
+    res.render('delete_collection');
+});
 
-export default router;
