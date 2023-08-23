@@ -65,13 +65,18 @@ router.route('/admin/products').get((req, res) => {
 router.route('/admin/salestrack').get((req, res) => {
     res.render('salestrack');
 });
-router.route('/admin/create_collection').get((req, res) => {
+router.route('/create_collection').get((req, res) => {
     res.render('create_collection');
 });
-router.route('/admin/delete_collection').get((req, res) => {
+router.route('/delete_collection').get((req, res) => {
     res.render('delete_collection');
 });
 router.route('/wishlist').get((req, res) => {
     res.render('wishlist');
 });
-
+router.route('/admin/collection').get((req, res) => {
+    res.render('collection');
+});
+router.route('/admin/admiorders').get((req, res) => {
+    res.render('admiorders');
+});
