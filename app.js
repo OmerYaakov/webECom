@@ -1,4 +1,4 @@
-import dotenv from 'dotenv'
+import dotenv from 'dotenv';
 dotenv.config();
 import express from "express";
 import mainRouter from "./routes/router.js";
@@ -58,5 +58,5 @@ io.on('disconnect', () => {
 
 
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8080;
 server.listen(PORT, () => console.log(`Server running on port ${PORT}`));
