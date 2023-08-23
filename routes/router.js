@@ -1,11 +1,15 @@
 import express from 'express';
+import isAuthenticated from "../middleware/isAuthenticated.js";
 const router = express.Router();
 export default router;
 
 // Home page
 router.route('/').get((req, res) => {
+    req.session.isAuth=true
     res.render('index');
 });
+
+
 
 // Product page
 router.route('/product').get((req, res) => {
@@ -26,7 +30,7 @@ router.route('/user/settings').get((req, res) => {
 router.route('/about').get((req, res) => {
     res.render('about');
 });
-router.route('/login').get((req, res) => {
+router.route('/login').get(isAuthenticated,(req, res) => {
     res.render('login');
 });
 router.route('/cart').get((req, res) => {
