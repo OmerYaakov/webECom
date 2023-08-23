@@ -59,6 +59,9 @@ router.route('/branches').get((req, res) => {
 router.route('/admin/editbranches').get((req, res) => {
     res.render('editbranches');
 });
+router.route('/admin/products').get((req, res) => {
+    res.render('admincrudproducts');
+});
 router.route('/admin/salestrack').get((req, res) => {
     res.render('salestrack');
 });
