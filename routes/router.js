@@ -50,6 +50,9 @@ router.route('/terms').get((req, res) => {
 router.route('/signup').get((req, res) => {
     res.render('signup');
 });
+router.route('/account').get((req, res) => {
+    res.render('account');
+});
 router.route('/branches').get((req, res) => {
     res.render('branches');
 });
@@ -64,5 +67,8 @@ router.route('/admin/create_collection').get((req, res) => {
 });
 router.route('/admin/delete_collection').get((req, res) => {
     res.render('delete_collection');
+});
+router.route('/wishlist').get((req, res) => {
+    res.render('wishlist');
 });
 

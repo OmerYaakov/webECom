@@ -5,8 +5,26 @@
 
 <body>
 <%- include('partials/nav') %>
-<div>
-    <h1>Products</h1>
+<div class="container text-right">
+    <div class="row">
+        <div class="col-md-4">
+            <p>שם מוצר</p>
+            <p>מחיר</p><a href="#">הצג מדריך גדלים</a>
+            <br>
+            <button class="btn" type="button">אופציות</button>
+            <br>
+            <button class="btn" type="button">הוספת חריטה</button>
+            <br>
+            <button class="btn" type="button">רכישה</button>
+        </div>
+        <div class="col-md-4"><img src="./photos/PhotoRoom-20230620_201217.png" width="500" height="500"/></div>
+        <div class="col-md-4">
+            <p>דרך</p>
+            <p>תיאור</p>
+            <p>תיאור נוסף</p>
+            <p>חומרים</p>
+        </div>
+    </div>
 </div>
 <%- include('partials/footer') %>
 </body>

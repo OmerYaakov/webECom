@@ -2,62 +2,12 @@
 <html data-bs-theme="auto" lang="he">
 
 <%- include('partials/head') %>
-    <!-- Import jQuery -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            console.log("ready!");
-            $("#sign-in").click(function () {
-                console.log("login button pressed!");
+<%- include('logics/loginlogics.ejs') %>
 
-                const username = $("#email-in").val();
-                const password = $("#password-in").val();
-
-                const url = `/api/users/?username=${username}&password=${password}`;
-                console.log(username, password)
-
-                // Make the AJAX GET request
-                $.ajax({
-                    url: url,
-                    type: "GET",
-                    data: JSON.stringify({
-                        username: username,
-                        password: password
-                    }),
-                    contentType: "application/json",
-                    success: function (res) {
-                        console.log("Login success:", res);
-                        //navigate to home page
-                        window.location.href = "/";
-                    },
-                    error: function (err) {
-                        console.error("Login error:", err);
-                    }
-                });
-            });
-            $("#sign-up-nav").click(function () {
-                console.log("sign-up button pressed!");
-                // Make the AJAX GET request
-                $.ajax({
-                    url: "/signup",
-                    type: "GET",
-                    data: {},
-                    success: function (res) {
-                        //navigate to sign-up page
-                        window.location.href = "/signup";
-                    },
-                    error: function (err) {
-                        console.error("sign-up navigation error:", err);
-                    }
-                });
-            });
-        });
-    </script>
-
-    <body>
-        <%- include('partials/nav') %>
-            <%- include('partials/components/logincomponent.ejs') %>
-                <%- include('partials/footer') %>
-    </body>
+<body>
+<%- include('partials/nav') %>
+<%- include('partials/components/logincomponent.ejs') %>
+<%- include('partials/footer') %>
+</body>
 
 </html>
