@@ -77,6 +77,6 @@ router.route('/wishlist').get((req, res) => {
 router.route('/admin/collection').get((req, res) => {
     res.render('collection');
 });
-router.route('/admin/admiorders').get((req, res) => {
-    res.render('admiorders');
+router.route('/admin/orders').get((req, res) => {
+    res.render('adminorders');
 });
