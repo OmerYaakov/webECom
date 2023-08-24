@@ -1,3 +1,21 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        console.log('ready!')
+
+        $("#create-product").click(function (){
+
+
+
+
+        });
+
+
+        // $("#search-product").click(function (){
+        //
+        // });
+    });
+</script>
 <div class="card mb-3">
                 <div class="card-body">
                     <h3 class="mb-3">יצירת מוצר</h3>
@@ -18,14 +36,16 @@
                                                 <option>עגיל</option>
                                             </select>
                                         </div>
-                                        <div class="mb-3"><input id="price" class="form-control" type="email"
-                                                                 name="price" placeholder="price"/></div>
-<!--                                        instead of img url we need to upload file to aws and get back the link to it...-->
-                                        <div class="mb-3"><input id="url" class="form-control" type="url"
-                                                                 placeholder="img url"/></div>
+                                        <form>
+                                            <label for="file">Select a file:</label>
+                                            <input type="file" name="file" id="file">
+                                            <br>
+                                            <input type="text" >
+
+                                        </form>
 
                                         <div>
-                                            <button class="btn btn-dark d-block w-100" type="submit">Send</button>
+                                            <button id="create-product" class="btn btn-dark d-block w-100" type="submit">Send</button>
                                         </div>
                                     </form>
                                 </div>

@@ -12,16 +12,9 @@ import http from "http";
 import { Server as SocketIOServer } from 'socket.io';
 import session from 'express-session'
 import MongeDBSession from 'connect-mongodb-session'
+import multer from 'multer'
+import {uploadFile} from "./s3.js";
 
-const mdbs=MongeDBSession(session)
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
-
-const app = express();
-
-// Set up EJS as the view engine
 mongoose.connect('mongodb+srv://AvivNat:AvivKaved@shagal.jaexhqx.mongodb.net/', {
     useNewUrlParser: true,
     useUnifiedTopology: true
@@ -31,6 +24,15 @@ mongoose.connect('mongodb+srv://AvivNat:AvivKaved@shagal.jaexhqx.mongodb.net/', 
     console.log('Could not connect to the database. Exiting now...', err);
     process.exit();
 });
+
+const mdbs=MongeDBSession(session)
+const __filename = fileURLToPath(import.meta.url);
+
+
+const __dirname = dirname(__filename);
+
+const app = express();
+// Set up EJS as the view engine
 
 const store = new mdbs({
     uri:'mongodb+srv://AvivNat:AvivKaved@shagal.jaexhqx.mongodb.net/',
@@ -43,6 +45,20 @@ app.use(session({
     saveUninitialized: true,
     store:store
 }))
+
+
+
+// importing multer for saving pics
+const upload = multer({dest:'uploads/'})
+app.post('/images' , upload.single('url-image'),async (req,res)=>{
+    const file = req.file
+   const result=  await uploadFile(file)
+    console.log(result)
+    res.send("good staff")
+})
+
+
+
 
 app.use(bodyParser.json())
 
