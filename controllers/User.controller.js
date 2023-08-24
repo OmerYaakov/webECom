@@ -1,14 +1,21 @@
 import bcrypt from 'bcrypt';
 import User from '../models/User.model.js';
+import UserModel from "../models/User.model.js";
 
 
 const create = async (req, res) => {
     try {
-        console.log("body: ", req.body);
 
-        console.log("create salt");
+        const username =req.body.username
+
+        //checking if the user exist by username...
+        const findUser = await UserModel.findOne(username)
+        if(findUser){
+            return res.redirect('/signup')
+        }
+
         const salt = bcrypt.genSaltSync(10);
-        console.log("create hash");
+
         const hash = bcrypt.hashSync(req.body.password, salt);
 
         console.log("create user");
@@ -24,6 +31,9 @@ const create = async (req, res) => {
             role: req.body.role || 'user',
             cartId: "0"
         });
+
+        //isAuth
+        req.session.isAuth=true
         //save user in the database
         console.log("save user");
         user.save()
