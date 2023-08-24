@@ -2,30 +2,7 @@
 <html data-bs-theme="auto" lang="he">
 
 <%- include('partials/head') %>
-    <script>
-        $(document).ready(function () {
-            $('#delete_collectioncompbtt').click(() => {
-
-                console.log("delete_collectioncompbtt clicked");
-                const categoryId = 123;
-                const url = `/api/categories/${categoryId}`;
-                // Make the AJAX GET request
-                $.ajax({
-                    url: url,
-                    type: "DELETE",
-                    contentType: "application/json",
-                    success: function (res) {
-                        console.log("delete collection success:", res);
-                        //navigate to admin page
-                        window.location.href = "/admin";
-                    },
-                    error: function (err) {
-                        console.error("error:", err);
-                    }
-                });
-            });
-        })
-    </script>
+<%- include('logics/deletecollectionlogics')%>
 
 
     <body>
