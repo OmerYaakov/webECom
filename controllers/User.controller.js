@@ -5,14 +5,14 @@ import UserModel from "../models/User.model.js";
 
 const create = async (req, res) => {
     try {
-
+        console.log("creating the user...")
         const username =req.body.username
-
+        console.log("user name: " , username)
         //checking if the user exist by username...
-        const findUser = await UserModel.findOne(username)
-        if(findUser){
-            return res.redirect('/signup')
-        }
+        // const findUser = await UserModel.findOne(username)
+        // if(findUser){
+        //     return res.render('/signup')
+        // }
 
         const salt = bcrypt.genSaltSync(10);
 

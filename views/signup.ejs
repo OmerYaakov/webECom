@@ -2,7 +2,7 @@
 <html data-bs-theme="auto" lang="en">
 
 <%- include('partials/head') %>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script>
     $(document).ready(function () {
       console.log("ready!");
@@ -26,7 +26,8 @@
           contentType: "application/json",
           success: function (res) {
             console.log("Sign up success:", res);
-            window.location.href = "/login";
+            window.location.href = "/";
+            alert("Hello " + username)
           },
           error: function (err) {
             console.error("Sign up! error:", err);
