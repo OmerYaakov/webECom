@@ -5,7 +5,8 @@ export default router;
 
 // Home page
 router.route('/').get((req, res) => {
-    req.session.isAuth=true
+    // req.session.isAuth=true
+    console.log("session", req.session.isAuth)
     res.render('index');
 });
 
@@ -31,6 +32,7 @@ router.route('/about').get((req, res) => {
     res.render('about');
 });
 router.route('/login').get(isAuthenticated,(req, res) => {
+
     res.render('login');
 });
 router.route('/cart').get((req, res) => {
@@ -101,3 +103,4 @@ router.route('/deletecouponsadmin').get((req, res) => {
 router.route('/admin/orders').get((req, res) => {
     res.render('adminorders');
 });
+
