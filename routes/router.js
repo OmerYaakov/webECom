@@ -31,6 +31,7 @@ router.route('/about').get((req, res) => {
     res.render('about');
 });
 router.route('/login').get(isAuthenticated,(req, res) => {
+
     res.render('login');
 });
 router.route('/cart').get((req, res) => {
@@ -87,3 +88,4 @@ router.route('/admin/collection').get((req, res) => {
 router.route('/admin/orders').get((req, res) => {
     res.render('adminorders');
 });
+
