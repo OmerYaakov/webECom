@@ -1,16 +1,44 @@
-    <!-- collection component -->
-    <div class="row">
-      <div class="col-md-6">
-          <img src="./photos/PhotoRoom-20230621_150845.png" class="img-fluid" alt="Collection Image" style="height: 350px;" />
-      </div>
-      <div class="row py-10">
-          <div class="product-collection px-2 py-5">
-              <img src="./photos/PhotoRoom-20230621_160819.png" class="img-fluid rounded" style="height: 200px; width: 200px;" />
-              <p>₪1000</p>
-          </div>
-          <div class="product-collection px-5 py-5">
-              <img src="./photos/PhotoRoom-20230621_153312.png" class="img-fluid rounded" style="height: 200px; width: 200px;" />
-              <p>₪5000</p>
-          </div>
-      </div>
-  </div>
+<!-- collection component -->
+<div class="row">
+    <div class="col-md-6">
+        <img src="./photos/PhotoRoom-20230621_150845.png" class="img-fluid" alt="Collection Image" style="height: 350px;" />
+    </div>
+    <div class="row py-10">
+        <div class="product-collection px-2 py-5">
+            <img src="./photos/PhotoRoom-20230621_160819.png" class="img-fluid rounded" style="height: 200px; width: 200px;" />
+            <p>₪1000</p>
+            <!-- Display converted price using JavaScript -->
+            <p id="convertedPrice1"></p>
+        </div>
+        <div class="product-collection px-5 py-5">
+            <img src="./photos/PhotoRoom-20230621_153312.png" class="img-fluid rounded" style="height: 200px; width: 200px;" />
+            <p>₪5000</p>
+            <!-- Display converted price using JavaScript -->
+            <p id="convertedPrice2"></p>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Assuming you have fetched the exchange rates and have the conversion rates available
+    // Example conversion rates (replace with your actual data)
+    const conversionRates = {
+        USD: 0.28,  // Example conversion rate for USD to ₪ (Israeli Shekel)
+        // Add more conversion rates as needed
+    };
+
+    // Function to calculate converted price
+    function convertPrice(price, exchangeRate) {
+        return (price * exchangeRate).toFixed(2);
+    }
+
+    // Calculate and display converted prices
+    const price1 = 1000; // Original price in ₪
+    const price2 = 5000; // Original price in ₪
+
+    const convertedPrice1 = convertPrice(price1, conversionRates.USD);
+    const convertedPrice2 = convertPrice(price2, conversionRates.USD);
+
+    document.getElementById('convertedPrice1').textContent = `Converted Price: $${convertedPrice1}`;
+    document.getElementById('convertedPrice2').textContent = `Converted Price: $${convertedPrice2}`;
+</script>
