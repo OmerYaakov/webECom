@@ -18,7 +18,7 @@ const s3 = new S3Client({
 });
 
 async function uploadFile(file) {
-    const fileStream = await fs.readFile(file.path); // Use fs.promises.readFile
+    const fileStream = await fs.readFile(file.path);
 
     const uploadParams = {
         Bucket: bucketName,
@@ -28,7 +28,7 @@ async function uploadFile(file) {
 
     try {
         const data = await s3.send(new PutObjectCommand(uploadParams));
-        console.log('File uploaded successfully', data);
+        console.log('File uploaded successfully', data); // Log the data object
         return data;
     } catch (error) {
         console.error('Error uploading file', error);
@@ -36,6 +36,16 @@ async function uploadFile(file) {
     }
 }
 
+// downloads a file from s3
+const getFileStream = (fileKey)=>{
+     const downloadParams = {
+         Key: fileKey,
+         Bucket : bucketName
+     }
+     return s3.getObject(downloadParams).createReadStream()
+}
+
 export {
-    uploadFile
+    uploadFile,
+    getFileStream
 };

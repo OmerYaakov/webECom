@@ -13,7 +13,9 @@ import { Server as SocketIOServer } from 'socket.io';
 import session from 'express-session'
 import MongeDBSession from 'connect-mongodb-session'
 import multer from 'multer'
-import {uploadFile} from "./s3.js";
+import {uploadFile,getFileStream} from "./s3.js";
+import fs from 'fs'
+import util from 'util'
 
 mongoose.connect('mongodb+srv://AvivNat:AvivKaved@shagal.jaexhqx.mongodb.net/', {
     useNewUrlParser: true,
@@ -26,18 +28,24 @@ mongoose.connect('mongodb+srv://AvivNat:AvivKaved@shagal.jaexhqx.mongodb.net/', 
 });
 
 const mdbs=MongeDBSession(session)
+
+
 const __filename = fileURLToPath(import.meta.url);
 
-
 const __dirname = dirname(__filename);
-
 const app = express();
+
 // Set up EJS as the view engine
 
 const store = new mdbs({
     uri:'mongodb+srv://AvivNat:AvivKaved@shagal.jaexhqx.mongodb.net/',
     collection: "mySessions"
 })
+
+
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true }));
+
 
 app.use(session({
     secret: 'keyboard cat',
@@ -46,21 +54,37 @@ app.use(session({
     store:store
 }))
 
-
-
-// importing multer for saving pics
+// importing multer + util+fs
 const upload = multer({dest:'uploads/'})
-app.post('/images' , upload.single('url-image'),async (req,res)=>{
-    const file = req.file
-   const result=  await uploadFile(file)
-    console.log(result)
-    res.send("good staff")
+const unlinkFile = util.promisify(fs.unlink)
+
+// all of these '/images' we need to get out to a router...
+app.get('images/:key',(req, res)=>{
+    const key = req.params.Key
+    const readStream = getFileStream(key)
+    readStream.pipe(res)
 })
 
+app.post('/images', upload.single('avatar'), async (req, res) => {
+    try {
+        //uploading the file to s3 bucket
+        const result = await uploadFile(req.file);
+
+        //delete the file from the uploads folder...
+        await unlinkFile(req.file.path)
+
+        console.log('Upload result:', result);
+
+        //right now result.Key undefined,...need to be fixed!
+        res.send(`/images/${result.Key}`)
 
 
+    } catch (error) {
+        console.error('Error uploading image:', error);
+        res.status(500).send("Error uploading image.");
+    }
+});
 
-app.use(bodyParser.json())
 
 // Set up EJS as the view engine
 app.set('view engine', 'ejs');
