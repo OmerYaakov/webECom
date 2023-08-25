@@ -5,7 +5,8 @@ export default router;
 
 // Home page
 router.route('/').get((req, res) => {
-    req.session.isAuth=true
+    // req.session.isAuth=true
+    console.log("session", req.session.isAuth)
     res.render('index');
 });
 

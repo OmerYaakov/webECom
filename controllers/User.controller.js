@@ -111,13 +111,13 @@ const remove = (req, res) => {
 const findByUserNameAndPassword = (req, res) => {
     console.log(req.body);
     User.find({ username: req.query.username }).then(user => {
-        console.log(user);
         if (user.length == 0) {
             res.status(404).send({
                 message: "User not found"
             });
         } else {
             if (bcrypt.compareSync(req.query.password, user[0].password)) {
+                req.session.isAuth=true
                 res.send(user);
             } else {
                 res.status(401).send({

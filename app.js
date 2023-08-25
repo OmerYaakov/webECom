@@ -14,7 +14,7 @@ import {Server as SocketIOServer} from 'socket.io';
 import session from 'express-session'
 import MongeDBSession from 'connect-mongodb-session'
 import multer from 'multer'
-import {uploadFile,getFileStream} from "./s3.js";
+import { uploadFile, getFileStream } from "./s3.js";
 import fs from 'fs'
 import util from 'util'
 
@@ -36,7 +36,7 @@ mongoose.connect('mongodb+srv://AvivNat:AvivKaved@shagal.jaexhqx.mongodb.net/', 
     process.exit();
 });
 
-const mdbs=MongeDBSession(session)
+const mdbs = MongeDBSession(session)
 
 
 const __filename = fileURLToPath(import.meta.url);
@@ -48,6 +48,8 @@ const app = express();
 
 const store = new mdbs({
     uri: 'mongodb+srv://AvivNat:AvivKaved@shagal.jaexhqx.mongodb.net/', collection: "mySessions"
+    uri: 'mongodb+srv://AvivNat:AvivKaved@shagal.jaexhqx.mongodb.net/',
+    collection: "mySessions"
 })
 //code for locations...
 app.get('/api/data', async (req, res) => {
@@ -78,14 +80,18 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(session({
     secret: 'keyboard cat', resave: false, saveUninitialized: true, store: store
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: true,
+    store: store
 }))
 
 // importing multer + util+fs
-const upload = multer({dest:'uploads/'})
+const upload = multer({ dest: 'uploads/' })
 const unlinkFile = util.promisify(fs.unlink)
 
 // all of these '/images' we need to get out to a router...
-app.get('images/:key',(req, res)=>{
+app.get('images/:key', (req, res) => {
     const key = req.params.Key
     const readStream = getFileStream(key)
     readStream.pipe(res)
@@ -118,6 +124,7 @@ app.set('views', path.join(__dirname, 'views'));
 // Static files
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({extended: true}))
+app.use(express.urlencoded({ extended: true }))
 
 // Use the router
 app.use('/', mainRouter); // Use the router for the main path
