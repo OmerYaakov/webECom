@@ -1,0 +1,14 @@
+[
+    {
+        "name": "Tel Aviv Branch",
+        "address": "Tel Aviv, Rothschild Boulevard"
+    },
+    {
+        "name": "Jerusalem Branch",
+        "address": "Jerusalem, Jaffa Street"
+    },
+    {
+        "name": "Haifa Branch",
+        "address": "Haifa, Ben Gurion Avenue"
+    }
+]
