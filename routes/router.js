@@ -84,6 +84,20 @@ router.route('/wishlist').get((req, res) => {
 router.route('/admin/collection').get((req, res) => {
     res.render('collection');
 });
+router.route('/admin/couponsadmin').get((req, res) => {
+    res.render('couponsadmin');
+});
+
+router.route('/createcouponsadmin').get((req, res) => {
+    res.render('createcouponsadmin');
+});
+router.route('/editcouponsadmin').get((req, res) => {
+    res.render('editcouponsadmin');
+});
+router.route('/deletecouponsadmin').get((req, res) => {
+    res.render('deletecouponsadmin');
+});
+
 router.route('/admin/orders').get((req, res) => {
     res.render('adminorders');
 });
