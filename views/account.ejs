@@ -1,29 +1,49 @@
 <!DOCTYPE html>
 <html data-bs-theme="auto" lang="he">
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#adminpagebtt").click(function (event) {
+            window.location.href = "/admin";
+        });
+
+    });
+</script>
+
 <%- include('partials/head') %>
 
-<body>
-<%- include('partials/nav') %>
-<div class="text-right mx-5">
-    <h1>משתמש שלי</h1>
-</div>
+    <body>
+        <%- include('partials/nav') %>
+            <div class="text-right mx-5">
+                <h1>משתמש שלי</h1>
+            </div>
 
-<div class="row">
-    <div class="col-md-2 text-right" style="display: flex;flex-direction: column;">
-        <button class="btn userbtn" type="button">כללי</button>
-        <button class="btn userbtn" type="button">הזמנות שלי</button>
-        <button class="btn userbtn" type="button">הפרטים שלי</button>
-        <button class="btn userbtn" type="button">כתובות למשלוח</button>
-        <button class="btn userbtn" type="button">פרטי אשראי</button>
-        <button class="btn userbtn" type="button">התנתקות</button>
-    </div>
-    <div class="col-md-8 text-right">
-        <p>תכולת העמוד</p>
-    </div>
-</div>
+            <div class="row">
+                <div class="col-md-2 text-right" style="display: flex;flex-direction: column;">
+                    <button class="btn userbtn" type="button">כללי</button>
+                    <button class="btn userbtn" type="button">הזמנות שלי</button>
+                    <button class="btn userbtn" type="button">הפרטים שלי</button>
+                    <button class="btn userbtn" type="button">כתובות למשלוח</button>
+                    <button class="btn userbtn" type="button">פרטי אשראי</button>
+                    <button class="btn userbtn" type="button">התנתקות</button>
+                </div>
+                <div class="col-md-8 text-right">
+                    <h3>כללי</h3>
+                    <p>:מספר מזהה</p>
+                    <p>:שם פרטי</p>
+                    <p>:שם משפחה</p>
+                    <p>:כתובת</p>
+                    <p>:טלפון</p>
+                    <p>:אימייל</p>
+                    <% if (user.isAdmin) { %>
+                        <p>:מנהל</p>
+                        <button id="adminpagebtt" class="btn userbtn" type="button">עמוד מנהל</button>
+                        <% } %>
+                </div>
+            </div>
 
-<%- include('partials/footer') %>
-</body>
+            <%- include('partials/footer') %>
+    </body>
 
 </html>

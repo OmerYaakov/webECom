@@ -58,7 +58,7 @@ router.route('/signup').get((req, res) => {
     res.render('signup', { isAuth:req.session.isAuth });
 });
 router.route('/account').get((req, res) => {
-    res.render('account', { isAuth:req.session.isAuth });
+    res.render('account', { isAuth:req.session.isAuth, user: req.session.user });
 });
 router.route('/branches').get((req, res) => {
     res.render('branches', { isAuth:req.session.isAuth });
