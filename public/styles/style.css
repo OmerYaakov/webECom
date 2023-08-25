@@ -103,3 +103,7 @@ input[type='text']:focus {
     background: #181818;
     color: #CEAC59;
 }
+.navbar-toggler-icon{
+   color: white;
+    scale: 1.1;
+}

@@ -1,4 +1,5 @@
 import dotenv from 'dotenv';
+
 dotenv.config();
 import express from "express";
 import mainRouter from "./routes/router.js";
@@ -6,10 +7,10 @@ import apiRoutes from "./routes/apiRoutes/index.js";
 import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
 import path from 'path';
-import { fileURLToPath } from 'url';
-import { dirname } from 'path';
+import {fileURLToPath} from 'url';
+import {dirname} from 'path';
 import http from "http";
-import { Server as SocketIOServer } from 'socket.io';
+import {Server as SocketIOServer} from 'socket.io';
 import session from 'express-session'
 import MongeDBSession from 'connect-mongodb-session'
 import multer from 'multer'
@@ -17,9 +18,17 @@ import { uploadFile, getFileStream } from "./s3.js";
 import fs from 'fs'
 import util from 'util'
 
+const mdbs = MongeDBSession(session)
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+
+const app = express();
+
+// Set up EJS as the view engine
 mongoose.connect('mongodb+srv://AvivNat:AvivKaved@shagal.jaexhqx.mongodb.net/', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
+    useNewUrlParser: true, useUnifiedTopology: true
 }).then(() => {
     console.log("Successfully connected to the database");
 }).catch(err => {
@@ -38,9 +47,31 @@ const app = express();
 // Set up EJS as the view engine
 
 const store = new mdbs({
+    uri: 'mongodb+srv://AvivNat:AvivKaved@shagal.jaexhqx.mongodb.net/', collection: "mySessions"
     uri: 'mongodb+srv://AvivNat:AvivKaved@shagal.jaexhqx.mongodb.net/',
     collection: "mySessions"
 })
+//code for locations...
+app.get('/api/data', async (req, res) => {
+    try {
+        const collection = mongoose.connection.db.collection('branches'); // Replace with your collection name
+
+        // Fetch data from MongoDB
+        const data = await collection.find({}).toArray();
+
+        // Format data for Bing Maps API
+        const locations = data.map(item => ({
+            latitude: item.latitude,
+            longitude: item.longitude
+        }));
+
+        // Send the data to the frontend
+        res.json(locations);
+    } catch (error) {
+        console.error('Error fetching data from MongoDB:', error);
+        res.status(500).json({error: 'Error fetching data from MongoDB'});
+    }
+});
 
 
 app.use(bodyParser.json())
@@ -48,6 +79,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 
 app.use(session({
+    secret: 'keyboard cat', resave: false, saveUninitialized: true, store: store
     secret: 'keyboard cat',
     resave: false,
     saveUninitialized: true,
@@ -91,6 +123,7 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 // Static files
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.urlencoded({extended: true}))
 app.use(express.urlencoded({ extended: true }))
 
 // Use the router
@@ -111,7 +144,6 @@ io.on('connection', client => {
 io.on('disconnect', () => {
     io.emit('message', 'A user has left the chat');
 });
-
 
 
 const PORT = process.env.PORT || 8080;
