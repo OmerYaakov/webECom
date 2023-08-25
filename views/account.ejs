@@ -5,8 +5,24 @@
 
 <body>
 <%- include('partials/nav') %>
-<h1 class="text-right">המשתמש שלי</h1>
-<button class="btn">הזמנות</button>
+<div class="text-right mx-5">
+    <h1>משתמש שלי</h1>
+</div>
+
+<div class="row">
+    <div class="col-md-2 text-right" style="display: flex;flex-direction: column;">
+        <button class="btn userbtn" type="button">כללי</button>
+        <button class="btn userbtn" type="button">הזמנות שלי</button>
+        <button class="btn userbtn" type="button">הפרטים שלי</button>
+        <button class="btn userbtn" type="button">כתובות למשלוח</button>
+        <button class="btn userbtn" type="button">פרטי אשראי</button>
+        <button class="btn userbtn" type="button">התנתקות</button>
+    </div>
+    <div class="col-md-8 text-right">
+        <p>תכולת העמוד</p>
+    </div>
+</div>
+
 <%- include('partials/footer') %>
 </body>
 
