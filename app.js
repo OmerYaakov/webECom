@@ -13,6 +13,10 @@ import http from "http";
 import {Server as SocketIOServer} from 'socket.io';
 import session from 'express-session'
 import MongeDBSession from 'connect-mongodb-session'
+import multer from 'multer'
+import {uploadFile,getFileStream} from "./s3.js";
+import fs from 'fs'
+import util from 'util'
 
 const mdbs = MongeDBSession(session)
 
@@ -31,6 +35,16 @@ mongoose.connect('mongodb+srv://AvivNat:AvivKaved@shagal.jaexhqx.mongodb.net/', 
     console.log('Could not connect to the database. Exiting now...', err);
     process.exit();
 });
+
+const mdbs=MongeDBSession(session)
+
+
+const __filename = fileURLToPath(import.meta.url);
+
+const __dirname = dirname(__filename);
+const app = express();
+
+// Set up EJS as the view engine
 
 const store = new mdbs({
     uri: 'mongodb+srv://AvivNat:AvivKaved@shagal.jaexhqx.mongodb.net/', collection: "mySessions"
@@ -56,11 +70,47 @@ app.get('/api/data', async (req, res) => {
         res.status(500).json({error: 'Error fetching data from MongoDB'});
     }
 });
+
+
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true }));
+
+
 app.use(session({
     secret: 'keyboard cat', resave: false, saveUninitialized: true, store: store
 }))
 
-app.use(bodyParser.json())
+// importing multer + util+fs
+const upload = multer({dest:'uploads/'})
+const unlinkFile = util.promisify(fs.unlink)
+
+// all of these '/images' we need to get out to a router...
+app.get('images/:key',(req, res)=>{
+    const key = req.params.Key
+    const readStream = getFileStream(key)
+    readStream.pipe(res)
+})
+
+app.post('/images', upload.single('avatar'), async (req, res) => {
+    try {
+        //uploading the file to s3 bucket
+        const result = await uploadFile(req.file);
+
+        //delete the file from the uploads folder...
+        await unlinkFile(req.file.path)
+
+        console.log('Upload result:', result);
+
+        //right now result.Key undefined,...need to be fixed!
+        res.send(`/images/${result.Key}`)
+
+
+    } catch (error) {
+        console.error('Error uploading image:', error);
+        res.status(500).send("Error uploading image.");
+    }
+});
+
 
 // Set up EJS as the view engine
 app.set('view engine', 'ejs');

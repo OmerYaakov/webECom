@@ -8,6 +8,7 @@ import ProductRoutes from "./Product.routes.js";
 import ContactRoutes from "./Contact.routes.js";
 import BranchRoutes from "./Branch.routes.js";
 import PhotosRoutes from "./photos.routes.js";
+import CollectionRoutes from "./Collection.routes.js";
 
 const router = express.Router();
 
@@ -20,5 +21,6 @@ router.use('/products', ProductRoutes);
 router.use('/contacts', ContactRoutes);
 router.use('/branches', BranchRoutes);
 router.use('/photos', PhotosRoutes);
+router.use('/collections', CollectionRoutes);
 
 export default router;
