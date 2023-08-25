@@ -2,41 +2,46 @@
 <html data-bs-theme="auto" lang="he">
 
 <%- include('partials/head') %>
-    <script>
-        $(document).ready(function () {
-            $('#create_collectionbtt').click(() => {
-                const url = `/api/categories/`;
+<script>
+    $(document).ready(function () {
+        $('#create_collectionbtt').click(() => {
+            const url = `/api/categories/`;
 
-                const req = {
-                    categoryName: $('#collectName').val(),
-                    categoryImage: "test",
-                };
+            const req = {
+                categoryName: $('#collectName').val(),
+                categoryImage: "test",
+            };
 
-                // Make the AJAX GET request
-                $.ajax({
-                    url: url,
-                    type: "POST",
-                    data: JSON.stringify(req),
-                    contentType: "application/json",
-                    success: function (res) {
-                        console.log("create collection success:", res);
-                        //navigate to admin page
-                        window.location.href = "/admin";
-                    },
-                    error: function (err) {
-                        console.error("error:", err);
-                    }
-                });
+            // Make the AJAX GET request
+            $.ajax({
+                url: url,
+                type: "POST",
+                data: JSON.stringify(req),
+                contentType: "application/json",
+                success: function (res) {
+                    console.log("create collection success:", res);
+                    //navigate to admin page
+                    window.location.href = "/admin";
+                },
+                error: function (err) {
+                    console.error("error:", err);
+                }
             });
-        })
-    </script>
+        });
+    })
+</script>
 
-
-    <body>
-        <%- include('partials/nav') %>
-            <%- include('partials/components/create_collectioncomp.ejs') %>
+<body>
+<%- include('partials/nav') %>
+<%- include('partials/components/create_collectioncomp.ejs') %>
+<div class="container  text-right">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
             <%- include('partials/components/addproductcomp.ejs') %>
-                <%- include('partials/footer') %>
-    </body>
+        </div>
+    </div>
+</div>
+<%- include('partials/footer') %>
+</body>
 
 </html>
