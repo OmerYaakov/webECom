@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/OmerYaakov/webECom#readme",
   "dependencies": {
+    "@everapi/freecurrencyapi-js": "^1.0.1",
     "bcrypt": "^5.1.0",
     "body-parser": "^1.20.2",
     "connect-mongodb-session": "^3.1.1",
