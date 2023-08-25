@@ -3,19 +3,17 @@
 
 <%- include('partials/head') %>
 
-<body>
+    <body>
+        <%- include('partials/nav',{ isAuth }) %>
+            <%- include('partials/components/hero') %>
 
-<%- include('partials/nav') %>
+                <%- include('partials/components/productcollection') %>
 
-<%- include('partials/components/hero') %>
+                    <%- include('partials/components/quickcatalog') %>
+                        <%- include('partials/components/instagramfeed') %>
 
-<%- include('partials/components/productcollection') %>
+                            <%- include('partials/footer') %>
 
-<%- include('partials/components/quickcatalog') %>
-<%- include('partials/components/instagramfeed') %>
-
-<%- include('partials/footer') %>
-
-</body>
+    </body>
 
 </html>

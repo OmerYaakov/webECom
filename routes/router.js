@@ -1,13 +1,15 @@
 import express from 'express';
 import isAuthenticated from "../middleware/isAuthenticated.js";
+
 const router = express.Router();
 export default router;
 
 // Home page
 router.route('/').get((req, res) => {
-    // req.session.isAuth=true
-    console.log("session", req.session.isAuth)
-    res.render('index');
+    if (!req.session.isAuth) {
+        req.session.isAuth = false;
+    }
+    res.render('index', { isAuth:req.session.isAuth }); // Move the closing parenthesis here
 });
 
 
@@ -19,88 +21,87 @@ router.route('/product').get((req, res) => {
 
 // Admin page
 router.route('/admin').get((req, res) => {
-    res.render('admin');
+    res.render('admin', { isAuth:req.session.isAuth });
 });
 
 // User settings page
 router.route('/user/settings').get((req, res) => {
-    res.render('user/settings');
+    res.render('user/settings', { isAuth:req.session.isAuth });
 });
 
 // About us page
 router.route('/about').get((req, res) => {
-    res.render('about');
+    res.render('about', { isAuth:req.session.isAuth });
 });
-router.route('/login').get(isAuthenticated,(req, res) => {
-
-    res.render('login');
+router.route('/login').get( (req, res) => {
+    res.render('login', { isAuth: req.session.isAuth });
 });
 router.route('/cart').get((req, res) => {
-    res.render('cart');
+    res.render('cart', { isAuth:req.session.isAuth });
 });
 router.route('/wishlist').get((req, res) => {
-    res.render('wishlist');
+    res.render('wishlist', { isAuth:req.session.isAuth });
 });
 router.route('/catalog').get((req, res) => {
-    res.render('catalog');
+    res.render('catalog', { isAuth:req.session.isAuth });
 });
 router.route('/contact').get((req, res) => {
-    res.render('contact');
+    res.render('contact', { isAuth:req.session.isAuth });
 });
 router.route('/terms').get((req, res) => {
-    res.render('terms');
+    res.render('terms', { isAuth:req.session.isAuth });
 });
 // router.route('/locations').get((req, res) => {
 //     res.render('locations');
 // });
 router.route('/signup').get((req, res) => {
-    res.render('signup');
+    res.render('signup', { isAuth:req.session.isAuth });
 });
 router.route('/account').get((req, res) => {
-    res.render('account');
+    res.render('account', { isAuth:req.session.isAuth });
 });
 router.route('/branches').get((req, res) => {
-    res.render('branches');
+    res.render('branches', { isAuth:req.session.isAuth });
 });
 router.route('/admin/editbranches').get((req, res) => {
-    res.render('editbranches');
+    res.render('editbranches', { isAuth:req.session.isAuth });
 });
 router.route('/admin/products').get((req, res) => {
-    res.render('admincrudproducts');
+    res.render('admincrudproducts', { isAuth:req.session.isAuth });
 });
 router.route('/admin/salestrack').get((req, res) => {
-    res.render('salestrack');
+    res.render('salestrack', { isAuth:req.session.isAuth });
 });
 router.route('/create_collection').get((req, res) => {
-    res.render('create_collection');
+    res.render('create_collection', { isAuth:req.session.isAuth });
 });
 router.route('/delete_collection').get((req, res) => {
-    res.render('delete_collection');
+    res.render('delete_collection', { isAuth:req.session.isAuth });
 });
 router.route('/edit_collection').get((req, res) => {
-    res.render('edit_collection');
+    res.render('edit_collection', { isAuth:req.session.isAuth });
 });
 router.route('/wishlist').get((req, res) => {
-    res.render('wishlist');
+    res.render('wishlist', { isAuth:req.session.isAuth });
 });
 router.route('/admin/collection').get((req, res) => {
-    res.render('collection');
+    res.render('collection', { isAuth:req.session.isAuth });
 });
 router.route('/admin/couponsadmin').get((req, res) => {
-    res.render('couponsadmin');
+    res.render('couponsadmin', { isAuth:req.session.isAuth });
 });
 
 router.route('/createcouponsadmin').get((req, res) => {
-    res.render('createcouponsadmin');
+    res.render('createcouponsadmin', { isAuth:req.session.isAuth });
 });
 router.route('/editcouponsadmin').get((req, res) => {
-    res.render('editcouponsadmin');
+    res.render('editcouponsadmin', { isAuth:req.session.isAuth });
 });
 router.route('/deletecouponsadmin').get((req, res) => {
-    res.render('deletecouponsadmin');
+    res.render('deletecouponsadmin', { isAuth:req.session.isAuth });
 });
 
 router.route('/admin/orders').get((req, res) => {
-    res.render('adminorders');
+    res.render('adminorders', { isAuth:req.session.isAuth });
 });
 

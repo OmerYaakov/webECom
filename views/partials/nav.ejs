@@ -4,23 +4,19 @@
 </div>
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg">
-    <button
-            class="navbar-toggler"
-            type="button"
-            data-toggle="collapse"
-            data-target="#navbarNav"
-            aria-controls="navbarNav"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-    >
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"><i class="bi bi-list"></i></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
                 <!--                this is false for now but we need a function to check if logged in-->
-                <a class="nav-link" href="/<%= true ? 'account' : 'login' %>"><i
-                            class="bi bi-person-circle"></i></a>
+                <% if (isAuth) { %>
+                <a class="nav-link" href="/account">החשבון שלי</a>
+                <% } else { %>
+                <a class="nav-link" href="/login">התחברות</a>
+                <% } %>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/wishlist"><i class="bi bi-heart"></i></a>
@@ -30,16 +26,16 @@
             </li>
         </ul>
         <a class="navbar-brand navbar-brand-centered" href="/">
-            <img src="logo.png"/>
+            <img src="logo.png" />
         </a>
         <ul class="navbar-nav ml-auto">
             <li>
                 <div class="input-group rounded">
                     <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search"
-                           aria-describedby="search-addon"/>
+                        aria-describedby="search-addon" />
                     <span class="input-group-text border-0" style="background: none;color: white;" id="search-addon">
-<i class="bi bi-search"></i>
-  </span>
+                        <i class="bi bi-search"></i>
+                    </span>
                 </div>
             </li>
             <li class="nav-item">
