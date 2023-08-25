@@ -36,20 +36,10 @@ mongoose.connect('mongodb+srv://AvivNat:AvivKaved@shagal.jaexhqx.mongodb.net/', 
     process.exit();
 });
 
-const mdbs = MongeDBSession(session)
-
-
-const __filename = fileURLToPath(import.meta.url);
-
-const __dirname = dirname(__filename);
-const app = express();
-
 // Set up EJS as the view engine
 
 const store = new mdbs({
     uri: 'mongodb+srv://AvivNat:AvivKaved@shagal.jaexhqx.mongodb.net/', collection: "mySessions"
-    uri: 'mongodb+srv://AvivNat:AvivKaved@shagal.jaexhqx.mongodb.net/',
-    collection: "mySessions"
 })
 //code for locations...
 app.get('/api/data', async (req, res) => {
@@ -73,10 +63,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(session({
     secret: 'keyboard cat', resave: false, saveUninitialized: true, store: store
-    secret: 'keyboard cat',
-    resave: false,
-    saveUninitialized: true,
-    store: store
 }))
 
 // importing multer + util+fs
