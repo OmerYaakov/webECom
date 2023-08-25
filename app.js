@@ -58,15 +58,8 @@ app.get('/api/data', async (req, res) => {
 
         // Fetch data from MongoDB
         const data = await collection.find({}).toArray();
-
-        // Format data for Bing Maps API
-        const locations = data.map(item => ({
-            latitude: item.latitude,
-            longitude: item.longitude
-        }));
-
         // Send the data to the frontend
-        res.json(locations);
+        res.json(data);
     } catch (error) {
         console.error('Error fetching data from MongoDB:', error);
         res.status(500).json({error: 'Error fetching data from MongoDB'});
