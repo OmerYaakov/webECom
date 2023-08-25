@@ -75,6 +75,9 @@ router.route('/create_collection').get((req, res) => {
 router.route('/delete_collection').get((req, res) => {
     res.render('delete_collection');
 });
+router.route('/edit_collection').get((req, res) => {
+    res.render('edit_collection');
+});
 router.route('/wishlist').get((req, res) => {
     res.render('wishlist');
 });
