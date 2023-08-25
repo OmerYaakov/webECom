@@ -1,0 +1,17 @@
+
+<h1 class="text-right"> :ניהול קופונים</h1>
+<div class="row">
+    <div class="col-md-2 text-right" style="display: flex;flex-direction: column;">
+        <button class="btn userbtn" type="button" onclick="window.location.href='/createcouponsadmin'">יצירת קופון
+        </button>
+        <button class="btn userbtn" type="button" onclick="window.location.href='/editcouponsadmin'">עריכת קופון
+        </button>
+        <button class="btn userbtn" type="button" onclick="window.location.href='/deletecouponsadmin'">מחיקת קופון
+        </button>
+    </div>
+    <div class="col-md-8 text-right">
+        <%- include('createcouponsadmincomp.ejs') %>
+        <%- include('editcouponsadmincomp.ejs') %>
+        <%- include('deletecouponsadmincomp.ejs') %>
+    </div>
+</div>
