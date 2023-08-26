@@ -8,6 +8,23 @@
             window.location.href = "/admin";
         });
 
+        $("#log-out-btn").click(function (event) {
+            const url = '/logout'
+            $.ajax({
+                url: url,
+                type: "GET",
+                data: JSON.stringify({}),
+                contentType: "application/json",
+                success: function (res) {
+                    console.log('log out successfully applied!')
+                    window.location.href = "/";
+                },
+                error: function (err) {
+                    alert("log out failed! Please try again.");
+                    console.error("log out! error:", err);
+                }
+            });
+        });
     });
 </script>
 
@@ -26,7 +43,7 @@
                     <button class="btn userbtn" type="button">הפרטים שלי</button>
                     <button class="btn userbtn" type="button">כתובות למשלוח</button>
                     <button class="btn userbtn" type="button">פרטי אשראי</button>
-                    <button class="btn userbtn" type="button">התנתקות</button>
+                    <button id="log-out-btn" class="btn userbtn" type="button">התנתקות</button>
                 </div>
                 <div class="col-md-8 text-right">
                     <h3>כללי</h3>

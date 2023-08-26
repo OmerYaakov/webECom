@@ -1,11 +1,12 @@
 import express from 'express';
-import isAuthenticated from "../middleware/isAuthenticated.js";
+
 
 const router = express.Router();
 export default router;
 
 // Home page
 router.route('/').get((req, res) => {
+    console.log("Session : " ,req.session)
     if (!req.session.isAuth) {
         req.session.isAuth = false;
     }
@@ -34,7 +35,7 @@ router.route('/about').get((req, res) => {
     res.render('about', { isAuth:req.session.isAuth });
 });
 router.route('/login').get( (req, res) => {
-    res.render('login', { isAuth: req.session.isAuth });
+    res.render('login', { isAuth: req.session.isAuth , user: req.session.user  } );
 });
 router.route('/cart').get((req, res) => {
     res.render('cart', { isAuth:req.session.isAuth });
@@ -105,3 +106,16 @@ router.route('/admin/orders').get((req, res) => {
     res.render('adminorders', { isAuth:req.session.isAuth });
 });
 
+router.route('/logout').get((req,res)=>{
+
+    res.clearCookie('connect.sid');
+
+    req.session.destroy((err)=>{
+        if(err)
+            console.error('Error destroying session : ' , err)
+        else
+            console.log('Session destroyed successfully')
+
+        res.render('index',{isAuth:false})
+    })
+})
