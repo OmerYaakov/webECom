@@ -3,13 +3,10 @@
     $(document).ready(function () {
         console.log("ready!");
         $("#sign-up").click(function () {
-
             console.log("sign up button pressed!");
             const url = `/api/users/`;
             const username = $("#email").val();
             const password = $("#password-up").val();
-
-            console.log(username, password)
 
             // Make the AJAX GET request
             $.ajax({
@@ -21,11 +18,10 @@
                 }),
                 contentType: "application/json",
                 success: function (res) {
-                    console.log("Sign up success:", res);
                     window.location.href = "/";
-                    alert("Hello " + username)
                 },
                 error: function (err) {
+                    alert("Sign up failed! Please try again.");
                     console.error("Sign up! error:", err);
                 }
             });

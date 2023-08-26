@@ -3,9 +3,9 @@ import ProductModel from "../models/Product.model.js";
 const create = async (req, res) => {
     try {
         const product = new ProductModel({
-            id: req.body.id,
+            id: Math.floor(Math.random() * 1000),
             productName: req.body.productName,
-            categoryId: req.body.categoryId,
+            categoryName: req.body.categoryName,
             price: req.body.price,
             image: req.body.image,
 

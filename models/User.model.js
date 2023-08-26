@@ -9,7 +9,8 @@ const UserSchema = mongoose.Schema({
     city: String,
     street: String,
     role: String,
-    cartId: String
+    cartId: String,
+    isAdmin: Boolean
 });
 const userModel = mongoose.model('User', UserSchema);
 export default userModel;

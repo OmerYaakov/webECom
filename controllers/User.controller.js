@@ -5,39 +5,26 @@ import UserModel from "../models/User.model.js";
 
 const create = async (req, res) => {
     try {
-        console.log("creating the user...")
-        const username =req.body.username
-        console.log("user name: " , username)
-        //checking if the user exist by username...
-        // const findUser = await UserModel.findOne(username)
-        // if(findUser){
-        //     return res.render('/signup')
-        // }
-
         const salt = bcrypt.genSaltSync(10);
-
         const hash = bcrypt.hashSync(req.body.password, salt);
 
-        console.log("create user");
         const user = new User({
             userId: Math.floor(Math.random() * 1000000000),
-            firstName: req.body.firstName,
-            lastName: req.body.lastName,
+            firstName: req.body.firstName ? req.body.firstName : " ",
+            lastName: req.body.lastName ? req.body.lastName : " ",
             username: req.body.username,
-            idNumber: req.body.idNumber,
+            idNumber: req.body.idNumber ? req.body.idNumber : " ",
             password: hash,
-            city: req.body.city,
-            street: req.body.street,
+            city: req.body.city ? req.body.city : " ",
+            street: req.body.street ? req.body.street : " ",
             role: req.body.role || 'user',
-            cartId: "0"
+            isAdmin: req.body.isAdmin || false,
+            cartId: req.body.cartId || 0,
         });
-
-        //isAuth
-        req.session.isAuth=true
-        //save user in the database
-        console.log("save user");
         user.save()
             .then(data => {
+                req.session.isAuth = true
+                req.session.user = user
                 res.send(data);
             }).catch(err => {
                 res.status(500).send({
@@ -64,7 +51,6 @@ const findAll = (req, res) => {
 };
 
 const findOne = (req, res) => {
-    console.log(req.params.id);
     User.find({ idNumber: req.params.id }).then(user => {
         res.send(user);
     }
@@ -102,14 +88,7 @@ const remove = (req, res) => {
     );
 }
 
-// const findByUserName = (req, res) => {
-// }
-
-// const findByIdNumber = (req, res) => {
-// }
-
 const findByUserNameAndPassword = (req, res) => {
-    console.log(req.body);
     User.find({ username: req.query.username }).then(user => {
         if (user.length == 0) {
             res.status(404).send({
@@ -117,7 +96,8 @@ const findByUserNameAndPassword = (req, res) => {
             });
         } else {
             if (bcrypt.compareSync(req.query.password, user[0].password)) {
-                req.session.isAuth=true
+                req.session.isAuth = true
+                req.session.user = user[0]
                 res.send(user);
             } else {
                 res.status(401).send({
@@ -137,10 +117,8 @@ const findByUserNameAndPassword = (req, res) => {
 export {
     create,
     findByUserNameAndPassword,
-    // findByUserName,
     update,
     findOne,
     findAll,
-    // findByIdNumber,
     remove
 }
