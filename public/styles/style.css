@@ -75,9 +75,7 @@ a:hover {
 }
 
 .product-name {
-    margin-left: 180px;
-    word-break: inherit;
-    max-width: 400px;
+    /*margin-left: 150px;*/
 
 }
 
@@ -106,4 +104,7 @@ input[type='text']:focus {
 .navbar-toggler-icon{
    color: white;
     scale: 1.1;
+}
+.product-price{
+    float: left;
 }
