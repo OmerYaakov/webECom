@@ -25,6 +25,7 @@ const create = async (req, res) => {
             .then(data => {
                 req.session.isAuth = true
                 req.session.user = user
+                console.log("from create user , data is : " , data)
                 res.send(data);
             }).catch(err => {
                 res.status(500).send({
