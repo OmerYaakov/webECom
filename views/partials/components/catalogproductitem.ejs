@@ -2,27 +2,44 @@
 <script>
     $(document).ready(function () {
         console.log('ready!')
+        $(".product-card").click(function () {
+            console.log('add to cart');
+            // if (user) {
+            //     // get the cart
+            //     let cart;
+            //     $.ajax({
+            //         url: '/api/cart/' + user.cartId,
+            //         type: 'GET',
+            //         success: function (data) {
+            //             cart = data;
+            //             // add the product to the cart
+            //             let product = {
+            //                 name: "product name",
+            //                 price: 100,
+            //             };
+            //             cart.cartProducts.push(product);
+            //             // update the cart
+            //             $.ajax({
+            //                 url: '/cart/' + user.cartId,
+            //                 type: 'POST',
+            //                 data: cart,
+            //                 success: function (data) {
+            //                     alert('המוצר נוסף לעגלה');
+            //                 },
+            //                 error: function (err) {
+            //                     console.log(err);
+            //                 }
+            //             });
+            //         },
+            //         error: function (err) {
+            //             console.log(err);
+            //         }
+            //     });
+            // } else {
+            //     alert('אנא התחבר כדי להוסיף מוצרים לעגלה');
+            // }
+        });
 
-        $("#add_to_cart_btn").click(()=>{
-            const userId = "<%=userId%>"
-            const url = `/api/carts/${userId}`
-            $.ajax({
-                url: url,
-                type: "PUT",
-                data: JSON.stringify({
-                  products:[$("#product-name").text()]
-                }),
-                contentType: "application/json",
-                success: function (res) {
-                   alert('This item added to the cart!')
-                },
-                error: function (err) {
-                    alert("Sign up failed! Please try again.");
-                    console.error("Sign up! error:", err);
-                }
-            });
-
-        })
     })
 </script>
 
@@ -31,20 +48,20 @@
         <span class="badge badge-new">New</span>
         <a href="#" class="product-link" title="טבעת Infinito Singular בזהב צהוב, פנינים ויהלומים">
             <img src="./photos/PhotoRoom-20230621_150845.png" class="product-image"
-                 alt="טבעת Infinito Singular בזהב צהוב, פנינים ויהלומים">
+                alt="טבעת Infinito Singular בזהב צהוב, פנינים ויהלומים">
         </a>
     </div>
     <div class="product-details row" style="flex-direction: row;">
         <div class="col-md-8">
             <a id="product-name" href="#" class="product-name text-right" style="color: black;"
-               title="טבעת Infinito Singular בזהב צהוב, פנינים ויהלומים">טבעת Infinito Singular</a>
+                title="טבעת Infinito Singular בזהב צהוב, פנינים ויהלומים">טבעת Infinito Singular</a>
         </div>
         <div class="product-price col-md-1">
             <span class="price">₪11,180</span>
         </div>
     </div>
     <div class="text-center">
-        <button  id="add_to_cart_btn" class="add-to-cart-button btn">הוסף לסל</button>
+        <button id="add_to_cart_btn" class="add-to-cart-button btn">הוסף לסל</button>
         <button class="add-to-cart-button btn">אהבתי</button>
     </div>
 

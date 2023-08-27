@@ -7,8 +7,6 @@
             const url = `/api/users/`;
             const username = $("#email").val();
             const password = $("#password-up").val();
-            // const userId = Math.abs(Math.floor(Math.random()));
-            // const cartId = Math.abs(Math.floor(Math.random()));
 
 
             // Make the AJAX GET request
@@ -18,8 +16,6 @@
                 data: JSON.stringify({
                     username: username,
                     password: password,
-                    // userId:userId,
-                    // cartId: cartId
                 }),
                 contentType: "application/json",
                 success: function (res) {
