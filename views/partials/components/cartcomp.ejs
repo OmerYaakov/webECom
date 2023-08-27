@@ -1,3 +1,35 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        console.log('ready!')
+        $("#accept-order-btn").click(function (){
+            const user = "<%=user%>"
+            const url = '/api/orders'
+            $.ajax({
+                url: url,
+                type: "POST",
+                data: JSON.stringify({
+                   userId: user.userId,
+                    cartId: user.cartId,
+                    totalPrice: Number.parseInt($("#price").text()),
+                }),
+                contentType: "application/json",
+                success: function (res) {
+                    alert("Order success!");
+                    //navigate to home page
+                    window.location.href = "/";
+                },
+                error: function (err) {
+                    console.error("Order error:", err);
+                }
+            });
+        })
+    })
+
+
+</script>
+
+
 <h1 class="text-right"> סל קניות</h1>
 
 <div class="container">
@@ -29,14 +61,14 @@
                     <hr/>
                     <div class="row d-flex justify-content-end">
                         <div class="col-md-6">
-                            <h5 class="text-left d-block">₪1000</h5>
+                            <h5  class="text-left d-block">₪1000</h5>
                         </div>
                         <div class="col-md-6">
                             <h3 class="text-right d-block">סה"כ</h3>
                         </div>
                     </div>
                     <div class="text-center">
-                        <button class="btn btn-dark mybtn" style="width: 95%;">מעבר לתשלום</button>
+                        <button id="accept-order-btn" class="btn btn-dark mybtn" style="width: 95%;">מעבר לתשלום</button>
                     </div>
                 </div>
             </div>
@@ -54,7 +86,7 @@
                             <img src="./photos/new.jpg" alt="product img" class="" style="max-height: 150px"/>
                         </div>
                     </div>
-                    <p class="text-left">₪1000</p>
+                    <p  class="text-left">₪1000</p>
                 </div>
             </div>
 
@@ -70,7 +102,7 @@
                             <img src="./photos/new.jpg" alt="product img" style="max-height: 150px"/>
                         </div>
                     </div>
-                    <p class="text-left">₪1000</p>
+                    <p id="price" class="text-left">₪1000</p>
                 </div>
             </div>
 

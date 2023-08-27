@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 const CartSchema = mongoose.Schema({
     id: Number,
     userId: Number,
-    cartProducts: [],
+    cartProducts: [{ type: String }],
     totalPrice: Number
 });
 

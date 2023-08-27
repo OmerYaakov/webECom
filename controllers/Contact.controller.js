@@ -1,13 +1,16 @@
 import ContactModel from "../models/Contact.model.js";
-import CategoryModel from "../models/Category.model.js";
+
 
 const create = async (req, res) => {
+
+
     const contact = new ContactModel({
-      id:req.id,
-       name: req.name,
-        phoneNumber: req.phoneNumber,
-        mail: req.mail,
-        message:req.message
+
+        id:req.body.id,
+       name: req.body.name,
+        phoneNumber: req.body.phoneNumber,
+        mail: req.body.mail,
+        message:req.body.message
     });
     try {
         const data = await contact.save();

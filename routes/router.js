@@ -38,13 +38,14 @@ router.route('/login').get( (req, res) => {
     res.render('login', { isAuth: req.session.isAuth , user: req.session.user  } );
 });
 router.route('/cart').get((req, res) => {
-    res.render('cart', { isAuth:req.session.isAuth });
+    res.render('cart', { isAuth: req.session.isAuth , user: req.session.user } );
 });
 router.route('/wishlist').get((req, res) => {
     res.render('wishlist', { isAuth:req.session.isAuth });
 });
 router.route('/catalog').get((req, res) => {
-    res.render('catalog', { isAuth:req.session.isAuth });
+    console.log("user : ",req.session.user);
+    res.render('catalog', { isAuth:req.session.isAuth, userId: req.session.user.userId});
 });
 router.route('/contact').get((req, res) => {
     res.render('contact', { isAuth:req.session.isAuth });

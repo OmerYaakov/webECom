@@ -1,34 +1,33 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
     $(document).ready(function () {
-
-
-
-
-
+        console.log('ready!')
+        $("#add_to_cart_btn").on('click',function (){
+            alert('click!')
+        })
     })
 </script>
 
-<div class="product-card d-flex justify-content-center">
+<div class="product-card">
     <div class="product-image-container">
-        <span class="badge badge-new text-left">New</span>
+        <span class="badge badge-new">New</span>
         <a href="#" class="product-link" title="טבעת Infinito Singular בזהב צהוב, פנינים ויהלומים">
             <img src="./photos/PhotoRoom-20230621_150845.png" class="product-image"
                  alt="טבעת Infinito Singular בזהב צהוב, פנינים ויהלומים">
         </a>
     </div>
     <div class="product-details row" style="flex-direction: row;">
-        <div class="col-md-8 text-right">
-            <a href="#" class="product-name " style="color: black;"
+        <div class="col-md-8">
+            <a id="product-name" href="#" class="product-name text-right" style="color: black;"
                title="טבעת Infinito Singular בזהב צהוב, פנינים ויהלומים">טבעת Infinito Singular</a>
         </div>
-        <div class="product-price col-md-1 text-left">
+        <div class="product-price col-md-1">
             <span class="price">₪11,180</span>
         </div>
     </div>
-    <div class="text-center row">
-        <button class="add-to-cart-button btn">הוסף לסל<i class="bi bi-bag-plus mx-1"></i></button>
-        <button class="add-to-cart-button btn">אהבתי<i class="bi bi-heart mx-1"></i></button>
+    <div class="text-center">
+        <button  id="add_to_cart_btn" class="add-to-cart-button btn">הוסף לסל</button>
+        <button class="add-to-cart-button btn">אהבתי</button>
     </div>
 
 </div>

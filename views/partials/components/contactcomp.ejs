@@ -1,3 +1,36 @@
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        console.log("Contact page is up!")
+        $("#send-contact-btn").click(function (){
+            console.log("send-contact-btn pressed!")
+
+            $.ajax({
+                url: "/api/contacts",
+                type:"POST",
+                data:{
+                    // we need to handle the id of the contact msg's
+                    id:Math.abs(Math.floor(Math.random())),
+                    name: $("#nameLbl").val(),
+                    phoneNumber: $("#numLbl").val(),
+                    mail: $("#email").val(),
+                    message:$("#message").val()
+                },
+                success: function (res){
+                    alert("contact msg successfully sent")
+                    // we need to render the page again but empty...
+                },
+                error: function (err){
+                    console.error("contact msg unsuccessfully sent")
+                }
+            })
+
+        })
+
+    });
+</script>
+
 <div class="login-container" style="max-width: 300px; margin: auto;">
     <form>
         <div class="form-group-contact">

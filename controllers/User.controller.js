@@ -1,26 +1,53 @@
 import bcrypt from 'bcrypt';
 import User from '../models/User.model.js';
-import UserModel from "../models/User.model.js";
+import CartModel from "../models/Cart.model.js";
+import WishListModel from "../models/WishList.model.js";
+
 
 
 const create = async (req, res) => {
     try {
         const salt = bcrypt.genSaltSync(10);
         const hash = bcrypt.hashSync(req.body.password, salt);
+        const userId = Math.floor(Math.random() * 1000000000)
+        const cartId = Math.floor(Math.random() * 1000000000)
+        const wishListId = Math.floor(Math.random() * 1000000000)
+
+        console.log('creating the cart...')
+        const cart = new CartModel({
+            userId: userId,
+            products :[],
+            totalPrice:0
+        })
+        console.log('creating the wishlist...')
+
+        const wishList = new WishListModel({
+            userId:userId,
+            products:[]
+        })
+
+
+        await Promise.all([cart.save(),wishList.save()])
+        console.log('successfully saved!')
+
+
 
         const user = new User({
-            userId: Math.floor(Math.random() * 1000000000),
+            userId: userId,
+            cartId: cartId,
+            wishListId:wishListId,
             firstName: req.body.firstName ? req.body.firstName : " ",
             lastName: req.body.lastName ? req.body.lastName : " ",
             username: req.body.username,
-            idNumber: req.body.idNumber ? req.body.idNumber : " ",
             password: hash,
             city: req.body.city ? req.body.city : " ",
             street: req.body.street ? req.body.street : " ",
             role: req.body.role || 'user',
             isAdmin: req.body.isAdmin || false,
-            cartId: req.body.cartId || 0,
         });
+
+
+
         user.save()
             .then(data => {
                 req.session.isAuth = true

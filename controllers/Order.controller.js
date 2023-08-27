@@ -3,7 +3,7 @@ import OrderModel from "../models/Order.model.js";
 const create = async (req, res) => {
     try {
         const order = new OrderModel({
-            id: req.body.id,
+            id: Math.floor(Math.random() * 1000000000),
             userId: req.body.userId,
             cartId: req.body.cartId,
             totalPrice: req.body.totalPrice,
