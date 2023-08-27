@@ -2,8 +2,26 @@
 <script>
     $(document).ready(function () {
         console.log('ready!')
-        $("#add_to_cart_btn").on('click',function (){
-            alert('click!')
+
+        $("#add_to_cart_btn").click(()=>{
+            const userId = "<%=userId%>"
+            const url = `/api/carts/${userId}`
+            $.ajax({
+                url: url,
+                type: "PUT",
+                data: JSON.stringify({
+                  products:[$("#product-name").text()]
+                }),
+                contentType: "application/json",
+                success: function (res) {
+                   alert('This item added to the cart!')
+                },
+                error: function (err) {
+                    alert("Sign up failed! Please try again.");
+                    console.error("Sign up! error:", err);
+                }
+            });
+
         })
     })
 </script>
