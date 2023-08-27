@@ -47,13 +47,17 @@
                 </div>
                 <div class="col-md-8 text-right">
                     <h3>כללי</h3>
-                    <p><%= user.userId%> :מספר מזהה</p>
-<!--                    <p><%= user.firstName%> :שם פרטי</p>-->
-<!--                    <p><%= user.lastName%> :שם משפחה</p>-->
-<!--                    <p><%= user.phoneNumber%> :טלפון</p>-->
-<!--                    <p><%= user.email%> :אימייל</p>-->
-                    <p><%= user.username %> :שם משתמש</p>
-                    <% if (user.isAdmin) { %>
+                    <p>
+                        <%= user.userId%> :מספר מזהה
+                    </p>
+                    <!--                    <p><%= user.firstName%> :שם פרטי</p>-->
+                    <!--                    <p><%= user.lastName%> :שם משפחה</p>-->
+                    <!--                    <p><%= user.phoneNumber%> :טלפון</p>-->
+                    <!--                    <p><%= user.email%> :אימייל</p>-->
+                    <p>
+                        <%= user.username %> :שם משתמש
+                    </p>
+                    <% if (user.role=='admin' ) { %>
                         <p>:מנהל</p>
                         <button id="adminpagebtt" class="btn userbtn" type="button">עמוד מנהל</button>
                         <% } %>

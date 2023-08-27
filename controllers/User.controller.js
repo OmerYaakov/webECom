@@ -77,7 +77,7 @@ const findAll = (req, res) => {
 };
 
 const findOne = (req, res) => {
-    User.find({ idNumber: req.params.id }).then(user => {
+    User.find({ userId: req.params.id }).then(user => {
         res.send(user);
     }
     ).catch(err => {
@@ -90,7 +90,7 @@ const findOne = (req, res) => {
 
 const update = (req, res) => {
     console.log(req.params.id);
-    User.findOneAndUpdate({ idNumber: req.params.id }, req.body, { new: true }).then(user => {
+    User.findOneAndUpdate({ userId: req.params.id }, req.body, { new: true }).then(user => {
         res.send(user);
     }
     ).catch(err => {
