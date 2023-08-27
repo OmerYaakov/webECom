@@ -21,6 +21,7 @@ footer {
 nav {
 
 }
+/**/
 
 .carousel-inner img {
     width: 100%;
@@ -134,6 +135,7 @@ hr{
         background-color: #CEAC59; /* Change the background color when selected */
     }
 /**/
+/**/
 .mybtn{
     background: #ccb478;
     border: none;
@@ -141,3 +143,9 @@ hr{
 .mybtn:hover{
     background: #CEAC59;
 }
+/**/
+/**/
+.page-link{
+    color: black;
+}
+/**/
