@@ -15,27 +15,27 @@ const create = async (req, res) => {
 
         console.log('creating the cart...')
         const cart = new CartModel({
+            id: cartId,
             userId: userId,
-            products :[],
-            totalPrice:0
+            products: [],
+            totalPrice: 0
         })
         console.log('creating the wishlist...')
 
         const wishList = new WishListModel({
-            userId:userId,
-            products:[]
+            id: wishListId,
+            userId: userId,
+            products: []
         })
 
 
-        await Promise.all([cart.save(),wishList.save()])
+        await Promise.all([cart.save(), wishList.save()])
         console.log('successfully saved!')
-
-
 
         const user = new User({
             userId: userId,
             cartId: cartId,
-            wishListId:wishListId,
+            wishListId: wishListId,
             firstName: req.body.firstName ? req.body.firstName : " ",
             lastName: req.body.lastName ? req.body.lastName : " ",
             username: req.body.username,
@@ -46,13 +46,11 @@ const create = async (req, res) => {
             isAdmin: req.body.isAdmin || false,
         });
 
-
-
         user.save()
             .then(data => {
                 req.session.isAuth = true
                 req.session.user = user
-                console.log("from create user , data is : " , data)
+                console.log("from create user , data is : ", data)
                 res.send(data);
             }).catch(err => {
                 res.status(500).send({
@@ -79,7 +77,7 @@ const findAll = (req, res) => {
 };
 
 const findOne = (req, res) => {
-    User.find({ idNumber: req.params.id }).then(user => {
+    User.find({ userId: req.params.id }).then(user => {
         res.send(user);
     }
     ).catch(err => {
@@ -92,7 +90,7 @@ const findOne = (req, res) => {
 
 const update = (req, res) => {
     console.log(req.params.id);
-    User.findOneAndUpdate({ idNumber: req.params.id }, req.body, { new: true }).then(user => {
+    User.findOneAndUpdate({ userId: req.params.id }, req.body, { new: true }).then(user => {
         res.send(user);
     }
     ).catch(err => {
