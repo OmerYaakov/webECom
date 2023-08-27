@@ -1,6 +1,7 @@
 * {
     padding: 0;
     margin: 0;
+    box-sizing: content-box;
 }
 
 body {
@@ -57,25 +58,20 @@ a:hover {
 }
 
 .product-card {
-    margin: 0 50px;
+    /*margin: 0 50px;*/
     display: flex;
     direction: rtl;
-    width: 300px;
+    width: 200px;
     flex-direction: column;
 }
 
 .product-image {
     aspect-ratio: 1;
-    height: 300px;
+    max-height: 200px;
 }
 
 .product-name a {
     color: black;
-
-}
-
-.product-name {
-    /*margin-left: 150px;*/
 
 }
 
