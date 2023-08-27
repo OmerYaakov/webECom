@@ -3,7 +3,7 @@
 <div class="container">
     <div class="row">
         <div class="col-md-6">
-            <div class="cart-comp" style="max-width: 300px; margin: auto; background: #D9D9D9">
+            <div class="cart-comp" style="padding: 50px; margin: auto; background: #D9D9D9">
                 <h3 class="text-center">פרטי הזמנה</h3>
                 <div class="order-details text-right d-block">
                     <div class="row">
@@ -18,14 +18,17 @@
 
                     </div>
                     <hr/>
-                    <label>
-                        <span>שליח עד הבית (7 עד ימי עסקים)</span>
-                        <input type="radio" name="delivery">
-                    </label>
-                    <label>
-                        <span>איסוף עצמי (7 עד ימי עסקים)</span>
-                        <input type="radio" name="delivery">
-                    </label>
+                    <div class="delivery-options">
+                        <div class="radio-container">
+                            <input class="radio" type="radio" name="delivery" id="delivery-home">
+                            <label for="delivery-home">שליח עד הבית (7 עד ימי עסקים)</label>
+                        </div>
+                        <div class="radio-container">
+                            <input class="radio" type="radio" name="delivery" id="delivery-pickup">
+                            <label for="delivery-pickup">איסוף עצמי (7 עד ימי עסקים)</label>
+
+                        </div>
+                    </div>
                     <hr/>
                     <div class="row">
                         <div class="col-md-6">
@@ -38,8 +41,9 @@
                         </div>
 
                     </div>
-
-                    <button class="btn btn-primary">מעבר לתשלום</button>
+                    <div class="text-center">
+                        <button class="btn btn-dark mybtn" style="width: 95%;">מעבר לתשלום</button>
+                    </div>
                 </div>
             </div>
         </div>

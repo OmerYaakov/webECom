@@ -111,3 +111,37 @@ input[type='text']:focus {
 hr{
     color: #CEAC59;
 }
+
+/*radio buttons*/
+  .radio-container input[type="radio"] {
+        display: none; /* Hide the default radio button */
+    }
+
+    .radio-container label {
+        position: relative;
+        padding-right: 35px; /* Add some space for the custom square */
+        cursor: pointer;
+    }
+
+    .radio-container label::before {
+        content: "";
+        position: absolute;
+        top: 2px;
+        right: 0;
+        width: 20px; /* Adjust the size of the square */
+        height: 20px; /* Adjust the size of the square */
+        border-radius: 4px; /* Rounded corners for the square */
+        background-color: #fff; /* Background color of the square */
+    }
+
+    .radio-container input[type="radio"]:checked + label::before {
+        background-color: #CEAC59; /* Change the background color when selected */
+    }
+/**/
+.mybtn{
+    background: #ccb478;
+    border: none;
+}
+.mybtn:hover{
+    background: #CEAC59;
+}
