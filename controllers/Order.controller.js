@@ -9,7 +9,9 @@ const create = async (req, res) => {
             totalPrice: req.body.totalPrice,
             city: req.body.city,
             street: req.body.street,
-            creditCard: req.body.creditCard
+            creditCard: req.body.creditCard,
+            shipping: req.body.shipping,
+            self_pick_up:req.body.self_pick_up
         });
         const createdOrder = await order.save();
         res.status(201).send({ message: "New Order Created", order: createdOrder });
