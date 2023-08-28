@@ -47,7 +47,7 @@
     <div class="product-image-container">
         <span class="badge badge-new">New</span>
         <a href="#" class="product-link" title="<%- product.productName %>">
-            <% if (product.image != "sdasdasdsa") { %>
+            <% if (product.image && product.image != "sdasdasdsa") { %>
             <img src="<%- product.image %>" class="product-image" alt="<%- product.productName %>">
         <% } else { %>
             <img src="https://placehold.jp/300x300.png" class="product-image" alt="Default Image">
