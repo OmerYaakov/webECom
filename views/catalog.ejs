@@ -94,19 +94,19 @@
 <div class="container">
     <div class="row catalog-items">
     </div>
-    <!-- Pagination -->
-    <div class="row " style="margin-top: 50px">
-        <div class="col-12 text-center">
-            <nav aria-label="Page navigation ">
-                <ul class="pagination d-flex justify-content-center">
-                    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">Next</a></li>
-                </ul>
-            </nav>
-        </div>
-    </div>
+<!--    &lt;!&ndash; Pagination &ndash;&gt;-->
+<!--    <div class="row " style="margin-top: 50px">-->
+<!--        <div class="col-12 text-center">-->
+<!--            <nav aria-label="Page navigation ">-->
+<!--                <ul class="pagination d-flex justify-content-center">-->
+<!--                    <li class="page-item"><a class="page-link" href="#">Previous</a></li>-->
+<!--                    <li class="page-item active"><a class="page-link" href="#">1</a></li>-->
+<!--&lt;!&ndash;                    <li class="page-item"><a class="page-link" href="#">2</a></li>&ndash;&gt;-->
+<!--                    <li class="page-item"><a class="page-link" href="#">Next</a></li>-->
+<!--                </ul>-->
+<!--            </nav>-->
+<!--        </div>-->
+<!--    </div>-->
 </div>
 
 <%- include('partials/footer') %>
@@ -132,16 +132,16 @@
                             <div class="product-card">
                                 <div class="product-image-container">
                                     <span class="badge badge-new">New</span>
-                                    <a href="/product/${product.details}" class="product-link" title="${product.details}">
+                                    <a href="/product/${product.productName}" class="product-link" title="${product.productName}">
                                         ${product.image && product.image !== "sdasdasdsa" ?
-                            `<img src="${product.image}" class="product-image" alt="${product.details}">` :
+                            `<img src="${product.image}" class="product-image" alt="${product.productName}">` :
                             `<img src="https://placehold.jp/300x300.png" class="product-image" alt="Default Image">`}
                                     </a>
                                 </div>
                                 <div class="product-details row" style="flex-direction: row;">
                                     <div class="col-md-8">
-                                        <a id="product-name" href="/product/${product.details}" class="product-name text-right" style="color: black;"
-                                            title="${product.details}">${product.details}</a>
+                                        <a id="product-name" href="/product/${product.productName}" class="product-name text-right" style="color: black;"
+                                            title="${product.productName}">${product.productName}</a>
                                     </div>
                                     <div class="product-price col-md-1">
                                         <span class="price">₪${product.price}</span>
@@ -190,16 +190,16 @@
                  <div class="product-card">
                         <div class="product-image-container">
                             <span class="badge badge-new">New</span>
-                            <a href="/product/${product.details}" class="product-link" title="${product.details}">
+                            <a href="/product/${product.productName}" class="product-link" title="${product.productName}">
                                 ${product.image && product.image !== "sdasdasdsa" ?
-                    `<img src="${product.image}" class="product-image" alt="${product.details}">` :
+                    `<img src="${product.image}" class="product-image" alt="${product.productName}">` :
                     `<img src="https://placehold.jp/300x300.png" class="product-image" alt="Default Image">`}
                             </a>
                         </div>
                         <div class="product-details row" style="flex-direction: row;">
                             <div class="col-md-8">
-                                <a id="product-name" href="/product/${product.details}" class="product-name text-right" style="color: black;"
-                                    title="${product.details}">${product.details}</a>
+                                <a id="product-name" href="/product/${product.productName}" class="product-name text-right" style="color: black;"
+                                    title="${product.productName}">${product.productName}</a>
                             </div>
                             <div class="product-price col-md-1">
                                 <span class="price">₪${product.price}</span>
