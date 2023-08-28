@@ -1,4 +1,5 @@
 import express from 'express';
+import {findOneByName} from "../controllers/Product.controller.js";
 
 
 const router = express.Router();
@@ -14,8 +15,20 @@ router.route('/').get((req, res) => {
 
 
 // Product page
-router.route('/product').get((req, res) => {
-    res.render('product', {isAuth: req.session.isAuth});
+router.get('/product/:productName', async (req, res) => {
+    try {
+        console.log(req.params)
+
+        const product = await findOneByName({ productName: req.params.productName });
+        console.log(product)
+        if (!product) {
+            return res.status(404).send('Product not found');
+        }
+
+        res.render('product', {isAuth: req.session.isAuth, user: req.session.user,product: product }); // Render the product template
+    } catch (err) {
+        res.status(500).send('Internal Server Error');
+    }
 });
 
 // Admin page

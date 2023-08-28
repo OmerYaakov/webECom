@@ -35,41 +35,35 @@ const findAll = (req, res) => {
 
 const findOneByID = (req, res) => {
     console.log(req.params.id);
-    ProductModel.findOne({ id: req.params.id }) // Use findOne instead of find for a single product
+    ProductModel.findOne({id: req.params.id}) // Use findOne instead of find for a single product
         .then((product) => {
             res.status(200).json(product);
         })
         .catch((error) => {
-            res.status(500).json({ message: error.message });
+            res.status(500).json({message: error.message});
         });
 };
 const findOne = (req, res) => {
     console.log(req.params.id);
-    ProductModel.findOne({ id: req.params.id }) // Use findOne instead of find for a single product
+    ProductModel.findOne({id: req.params.id}) // Use findOne instead of find for a single product
         .then((product) => {
             res.status(200).json(product);
         })
         .catch((error) => {
-            res.status(500).json({ message: error.message });
+            res.status(500).json({message: error.message});
         });
 };
 
 const findOneByName = (req, res) => {
-    console.log(req.params.productName);
-    const productName = req.params.productName;
-
-    Product.findOne({ productName: productName })
+    ProductModel.findOne({productName: req.productName})
         .then((product) => {
-            if (!product) {
-                return res.status(404).send('Product not found');
-            }
+            // console.log(product)
             res.status(200).json(product);
         })
         .catch((error) => {
-            res.status(500).json({ message: error.message });
+            res.status(500).json({message: error.message});
         });
 };
-
 const update = (req, res) => {
     ProductModel.findOneAndUpdate({id: req.params.id}, {
         id: req.body.id,
@@ -78,22 +72,20 @@ const update = (req, res) => {
         price: req.body.price,
         image: req.body.image,
     }, {new: true}).then((product) => {
-            res.status(200).json(product);
-        }
-    ).catch((error) => {
+        res.status(200).json(product);
+    }).catch((error) => {
         res.status(500).json({message: error.message});
     });
 };
 
 const remove = (req, res) => {
     ProductModel.findOneAndDelete({id: req.params.id}).then((product) => {
-            res.status(200).json(product);
-        }
-    ).catch((error) => {
+        res.status(200).json(product);
+    }).catch((error) => {
         res.status(500).json({message: error.message});
     });
 }
 
 export {
-    remove, update, findAll,findOne, findOneByID,findOneByName, create
+    remove, update, findAll, findOne, findOneByID, findOneByName, create
 }
