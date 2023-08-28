@@ -7,14 +7,14 @@ import apiRoutes from "./routes/apiRoutes/index.js";
 import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
 import path from 'path';
-import { fileURLToPath } from 'url';
-import { dirname } from 'path';
+import {fileURLToPath} from 'url';
+import {dirname} from 'path';
 import http from "http";
-import { Server as SocketIOServer } from 'socket.io';
+import {Server as SocketIOServer} from 'socket.io';
 import session from 'express-session'
 import MongeDBSession from 'connect-mongodb-session'
 import multer from 'multer'
-import { uploadFile, getFileStream } from "./s3.js";
+import {uploadFile, getFileStream} from "./s3.js";
 import fs from 'fs'
 import util from 'util'
 
@@ -42,8 +42,9 @@ const store = new mdbs({
     uri: 'mongodb+srv://AvivNat:AvivKaved@shagal.jaexhqx.mongodb.net/',
     collection: "mySessions"
 })
+app.use(express.static(__dirname + '/facebookAPI'));
 //code for locations...
-app.get('/api/data', async (req, res) => {
+app.get('/api/map', async (req, res) => {
     try {
         const collection = mongoose.connection.db.collection('branches'); // Replace with your collection name
 
@@ -53,13 +54,24 @@ app.get('/api/data', async (req, res) => {
         res.json(data);
     } catch (error) {
         console.error('Error fetching data from MongoDB:', error);
-        res.status(500).json({ error: 'Error fetching data from MongoDB' });
+        res.status(500).json({error: 'Error fetching data from MongoDB'});
+    }
+});
+
+app.get('/api/facebook', async (req, res) => {
+    try {
+        res.type('application/javascript'); // Set the correct MIME type
+        res.sendFile(__dirname + '/facebookAPI/facebook.js'); // Send the JavaScript file
+        console.log("facebook.js sent");
+    } catch (error) {
+        console.error("Error:", error);
+        res.status(500).send("An error occurred");
     }
 });
 
 
 app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({extended: true}));
 
 
 app.use(session({
@@ -70,7 +82,7 @@ app.use(session({
 }))
 
 // importing multer + util+fs
-const upload = multer({ dest: 'uploads/' })
+const upload = multer({dest: 'uploads/'})
 const unlinkFile = util.promisify(fs.unlink)
 
 // all of these '/images' we need to get out to a router...
@@ -106,8 +118,8 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 // Static files
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.urlencoded({ extended: true }))
-app.use(express.urlencoded({ extended: true }))
+app.use(express.urlencoded({extended: true}))
+app.use(express.urlencoded({extended: true}))
 
 // Use the router
 app.use('/', mainRouter); // Use the router for the main path
