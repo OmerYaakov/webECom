@@ -1,29 +1,45 @@
 import WishList from '../models/WishList.model.js';
 
+// const create = async (req, res) => {
+//     try {
+//
+//         const wishList = new wishList({
+//             id: req.body.id,
+//             userId: req.body.userId,
+//             products: req.body.products
+//         });
+//         user.save()
+//             .then(data => {
+//                 res.send(data);
+//             }).catch(err => {
+//                 res.status(500).send({
+//                     message: err.message || "Some error occurred while creating the wish list."
+//                 });
+//             });
+//     } catch (error) {
+//         console.log("error");
+//         return res.status(400).send({
+//             message: error.message || "Some error occurred while creating the wish list."
+//         });
+//     }
+// };
 const create = async (req, res) => {
     try {
-
-        const wishList = new wishList({
+        const wishList = new WishList({
             id: req.body.id,
             userId: req.body.userId,
             products: req.body.products
         });
-        user.save()
-            .then(data => {
-                res.send(data);
-            }).catch(err => {
-                res.status(500).send({
-                    message: err.message || "Some error occurred while creating the wish list."
-                });
-            });
+        console.log("wishList", wishList)
+        const savedWishList = await wishList.save();
+        res.send(savedWishList);
     } catch (error) {
-        console.log("error");
+        console.error(error);
         return res.status(400).send({
             message: error.message || "Some error occurred while creating the wish list."
         });
     }
 };
-
 const findAll = (req, res) => {
     WishList.find()
         .then(wishlists => {
