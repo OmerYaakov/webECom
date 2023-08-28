@@ -132,7 +132,7 @@
                             <div class="product-card">
                                 <div class="product-image-container">
                                     <span class="badge badge-new">New</span>
-                                    <a href="#" class="product-link" title="${product.details}">
+                                    <a href="/product/${product.details}" class="product-link" title="${product.details}">
                                         ${product.image && product.image !== "sdasdasdsa" ?
                             `<img src="${product.image}" class="product-image" alt="${product.details}">` :
                             `<img src="https://placehold.jp/300x300.png" class="product-image" alt="Default Image">`}
@@ -140,7 +140,7 @@
                                 </div>
                                 <div class="product-details row" style="flex-direction: row;">
                                     <div class="col-md-8">
-                                        <a id="product-name" href="#" class="product-name text-right" style="color: black;"
+                                        <a id="product-name" href="/product/${product.details}" class="product-name text-right" style="color: black;"
                                             title="${product.details}">${product.details}</a>
                                     </div>
                                     <div class="product-price col-md-1">
@@ -190,16 +190,16 @@
                  <div class="product-card">
                         <div class="product-image-container">
                             <span class="badge badge-new">New</span>
-                            <a href="#" class="product-link" title="${product.productName}">
+                            <a href="/product/${product.details}" class="product-link" title="${product.details}">
                                 ${product.image && product.image !== "sdasdasdsa" ?
-                    `<img src="${product.image}" class="product-image" alt="${product.productName}">` :
+                    `<img src="${product.image}" class="product-image" alt="${product.details}">` :
                     `<img src="https://placehold.jp/300x300.png" class="product-image" alt="Default Image">`}
                             </a>
                         </div>
                         <div class="product-details row" style="flex-direction: row;">
                             <div class="col-md-8">
-                                <a id="product-name" href="#" class="product-name text-right" style="color: black;"
-                                    title="${product.productName}">${product.productName}</a>
+                                <a id="product-name" href="/product/${product.details}" class="product-name text-right" style="color: black;"
+                                    title="${product.details}">${product.details}</a>
                             </div>
                             <div class="product-price col-md-1">
                                 <span class="price">₪${product.price}</span>
