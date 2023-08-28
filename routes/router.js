@@ -16,7 +16,7 @@ router.route('/').get((req, res) => {
 
 // Product page
 router.route('/product').get((req, res) => {
-    res.render('product');
+    res.render('product',{isAuth: req.session.isAuth});
 });
 
 // Admin page
@@ -48,7 +48,7 @@ router.route('/wishlist').get((req, res) => {
     res.render('wishlist', { isAuth: req.session.isAuth });
 });
 router.route('/catalog').get((req, res) => {
-    res.render('catalog', { isAuth: req.session.isAuth, userId: req.session.user.userId });
+    res.render('catalog', { isAuth: req.session.isAuth, user: req.session.user });
 });
 router.route('/contact').get((req, res) => {
     res.render('contact', { isAuth: req.session.isAuth });
