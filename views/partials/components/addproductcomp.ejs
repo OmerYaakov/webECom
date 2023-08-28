@@ -1,6 +1,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="/facebookAPI/facebook.js"></script>
 <script>
+
     $(document).ready(function () {
         console.log('ready!')
 
@@ -32,6 +33,7 @@
             //     }
             // });
 
+
             console.log("category:", $("#exampleFormControlSelect1").val());
             $.ajax({
                 url: '/api/products',
@@ -47,7 +49,7 @@
                         diamondWeight: $("#diamond_weight").val(),
                         categoryName: $("#category").val(),
                         price: $("#price").val(),
-                        image: "sdasdasdsa",
+                        image: "sdasdasdsa"
                     }),
                 contentType: 'application/json',
                 success: function (res) {
@@ -57,6 +59,10 @@
                     console.error("upload error:", err);
                 }
             });
+        });
+        $("#post-to-facebook").click(function () {
+            console.log("post to facebook");
+            postToFacebook(); // Call the function when the button is clicked
         });
     });
 </script>
@@ -89,6 +95,8 @@
                                     <option id="necklace">שרשרת</option>
                                 </select>
                             </div>
+                            <input id="diamond_weight" class="form-control text-right" type="text" name="diamond_weight"
+                                   placeholder="משקל יהלומים"/>
                             <input id="price" class="form-control text-right" type="text" name="price"
                                    placeholder=" מחיר"/>
                         </div>
@@ -110,6 +118,7 @@
                             <button id="create-product" class="btn btn-dark d-block w-100" type="submit">Send</button>
                             <div>
                                 <button class="btn btn-dark d-block w-100" type="button" onclick="postToFacebook()">face</button>
+                                </button>
                             </div>
                         </div>
                     </div>
