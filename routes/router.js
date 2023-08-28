@@ -45,6 +45,7 @@ router.route('/cart').get((req, res) => {
 router.route('/wishlist').get((req, res) => {
     res.render('wishlist', {isAuth: req.session.isAuth});
 });
+
 router.route('/catalog').get(async (req, res) => {
     try {
         const response = await fetch('http://localhost:8080/api/products');
@@ -55,6 +56,7 @@ router.route('/catalog').get(async (req, res) => {
         console.error('Error fetching products:', error);
         res.status(500).send('Error fetching products'); // Send an appropriate error response
     }
+
 });
 
 
