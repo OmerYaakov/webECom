@@ -4,8 +4,14 @@ const create = async (req, res) => {
     try {
         const product = new ProductModel({
             id: Math.floor(Math.random() * 1000),
-            productName: req.body.productName,
+            modelNumber: req.body.modelNumber,
+            details: req.body.details,
             categoryName: req.body.categoryName,
+            goldWeight: req.body.goldWeight,
+            goldType: req.body.goldType,
+            diamondWeight: req.body.diamondWeight,
+            diamondNumber: req.body.diamondNumber,
+            //productName: req.body.productName,
             price: req.body.price,
             image: req.body.image,
 
