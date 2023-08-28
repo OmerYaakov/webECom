@@ -20,7 +20,7 @@
         function loadMapScenario() {
             const apiKey = 'Ag9UjiKRlsiGF-fONrs9aSpqTNGWkGTt0l4Qz0SF-JmZ6NVa0hLMWIcvWgicjGxU';
 
-            fetch('/api/data')
+            fetch('/api/map')
                 .then(response => response.json())
                 .then(data => {
                     var map = new Microsoft.Maps.Map(document.getElementById('myMap'), {

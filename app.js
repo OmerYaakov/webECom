@@ -44,7 +44,7 @@ const store = new mdbs({
 })
 app.use(express.static(__dirname + '/facebookAPI'));
 //code for locations...
-app.get('/api/data', async (req, res) => {
+app.get('/api/map', async (req, res) => {
     try {
         const collection = mongoose.connection.db.collection('branches'); // Replace with your collection name
 
