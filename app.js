@@ -62,6 +62,7 @@ app.get('/api/facebook', async (req, res) => {
     try {
         res.type('application/javascript'); // Set the correct MIME type
         res.sendFile(__dirname + '/facebookAPI/facebook.js'); // Send the JavaScript file
+        console.log("facebook.js sent");
     } catch (error) {
         console.error("Error:", error);
         res.status(500).send("An error occurred");
