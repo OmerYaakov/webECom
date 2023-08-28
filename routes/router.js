@@ -17,17 +17,21 @@ router.route('/').get((req, res) => {
 // Product page
 router.get('/product/:productName', async (req, res) => {
     try {
-        console.log(req.params)
-        const product = findOneByName({ productName: req.params.productName })
+        console.log(req.params);
+
+        // Call findOneByName function correctly with req
+        const product = await findOneByName(req.params, res);
+
+        console.log(product)
         if (!product) {
             return res.status(404).send('Product not found');
         }
-
-        res.render('product', {isAuth: req.session.isAuth, user: req.session.user,product: product }); // Render the product template
+        res.render('product', { product, isAuth: req.session.isAuth, user: req.session.user });
     } catch (err) {
         res.status(500).send('Internal Server Error');
     }
 });
+
 
 // Admin page
 router.route('/admin').get((req, res) => {
