@@ -47,7 +47,7 @@
                         diamondWeight: $("#diamond_weight").val(),
                         categoryName: $("#category").val(),
                         price: $("#price").val(),
-                        image: "sdasdasdsa"
+                        image: "sdasdasdsa",
                     }),
                 contentType: 'application/json',
                 success: function (res) {
@@ -78,6 +78,8 @@
                                    placeholder="סוג זהב"/>
                             <input id="diamond_number" class="form-control text-right" type="text" name="diamond_number"
                                    placeholder="כמות יהלומים"/>
+                            <input id="diamond_weight" class="form-control text-right" type="text" name="diamond_weight"
+                                   placeholder="משקל יהלומים"/>
                             <div class="form-group">
                                 <select class="form-control text-right" id="category">
                                     <option id="bracelet">צמיד</option>
@@ -87,8 +89,6 @@
                                     <option id="necklace">שרשרת</option>
                                 </select>
                             </div>
-                            <input id="diamond_weight" class="form-control text-right" type="text" name="diamond_weight"
-                                   placeholder="משקל יהלומים"/>
                             <input id="price" class="form-control text-right" type="text" name="price"
                                    placeholder=" מחיר"/>
                         </div>
@@ -107,8 +107,8 @@
                         </div>
                         <hr/>
                         <div>
+                            <button id="create-product" class="btn btn-dark d-block w-100" type="submit">Send</button>
                             <div>
-                                <button class="btn btn-dark d-block w-100" type="submit">Send</button>
                                 <button class="btn btn-dark d-block w-100" type="button" onclick="postToFacebook()">face</button>
                             </div>
                         </div>
