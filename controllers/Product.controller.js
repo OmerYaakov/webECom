@@ -11,7 +11,7 @@ const create = async (req, res) => {
             goldType: req.body.goldType,
             diamondWeight: req.body.diamondWeight,
             diamondNumber: req.body.diamondNumber,
-            //productName: req.body.productName,
+            productName: req.body.productName,
             price: req.body.price,
             image: req.body.image,
 
