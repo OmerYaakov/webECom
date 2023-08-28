@@ -38,9 +38,15 @@
                 type: 'POST',
                 data:
                     JSON.stringify({
-                        productName: $("#name").val(),
-                        categoryName: $("#exampleFormControlSelect1").val(),
-                        price: 100,
+                        // productName: $("#name").val(),
+                        modelNumber: $("#model_number").val(),
+                        details: $("#details").val(),
+                        goldWeight: $("#gold_weight").val(),
+                        goldType: $("#gold_type").val(),
+                        diamondNumber: $("#diamond_number").val(),
+                        diamondWeight: $("#diamond_weight").val(),
+                        categoryName: $("#category").val(),
+                        price: $("#price").val(),
                         image: "sdasdasdsa"
                     }),
                 contentType: 'application/json',
@@ -62,18 +68,29 @@
                 <div class="row d-flex justify-content-center">
                     <div class="col">
                         <div class="mb-3">
-                            <input id="details" class="form-control" type="text" name="details"
+                            <input id="details" class="form-control text-right" type="text" name="details"
                                    placeholder="תיאור מוצר"/>
-                            <input id="model_number" class="form-control" type="text" name="model_number"
+                            <input id="model_number" class="form-control text-right" type="text" name="model_number"
                                    placeholder="מספר דגם"/>
-                            <input id="gold_weight" class="form-control" type="text" name="gold_weight"
+                            <input id="gold_weight" class="form-control text-right" type="text" name="gold_weight"
                                    placeholder="משקל זהב"/>
-                            <input id="gold_type" class="form-control" type="text" name="gold_type"
+                            <input id="gold_type" class="form-control text-right" type="text" name="gold_type"
                                    placeholder="סוג זהב"/>
-                            <input id="diamond_number" class="form-control" type="text" name="diamond_number"
+                            <input id="diamond_number" class="form-control text-right" type="text" name="diamond_number"
                                    placeholder="כמות יהלומים"/>
-                            <input id="diamond_weight" class="form-control" type="text" name="diamond_weight"
+                            <div class="form-group">
+                                <select class="form-control text-right" id="category">
+                                    <option id="bracelet">צמיד</option>
+                                    <option id="watch">שעון</option>
+                                    <option id="ring">טבעת</option>
+                                    <option id="earring">עגיל</option>
+                                    <option id="necklace">שרשרת</option>
+                                </select>
+                            </div>
+                            <input id="diamond_weight" class="form-control text-right" type="text" name="diamond_weight"
                                    placeholder="משקל יהלומים"/>
+                            <input id="price" class="form-control text-right" type="text" name="price"
+                                   placeholder=" מחיר"/>
                         </div>
                         <input type="file" id="input-image" name="avatar"/>
                         <div class="delivery-options">
@@ -90,7 +107,6 @@
                         </div>
                         <hr/>
                         <div>
-                            <button id="create-product" class="btn btn-dark d-block w-100" type="submit">Send</button>
                             <div>
                                 <button class="btn btn-dark d-block w-100" type="submit">Send</button>
                                 <button class="btn btn-dark d-block w-100" type="button" onclick="postToFacebook()">face</button>
