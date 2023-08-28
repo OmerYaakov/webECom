@@ -45,129 +45,181 @@
                     }
                 });
 
-                const fun = (index) => {
-                    console.log('add to cart');
-                    if (user) {
-                        // get the cart
-                        $.ajax({
-                            url: 'api/carts/' + user.cartId,
-                            type: 'GET',
-                            success: function (data) {
-                                let cart = data[0];
-                                // update the cart
-                                newProduct = {
-                                    productId: products[index].id,
-                                    quantity: 1,
-                                    price: products[index].price,
-                                    name: products[index].name,
-                                }
-                                cart.totalPrice += products[index].price * newProduct.quantity;
-                                cart.cartProducts.push(products[index]);
-                                $.ajax({
-                                    url: 'api/carts/' + user.cartId,
-                                    type: 'PUT',
-                                    data: JSON.stringify(cart),
-                                    contentType: 'application/json',
-                                    success: function (data) {
-                                        alert('המוצר נוסף לעגלה');
-                                    },
-                                    error: function (err) {
-                                        console.log(err);
-                                    }
-                                });
-                            },
-                            error: function (err) {
-                                console.log(err);
-                            }
-                        });
-                    } else {
-                        alert('אנא התחבר כדי להוסיף מוצרים לעגלה');
-                    }
+
+<body>
+<%- include('partials/nav') %>
+<div class="text-right px-2">
+    <h1>קטלוג מוצרים</h1>
+</div>
+<!-- Filter form -->
+<div class="container">
+    <div class="row justify-content-end mb-3">
+        <div class="col-md-12 text-right">
+            <form id="filter-form" class="form-inline">
+                <button type="submit" class="btn btn-primary mr-3">סנן</button>
+                   <div class="form-group mr-3">
+                    <label class="mr-2" for="price-range">טווח מחירים: </label>
+                    <input type="number" class="form-control" id="price-min" placeholder="מחיר מינימלי"
+                           name="minPrice">
+                </div>
+
+                <div class="form-group">
+                    <input type="number" class="form-control" id="price-max" placeholder="מחיר מקסימלי"
+                           name="maxPrice">
+                </div>
+                <div class="form-group">
+                    <label class="mr-2" for="category-select">סנן לפי קטגוריה: </label>
+                    <select class="custom-select" id="category-select" name="category">
+                        <option value="">הכל</option>
+                        <!-- Add options for your categories here -->
+                        <option value="bracelet">צמיד</option>
+                        <option value="necklace">שרשרת</option>
+                        <option value="ring">טבעת</option>
+                        <option value="earring">עגיל</option>
+                        <option value="pendant">תליון</option>
+                        <option value="watch">שעון</option>
+                        <option value="other">אחר</option>
+
+                        <!-- ... more categories ... -->
+                    </select>
+                </div>
+
+
+
+
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<div class="container">
+    <div class="row catalog-items">
+    </div>
+    <!-- Pagination -->
+    <div class="row " style="margin-top: 50px">
+        <div class="col-12 text-center">
+            <nav aria-label="Page navigation ">
+                <ul class="pagination d-flex justify-content-center">
+                    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+<%- include('partials/footer') %>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+
+
+
+    $(document).ready(function () {
+        $('.catalog-items').on('click', '.product-card', function () {
+            console.log('add to cart');
+            // Your "add to cart" logic here
+        });
+        try {
+            $.ajax({
+                url: '/api/products', // Replace with your API endpoint
+                method: 'GET',
+                success: function (response) {
+                    const productList = $('.catalog-items');
+                    productList.empty();
+
+                    response.forEach(product => {
+                        const productItem = $('<div>').addClass('col-md-3').html(`
+                            <div class="product-card">
+                                <div class="product-image-container">
+                                    <span class="badge badge-new">New</span>
+                                    <a href="#" class="product-link" title="${product.details}">
+                                        ${product.image && product.image !== "sdasdasdsa" ?
+                            `<img src="${product.image}" class="product-image" alt="${product.details}">` :
+                            `<img src="https://placehold.jp/300x300.png" class="product-image" alt="Default Image">`}
+                                    </a>
+                                </div>
+                                <div class="product-details row" style="flex-direction: row;">
+                                    <div class="col-md-8">
+                                        <a id="product-name" href="#" class="product-name text-right" style="color: black;"
+                                            title="${product.details}">${product.details}</a>
+                                    </div>
+                                    <div class="product-price col-md-1">
+                                        <span class="price">₪${product.price}</span>
+                                    </div>
+                                </div>
+                                <div class="text-center">
+                                    <button id="add_to_cart_btn" class="add-to-cart-button btn">הוסף לסל</button>
+                                    <button class="add-to-cart-button btn">אהבתי</button>
+                                </div>
+                            </div>
+                        `);
+                        productList.append(productItem);
+                    });
+                },
+                error: function (error) {
+                    console.error('Error fetching products:', error);
                 }
-
             });
-        </script>
+        } catch (error) {
+            console.error('Error fetching products:', error);
+        }
+    });
+    $('#filter-form').on('submit', async function (event) {
 
-        <body>
-            <%- include('partials/nav') %>
-                <div id="products-container">
-                    <!-- i gave this container css already -->
-    <body>
-        <%- include('partials/nav') %>
-            <div class="text-right px-2">
-                <h1>קטלוג מוצרים</h1>
-            </div>
-            <!--filter the catalog here-->
-            <div class="container">
-                <div class="row">
-                    <div class="col-6">
-                        <p></p>
-                    </div>
-                    <div class="col-6">
-                        <p></p>
-                    </div>
-                </div>
-            </div>
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-3">
-                        <%- include('partials/components/catalogproductitem') %>
-                    </div>
-                    <div class="col-md-3">
-                        <%- include('partials/components/catalogproductitem') %>
-                    </div>
-                    <div class="col-md-3">
-                        <%- include('partials/components/catalogproductitem') %>
-                    </div>
-                    <div class="col-md-3">
-                        <%- include('partials/components/catalogproductitem') %>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-3">
-                        <%- include('partials/components/catalogproductitem') %>
-                    </div>
-                    <div class="col-md-3">
-                        <%- include('partials/components/catalogproductitem') %>
-                    </div>
-                    <div class="col-md-3">
-                        <%- include('partials/components/catalogproductitem') %>
-                    </div>
-                    <div class="col-md-3">
-                        <%- include('partials/components/catalogproductitem') %>
-                    </div>
-                </div>
-                <div class="row ">
-                    <div class="col-md-3">
-                        <%- include('partials/components/catalogproductitem') %>
-                    </div>
-                    <div class="col-md-3">
-                        <%- include('partials/components/catalogproductitem') %>
-                    </div>
-                    <div class="col-md-3">
-                        <%- include('partials/components/catalogproductitem') %>
-                    </div>
-                    <div class="col-md-3">
-                        <%- include('partials/components/catalogproductitem') %>
-                    </div>
-                </div>
-                <!-- Pagination -->
-                <div class="row " style="margin-top: 50px">
-                    <div class="col-12 text-center">
-                        <nav aria-label="Page navigation ">
-                            <ul class="pagination d-flex justify-content-center">
-                                <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                                <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                <li class="page-item"><a class="page-link" href="#">Next</a></li>
-                            </ul>
-                        </nav>
-                    </div>
-                </div>
+        event.preventDefault();
 
-                </div>
+        const category = $('#category-select').val();
+        const minPrice = $('#price-min').val();
+        const maxPrice = $('#price-max').val();
 
-                <%- include('partials/footer') %>
-        </body>
+        const queryParams = new URLSearchParams({
+            category: category,
+            minPrice: minPrice,
+            maxPrice: maxPrice,
+        });
+        console.log(queryParams.toString());
+        try {
+            const response = await fetch(`/api/products?${queryParams.toString()}`);
+            const filteredProducts = await response.json();
 
+            const productList = $('.catalog-items');
+            productList.empty();
+
+            filteredProducts.forEach(product => {
+                const productItem = $('<div>').addClass('col-md-3').html(`
+                 <div class="product-card">
+                        <div class="product-image-container">
+                            <span class="badge badge-new">New</span>
+                            <a href="#" class="product-link" title="${product.productName}">
+                                ${product.image && product.image !== "sdasdasdsa" ?
+                    `<img src="${product.image}" class="product-image" alt="${product.productName}">` :
+                    `<img src="https://placehold.jp/300x300.png" class="product-image" alt="Default Image">`}
+                            </a>
+                        </div>
+                        <div class="product-details row" style="flex-direction: row;">
+                            <div class="col-md-8">
+                                <a id="product-name" href="#" class="product-name text-right" style="color: black;"
+                                    title="${product.productName}">${product.productName}</a>
+                            </div>
+                            <div class="product-price col-md-1">
+                                <span class="price">₪${product.price}</span>
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <button id="add_to_cart_btn" class="add-to-cart-button btn">הוסף לסל</button>
+                            <button class="add-to-cart-button btn">אהבתי</button>
+                        </div>
+                    </div>
+                `);
+                productList.append(productItem);
+            });
+        } catch (error) {
+            console.error('Error fetching products:', error);
+        }
+    });
+</script>
+</body>
 </html>

@@ -7,60 +7,62 @@ import WishListModel from "../models/WishList.model.js";
 
 const create = async (req, res) => {
     try {
+        // Generate user data
         const salt = bcrypt.genSaltSync(10);
         const hash = bcrypt.hashSync(req.body.password, salt);
-        const userId = Math.floor(Math.random() * 1000000000)
-        const cartId = Math.floor(Math.random() * 1000000000)
-        const wishListId = Math.floor(Math.random() * 1000000000)
+        const userId = Math.floor(Math.random() * 1000000000);
+        const cartId = Math.floor(Math.random() * 1000000000);
+        const wishListId = Math.floor(Math.random() * 1000000000);
 
-        console.log('creating the cart...')
+        // Create CartModel and WishListModel instances
         const cart = new CartModel({
             id: cartId,
             userId: userId,
             products: [],
-            totalPrice: 0
-        })
-        console.log('creating the wishlist...')
+            totalPrice: 0,
+        });
 
         const wishList = new WishListModel({
-            id: wishListId,
             userId: userId,
-            products: []
-        })
+            products: [],
+        });
 
+        // Save CartModel and WishListModel instances
+        await Promise.all([cart.save(), wishList.save()]);
 
-        await Promise.all([cart.save(), wishList.save()])
-        console.log('successfully saved!')
-
+        // Create User instance
         const user = new User({
             userId: userId,
             cartId: cartId,
-            wishListId: wishListId,
-            firstName: req.body.firstName ? req.body.firstName : " ",
-            lastName: req.body.lastName ? req.body.lastName : " ",
+            wishListId: wishList._id, // Use the automatically generated _id
+            firstName: req.body.firstName ? req.body.firstName : '',
+            lastName: req.body.lastName ? req.body.lastName : '',
             username: req.body.username,
             password: hash,
-            city: req.body.city ? req.body.city : " ",
-            street: req.body.street ? req.body.street : " ",
+            city: req.body.city ? req.body.city : '',
+            street: req.body.street ? req.body.street : '',
             role: req.body.role || 'user',
             isAdmin: req.body.isAdmin || false,
         });
 
+        // Save User instance
         user.save()
             .then(data => {
-                req.session.isAuth = true
-                req.session.user = user
-                console.log("from create user , data is : ", data)
+                req.session.isAuth = true;
+                req.session.user = user;
+                console.log('User created:', data);
                 res.send(data);
-            }).catch(err => {
+            })
+            .catch(err => {
+                console.error('Error creating user:', err);
                 res.status(500).send({
-                    message: err.message || "Some error occurred while creating the User."
+                    message: err.message || 'Some error occurred while creating the User.',
                 });
             });
     } catch (error) {
-        console.log("error");
+        console.error('Error:', error);
         return res.status(400).send({
-            message: error.message || "Some error occurred while creating the User."
+            message: error.message || 'Some error occurred while creating the User.',
         });
     }
 };

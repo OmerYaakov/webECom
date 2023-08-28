@@ -1,58 +1,90 @@
 <h1 class="text-right"> סניפים</h1>
-<div class="branches-container" style="max-width: 300px; margin: auto;">
-    <div id="myMap" style="width: 1000px; height: 500px;"></div>
-    <script>
-        function geocodeAddress(address, apiKey) {
-            const geocodeUrl = `https://dev.virtualearth.net/REST/v1/Locations?query=${encodeURIComponent(address)}&key=${apiKey}`;
-
-            return fetch(geocodeUrl)
-                .then(response => response.json())
-                .then(data => {
-                    if (data.resourceSets.length > 0 && data.resourceSets[0].resources.length > 0) {
-                        const location = data.resourceSets[0].resources[0].point.coordinates;
-                        return {latitude: location[0], longitude: location[1]};
-                    } else {
-                        return null; // Geocoding failed
-                    }
-                });
-        }
-
-        function loadMapScenario() {
-            const apiKey = 'Ag9UjiKRlsiGF-fONrs9aSpqTNGWkGTt0l4Qz0SF-JmZ6NVa0hLMWIcvWgicjGxU';
-
-            fetch('/api/map')
-                .then(response => response.json())
-                .then(data => {
-                    var map = new Microsoft.Maps.Map(document.getElementById('myMap'), {
-                        credentials: apiKey
-                    });
-                    console.log(data)
-                    Promise.all(data.map(item => geocodeAddress(item.address, apiKey)))
-                        .then(locations => {
-                            locations.forEach(location => {
-                                if (location) {
-                                    console.log(location)
-                                    var pin = new Microsoft.Maps.Pushpin(new Microsoft.Maps.Location(location.latitude, location.longitude));
-                                    map.entities.push(pin);
-                                }
-                            });
-                        })
-                        .catch(error => {
-                            console.error('Error geocoding addresses:', error);
-                        });
-                })
-                .catch(error => {
-                    console.error('Error fetching or processing data:', error);
-                });
-        }
-    </script>
-    <script type="text/javascript" src="https://www.bing.com/api/maps/mapcontrol?callback=loadMapScenario"></script>
-
-    <form action="/branches" method="post">
-        <label class="text-right d-block">:סניף</label>
-        <label class="text-right d-block">:כתובת</label>
-        <label class="text-right d-block">:שעות פתיחה</label>
-        <label class="text-right d-block">:טלפון</label>
-    </form>
-
+<div class="branches-container container" style="max-width: 900px;">
+    <div class="row">
+        <div class="col-md-6">
+            <div id="myMap" style="width: 100%; min-height: 700px"></div>
+        </div>
+        <div class="col-md-6 branch-details">
+        </div>
+    </div>
 </div>
+
+<script type="text/javascript" src="https://www.bing.com/api/maps/mapcontrol?callback=loadMapScenario"></script>
+<script>
+    function displayBranchDetails(branch) {
+        const detailsDiv = document.querySelector('.branch-details');
+
+        const detailsHTML = `
+    <div class="branch-details-inner text-right column">
+        <div class="detail">
+            <span class="value">${branch.name}</span>
+            <span class="label"> - סניף</span>
+        </div>
+        <div class="detail">
+            <span class="value">${branch.address}</span>
+            <span class="label"> - כתובת</span>
+        </div>
+        <div class="detail">
+            <span class="value">${branch.hours}</span>
+            <span class="label"> - שעות פתיחה</span>
+
+        </div>
+        <div class="detail">
+            <span class="value">${branch.phone}</span>
+            <span class="label"> - טלפון</span>
+        </div>
+    </div>
+`;
+
+
+        detailsDiv.innerHTML += detailsHTML;
+    }
+
+    function geocodeAddress(address, apiKey) {
+        const geocodeUrl = `https://dev.virtualearth.net/REST/v1/Locations?query=${encodeURIComponent(address)}&key=${apiKey}`;
+
+        return fetch(geocodeUrl)
+            .then(response => response.json())
+            .then(data => {
+                if (data.resourceSets.length > 0 && data.resourceSets[0].resources.length > 0) {
+                    const location = data.resourceSets[0].resources[0].point.coordinates;
+                    return {latitude: location[0], longitude: location[1]};
+                } else {
+                    return null; // Geocoding failed
+                }
+            });
+    }
+
+    function loadMapScenario() {
+        const apiKey = 'Ag9UjiKRlsiGF-fONrs9aSpqTNGWkGTt0l4Qz0SF-JmZ6NVa0hLMWIcvWgicjGxU';
+
+        fetch('/api/map')
+            .then(response => response.json())
+            .then(data => {
+                var map = new Microsoft.Maps.Map(document.getElementById('myMap'), {
+                    credentials: apiKey
+                });
+
+                Promise.all(data.map(item => geocodeAddress(item.address, apiKey)))
+                    .then(locations => {
+                        locations.forEach((location, index) => {
+                            if (location) {
+                                var pin = new Microsoft.Maps.Pushpin(new Microsoft.Maps.Location(location.latitude, location.longitude));
+                                map.entities.push(pin);
+
+                                Microsoft.Maps.Events.addHandler(pin, 'click', function () {
+                                    // highlightBranchDetails(data[index]);
+                                });
+                                displayBranchDetails(data[index]);
+                            }
+                        });
+                    })
+                    .catch(error => {
+                        console.error('Error geocoding addresses:', error);
+                    });
+            })
+            .catch(error => {
+                console.error('Error fetching or processing data:', error);
+            });
+    }
+</script>
