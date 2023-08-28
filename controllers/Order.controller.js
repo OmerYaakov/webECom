@@ -7,6 +7,7 @@ const create = async (req, res) => {
             userId: req.body.userId,
             cartId: req.body.cartId,
             totalPrice: req.body.totalPrice,
+            date: new Date(),
             city: req.body.city,
             street: req.body.street,
             creditCard: req.body.creditCard,

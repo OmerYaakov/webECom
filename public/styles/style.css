@@ -114,31 +114,45 @@ hr {
     color: #CEAC59;
 }
 
-/*radio buttons*/
-.radio-container input[type="radio"] {
-    display: none; /* Hide the default radio button */
+.checkbox-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end; /* Align to the right */
+    margin-bottom: 10px; /* Optional: Add some spacing between checkbox containers */
 }
 
-.radio-container label {
+.checkbox-container input[type="checkbox"] {
+    display: none; /* Hide the default checkbox */
+}
+
+.checkbox-container label {
     position: relative;
-    padding-right: 35px; /* Add some space for the custom square */
+    padding-right: 30px; /* Add some space for the custom checkbox on the right */
     cursor: pointer;
+    font-size: 16px; /* Adjust the font size */
 }
 
-.radio-container label::before {
+.checkbox-container label::before {
     content: "";
     position: absolute;
-    top: 2px;
-    right: 0;
-    width: 20px; /* Adjust the size of the square */
-    height: 20px; /* Adjust the size of the square */
-    border-radius: 4px; /* Rounded corners for the square */
-    background-color: #fff; /* Background color of the square */
+    top: 4px;
+    right: 0; /* Align the checkbox to the right */
+    width: 18px; /* Adjust the size of the checkbox */
+    height: 18px; /* Adjust the size of the checkbox */
+    border: 1px solid #000; /* Add a border to the checkbox */
+    background-color: #fff;
 }
 
-.radio-container input[type="radio"]:checked + label::before {
+.checkbox-container input[type="checkbox"]:checked + label::before {
     background-color: #CEAC59; /* Change the background color when selected */
+    border-color: #CEAC59; /* Change the border color when selected */
 }
+
+/* Optional: Hover effect */
+.checkbox-container label:hover::before {
+    background-color: #EFEFEF; /* Add a slight background color on hover */
+}
+
 
 /**/
 /**/
@@ -182,4 +196,42 @@ hr {
     color: #333;
 }
 
+/*d3js*/
+/* Line Graph Styles */
+.line {
+    fill: none;
+    stroke: steelblue; /* Line color */
+    stroke-width: 2; /* Line thickness */
+}
+
+.axis text {
+    font-weight: bold; /* Bold axis labels */
+}
+
+.axis path,
+.axis line {
+    fill: none;
+    stroke: black; /* Axis line color */
+    shape-rendering: crispEdges;
+}
+
+/* Bar Graph Styles */
+.bar {
+    fill: steelblue; /* Bar color */
+}
+
+.bar:hover {
+    fill: orange; /* Bar color on hover */
+}
+
+.axis-bar text {
+    font-weight: bold; /* Bold axis labels */
+}
+
+.axis-bar path,
+.axis-bar line {
+    fill: none;
+    stroke: black; /* Axis line color */
+    shape-rendering: crispEdges;
+}
 

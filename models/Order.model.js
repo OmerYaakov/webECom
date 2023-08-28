@@ -7,6 +7,7 @@ const OrderSchema = mongoose.Schema({
     userId: Number,
     cartId: Number,
     totalPrice: Number,
+    date: Date,
     city: String,
     street: String,
     shippingDate: String,

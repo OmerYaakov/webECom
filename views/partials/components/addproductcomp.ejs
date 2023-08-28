@@ -40,7 +40,7 @@
                 type: 'POST',
                 data:
                     JSON.stringify({
-                        // productName: $("#name").val(),
+                        productName: $("#name").val(),
                         modelNumber: $("#model_number").val(),
                         details: $("#details").val(),
                         goldWeight: $("#gold_weight").val(),
@@ -66,66 +66,68 @@
         });
     });
 </script>
-<div class="card mb-3">
-    <div class="card-body">
-        <h3 class="mb-3">יצירת מוצר</h3>
-        <section class="position-relative py-4 py-xl-5">
-            <div class="container position-relative">
-                <div class="row d-flex justify-content-center">
-                    <div class="col">
-                        <div class="mb-3">
-
-                            <input id="name" class="form-control text-right" type="text" name="name"
-                                   placeholder="שם מוצר"/>
-                            <input id="details" class="form-control text-right" type="text" name="details"
-                                   placeholder="תיאור מוצר"/>
-                            <input id="model_number" class="form-control text-right" type="text" name="model_number"
-                                   placeholder="מספר דגם"/>
-                            <input id="gold_weight" class="form-control text-right" type="text" name="gold_weight"
-                                   placeholder="משקל זהב"/>
-                            <input id="gold_type" class="form-control text-right" type="text" name="gold_type"
-                                   placeholder="סוג זהב"/>
-                            <input id="diamond_number" class="form-control text-right" type="text" name="diamond_number"
-                                   placeholder="כמות יהלומים"/>
-                            <input id="diamond_weight" class="form-control text-right" type="text" name="diamond_weight"
-                                   placeholder="משקל יהלומים"/>
-                            <div class="form-group">
-                                <select class="form-control text-right" id="category">
-                                    <option id="bracelet">צמיד</option>
-                                    <option id="watch">שעון</option>
-                                    <option id="ring">טבעת</option>
-                                    <option id="earring">עגיל</option>
-                                    <option id="necklace">שרשרת</option>
-                                </select>
-                            </div>
-                            <input id="price" class="form-control text-right" type="text" name="price"
-                                   placeholder=" מחיר"/>
-                        </div>
-                        <input type="file" id="input-image" name="avatar"/>
-                        <div class="delivery-options">
-                            <label>:לפרסם בפייסבוק</label>
-                            <div class="radio-container">
-                                <input class="radio" type="radio" name="facebook" id="post">
-                                <label for="post">כן</label>
-                            </div>
-                            <div class="radio-container">
-                                <input class="radio" type="radio" name="facebook" id="npost">
-                                <label for="npost">לא</label>
-
-                            </div>
-                        </div>
-                        <hr/>
-                        <div>
-                            <button id="create-product" class="btn btn-dark d-block w-100" type="submit">Send</button>
-                            <div>
-                                <button class="btn btn-dark d-block w-100" type="button" onclick="postToFacebook()">face</button>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    </form>
+<div class="container mt-5">
+    <div class="card">
+        <div class="card-body">
+            <h3 class="text-center">יצירת מוצר</h3>
+            <form>
+                <div class="form-group">
+                    <input id="name" class="form-control text-right" type="text" name="name" placeholder="שם מוצר"/>
                 </div>
-            </div>
-    </section>
-</div>
+                <div class="form-group">
+                    <input id="details" class="form-control text-right" type="text" name="details"
+                           placeholder="תיאור מוצר"/>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <input id="model_number" class="form-control text-right" type="text" name="model_number"
+                               placeholder="מספר דגם"/>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <select class="form-control text-right" id="category">
+                            <option value="bracelet">צמיד</option>
+                            <option value="watch">שעון</option>
+                            <option value="ring">טבעת</option>
+                            <option value="earring">עגיל</option>
+                            <option value="necklace">שרשרת</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <input id="gold_weight" class="form-control text-right" type="text" name="gold_weight"
+                               placeholder="משקל זהב"/>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <input id="gold_type" class="form-control text-right" type="text" name="gold_type"
+                               placeholder="סוג זהב"/>
+                    </div>
+                </div>
+                <div class="form-row">
+
+                    <div class="form-group col-md-6">
+                        <input id="diamond_weight" class="form-control text-right" type="text" name="diamond_weight"
+                               placeholder="משקל יהלומים"/>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <input id="diamond_number" class="form-control text-right" type="text" name="diamond_number"
+                               placeholder="כמות יהלומים"/>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <input id="price" class="form-control text-right" type="text" name="price" placeholder="מחיר"/>
+                </div>
+                <div class="form-group">
+                    <input type="file" id="input-image" name="avatar" class="form-control-file text-right">
+                </div>
+                <div class="form-group form-check checkbox-container">
+                    <input class="form-check-input" type="checkbox" name="facebook" id="post">
+                    <label class="form-check-label" for="post">פרסם בפייסבוק</label>
+                </div>
+                <hr/>
+                <button id="create-product" class="btn btn-dark d-block w-100" type="submit">שלח</button>
+            </form>
+        </div>
+    </div>
 </div>

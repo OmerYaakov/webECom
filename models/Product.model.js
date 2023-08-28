@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 
 const ProductSchema = mongoose.Schema({
     id: Number,
+    productName: String,
     modelNumber: Number,
     details: String,
     categoryName: String,
@@ -11,7 +12,6 @@ const ProductSchema = mongoose.Schema({
     diamondNumber: Number,
     price: Number,
     image: String,
-    name: String
 });
 
 const ProductModel = mongoose.model('Product', ProductSchema);
