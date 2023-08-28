@@ -1,6 +1,6 @@
 function postToFacebook() {
     // Set up the necessary parameters
-    const accessToken = "EAAPIDLpXx9sBO7kmUYqjHoG1HJD0IG6zRUQVxjkMqIAPRCsZBtl4AAyxi3sSajR11hgGEm6Ahq0cqfGs1X2HR5vKItdykUs7hqajAQuXPSGr7dblEm88v770pucxYlHxdtWn5BmndiXEIpDF9TMDoMTUVRkLpQmj1NR4vs49UXGE44ZAgSIZBEAB5SwhGSQjawEin1Kw9JXTbf62ZArZCeOdSiUtu2bLljwIZD"; // Replace with your Facebook access token
+    const accessToken = "EAAPIDLpXx9sBO8jdRodXZBNa968pyoaIvggnWZCl7mNqw6wQi3RXZA4ZBRtAE2wfR44fZBgPvV1TKQKNZA1HmgFOvZCBEz79aZA1KyjjLvb9bOl4FZAT8CNFwELbVhrPFM5uTuShTyV0XIXdDvl0aefUAYZC8nhjZC2cQfGIP7MHDmP0tAdsZBLqUiYSNS2GdZCl4x8zZC24F5KnJckNgw9e3qBiwjfVvOmCDHnf8ZD"; // Replace with your Facebook access token
     const postMessage =
         "we have new product, check it out! and tell us what you think about it!"; // Replace with your post message
     const pageId = "122285680960785";
