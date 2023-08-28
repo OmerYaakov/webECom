@@ -18,9 +18,7 @@ router.route('/').get((req, res) => {
 router.get('/product/:productName', async (req, res) => {
     try {
         console.log(req.params)
-
-        const product = await findOneByName({ productName: req.params.productName });
-        console.log(product)
+        const product = findOneByName({ productName: req.params.productName })
         if (!product) {
             return res.status(404).send('Product not found');
         }
