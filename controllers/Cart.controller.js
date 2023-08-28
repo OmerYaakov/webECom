@@ -28,7 +28,7 @@ const findAll = (req, res) => {
 };
 
 const findOne = (req, res) => {
-    CartModel.findOne({ id: req.params.id }).then((cart) => {
+    CartModel.find({ id: req.params.id }).then((cart) => {
         if (!cart) {
             return res.status(404).send({
                 message: "Cart not found with id " + req.params.id,
@@ -49,11 +49,7 @@ const findOne = (req, res) => {
 
 const update = (req, res) => {
     CartModel.findOneAndUpdate(
-        { id: req.params.id },
-        {
-            id: req.body.id,
-            userId: req.body.userId,
-        },
+        { id: req.params.id }, req.body,
         { new: true }
     ).then((cart) => {
         if (!cart) {

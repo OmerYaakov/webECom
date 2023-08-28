@@ -3,6 +3,7 @@
     $(document).ready(function () {
         console.log('ready!')
         $("#accept-order-btn").click(function (){
+
             const user = "<%=user%>"
             const url = '/api/orders'
             $.ajax({
@@ -12,12 +13,14 @@
                    userId: user.userId,
                     cartId: user.cartId,
                     totalPrice: Number.parseInt($("#price").text()),
+                    shipping: $("#delivery-home").is(':checked'),
+                    self_pick_up: $("#delivery-pickup").is(':checked')
                 }),
                 contentType: "application/json",
                 success: function (res) {
                     alert("Order success!");
                     //navigate to home page
-                    window.location.href = "/";
+                    // window.location.href = "/";
                 },
                 error: function (err) {
                     console.error("Order error:", err);
@@ -50,12 +53,11 @@
                     <div class="delivery-options">
                         <div class="radio-container">
                             <input class="radio" type="radio" name="delivery" id="delivery-home">
-                            <label for="delivery-home">שליח עד הבית (7 עד ימי עסקים)</label>
+                            <label  for="delivery-home">שליח עד הבית (7 עד ימי עסקים)</label>
                         </div>
                         <div class="radio-container">
                             <input class="radio" type="radio" name="delivery" id="delivery-pickup">
-                            <label for="delivery-pickup">איסוף עצמי (7 עד ימי עסקים)</label>
-
+                            <label  for="delivery-pickup">איסוף עצמי (7 עד ימי עסקים)</label>
                         </div>
                     </div>
                     <hr/>

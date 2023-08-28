@@ -11,7 +11,9 @@ const OrderSchema = mongoose.Schema({
     street: String,
     shippingDate: String,
     orderCreated: String,
-    creditCard: Number
+    creditCard: Number,
+    shipping: Boolean,
+    self_pick_up:Boolean
 });
 
 const OrderModel = mongoose.model('Order', OrderSchema);
