@@ -48,6 +48,8 @@ router.route('/wishlist').get((req, res) => {
     res.render('wishlist', { isAuth: req.session.isAuth });
 });
 router.route('/catalog').get((req, res) => {
+    console.log(req.session.user);
+    res.render('catalog', { isAuth: req.session.isAuth, user: req.session.user });
     res.render('catalog', { isAuth: req.session.isAuth, user: req.session.user });
 });
 router.route('/contact').get((req, res) => {

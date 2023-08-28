@@ -2,7 +2,96 @@
 <html data-bs-theme="auto" lang="he">
 
 <%- include('partials/head') %>
+    <%- include('logics/addtocartlogics') %>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script>
+            $(document).ready(function () {
+                var user = JSON.parse('<%- JSON.stringify(user) %>');
+                console.log(user);
+                var products = [];
+                $.ajax({
+                    url: '/api/products',
+                    type: 'GET',
+                    success: function (data) {
+                        products = JSON.parse(JSON.stringify(data));
+                        console.log(products);
+                        for (let i = 0; i < products.length; i++) {
+                            let product = products[i];
+                            // Nir - here you can append the product to the page
+                            // change the productCard to be the html of the product card you created......
+                            var productCard = `<div class="product-card">
+                            product id: ${product._id ? product._id : " not found"}
+                                product name: ${product.name ? product.name : " not found"}
+                                <br>
+                                product price: ${product.price ? product.price : " not found"}
+                                <br>
+                                product image: ${product.image ? product.image : " not found"}
+                                <br>
+                                product description: ${product.description ? product.description : " not found"}
+                                <br>
+                                product category: ${product.category ? product.category : " not found"}
+                                <br>
+                                `;
+                            $("#products-container").append(productCard);
+                            let button = $(`<button class="product-card" id="product-index-${i}}">add to cart</button>`);
+                            button.click(() => {
+                                fun(i);
+                            })
+                            $("#products-container").append(button);
+                        }
+                    },
+                    error: function (err) {
+                        console.log(err + "sadasdasdasdsa");
+                    }
+                });
 
+                const fun = (index) => {
+                    console.log('add to cart');
+                    if (user) {
+                        // get the cart
+                        $.ajax({
+                            url: 'api/carts/' + user.cartId,
+                            type: 'GET',
+                            success: function (data) {
+                                let cart = data[0];
+                                // update the cart
+                                newProduct = {
+                                    productId: products[index].id,
+                                    quantity: 1,
+                                    price: products[index].price,
+                                    name: products[index].name,
+                                }
+                                cart.totalPrice += products[index].price * newProduct.quantity;
+                                cart.cartProducts.push(products[index]);
+                                $.ajax({
+                                    url: 'api/carts/' + user.cartId,
+                                    type: 'PUT',
+                                    data: JSON.stringify(cart),
+                                    contentType: 'application/json',
+                                    success: function (data) {
+                                        alert('המוצר נוסף לעגלה');
+                                    },
+                                    error: function (err) {
+                                        console.log(err);
+                                    }
+                                });
+                            },
+                            error: function (err) {
+                                console.log(err);
+                            }
+                        });
+                    } else {
+                        alert('אנא התחבר כדי להוסיף מוצרים לעגלה');
+                    }
+                }
+
+            });
+        </script>
+
+        <body>
+            <%- include('partials/nav') %>
+                <div id="products-container">
+                    <!-- i gave this container css already -->
     <body>
         <%- include('partials/nav') %>
             <div class="text-right px-2">
@@ -76,10 +165,9 @@
                     </div>
                 </div>
 
-            </div>
+                </div>
 
-
-            <%- include('partials/footer') %>
-    </body>
+                <%- include('partials/footer') %>
+        </body>
 
 </html>
