@@ -2,24 +2,24 @@
 <html data-bs-theme="auto" lang="he">
 
 <%- include('partials/head') %>
-    <%- include('logics/addtocartlogics') %>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <script>
-            $(document).ready(function () {
-                var user = JSON.parse('<%- JSON.stringify(user) %>');
-                console.log(user);
-                var products = [];
-                $.ajax({
-                    url: '/api/products',
-                    type: 'GET',
-                    success: function (data) {
-                        products = JSON.parse(JSON.stringify(data));
-                        console.log(products);
-                        for (let i = 0; i < products.length; i++) {
-                            let product = products[i];
-                            // Nir - here you can append the product to the page
-                            // change the productCard to be the html of the product card you created......
-                            var productCard = `<div class="product-card">
+<%- include('logics/addtocartlogics') %>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        var user = JSON.parse('<%- JSON.stringify(user) %>');
+        console.log(user);
+        var products = [];
+        $.ajax({
+            url: '/api/products',
+            type: 'GET',
+            success: function (data) {
+                products = JSON.parse(JSON.stringify(data));
+                console.log(products);
+                for (let i = 0; i < products.length; i++) {
+                    let product = products[i];
+                    // Nir - here you can append the product to the page
+                    // change the productCard to be the html of the product card you created......
+                    var productCard = `<div class="product-card">
                             product id: ${product._id ? product._id : " not found"}
                                 product name: ${product.name ? product.name : " not found"}
                                 <br>
@@ -32,20 +32,20 @@
                                 product category: ${product.category ? product.category : " not found"}
                                 <br>
                                 `;
-                            $("#products-container").append(productCard);
-                            let button = $(`<button class="product-card" id="product-index-${i}}">add to cart</button>`);
-                            button.click(() => {
-                                fun(i);
-                            })
-                            $("#products-container").append(button);
-                        }
-                    },
-                    error: function (err) {
-                        console.log(err + "sadasdasdasdsa");
-                    }
-                });
+                    $("#products-container").append(productCard);
+                    let button = $(`<button class="product-card" id="product-index-${i}}">add to cart</button>`);
+                    button.click(() => {
+                        fun(i);
+                    })
+                    $("#products-container").append(button);
+                }
+            },
+            error: function (err) {
+                console.log(err + "sadasdasdasdsa");
+            }
+        });
 
-
+</script>
 <body>
 <%- include('partials/nav') %>
 <div class="text-right px-2">
@@ -57,7 +57,7 @@
         <div class="col-md-12 text-right">
             <form id="filter-form" class="form-inline">
                 <button type="submit" class="btn btn-primary mr-3">סנן</button>
-                   <div class="form-group mr-3">
+                <div class="form-group mr-3">
                     <label class="mr-2" for="price-range">טווח מחירים: </label>
                     <input type="number" class="form-control" id="price-min" placeholder="מחיר מינימלי"
                            name="minPrice">
@@ -83,8 +83,6 @@
                         <!-- ... more categories ... -->
                     </select>
                 </div>
-
-
 
 
             </form>
@@ -114,7 +112,6 @@
 <%- include('partials/footer') %>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-
 
 
     $(document).ready(function () {
