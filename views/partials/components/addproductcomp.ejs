@@ -1,9 +1,9 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="/facebookAPI/facebook.js"></script>
+<script src="/api/facebook"></script>
 <script>
+
     $(document).ready(function () {
         console.log('ready!')
-
         $("#create-product").click(function (event) {
             // event.preventDefault(); // Prevent the default form submission
             // console.log("Form submitted");
@@ -32,6 +32,7 @@
             //     }
             // });
 
+
             console.log("category:", $("#exampleFormControlSelect1").val());
             $.ajax({
                 url: '/api/products',
@@ -57,6 +58,10 @@
                     console.error("upload error:", err);
                 }
             });
+        });
+        $("#post-to-facebook").click(function () {
+            console.log("post to facebook");
+            postToFacebook(); // Call the function when the button is clicked
         });
     });
 </script>
@@ -109,13 +114,14 @@
                         <div>
                             <div>
                                 <button class="btn btn-dark d-block w-100" type="submit">Send</button>
-                                <button class="btn btn-dark d-block w-100" type="button" onclick="postToFacebook()">face</button>
+                                <button class="btn btn-dark d-block w-100" id="post-to-facebook" type="button">face
+                                </button>
                             </div>
                         </div>
                     </div>
                     </form>
                 </div>
             </div>
-    </section>
-</div>
+        </section>
+    </div>
 </div>

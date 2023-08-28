@@ -28,3 +28,6 @@ function postToFacebook() {
             console.log("Post request failed. Error:", error);
         });
 }
+// window.postToFacebook = postToFacebook;
+
+module.exports = postToFacebook;
