@@ -3,9 +3,9 @@ import BranchModel from "../models/Branch.model.js";
 const create = async (req, res) => {
     try {
         const branch = new BranchModel({
-            id: Math.floor(Math.random() * 1000),
             name: req.body.name,
             address: req.body.address,
+            hours: req.body.hours,
             phone: req.body.phone,
         });
         const data = await branch.save();
