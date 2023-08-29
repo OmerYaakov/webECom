@@ -31,8 +31,8 @@
                                                                 </a>
                                                             </div>
                                                         <div class="product-details row" style="flex-direction: row;">
-                                                            <div class="col-md-8">
-                                                            <a id="product-name" href="/product/${product.productName}" class="product-name text-right" style="color: black;"
+                                                            <div class="col-md-9 text-right">
+                                                            <a id="product-name text-right" href="/product/${product.productName}" class="product-name text-right" style="color: black;"
                                                             title="${product.productName}">${product.productName}</a>
                                                             </div>
                                                         <div class="product-price col-md-1">
@@ -44,7 +44,8 @@
                                             `);
                                 let buttonContainer = $(`<div id="button-container" class="text-center">
                                                     </div>`);
-                                let button = $(`<button class="product-card" id="product-index-${product.id}}">add to cart</button>`);
+                                let button = $(`<button class="product-card btn
+" id="product-index-${product.id}}">הוסף לסל</button>`);
                                 button.click(() => {
                                     fun(product);
                                 });
