@@ -59,7 +59,6 @@ const findAll = (req, res) => {
 };
 
 const findOneByID = (req, res) => {
-    console.log(req.params.id);
     ProductModel.findOne({ id: req.params.id }) // Use findOne instead of find for a single product
         .then((product) => {
             res.status(200).json(product);
@@ -69,7 +68,6 @@ const findOneByID = (req, res) => {
         });
 };
 const findOne = (req, res) => {
-    console.log(req.params.id);
     ProductModel.findOne({ id: req.params.id }) // Use findOne instead of find for a single product
         .then((product) => {
             res.status(200).json(product);

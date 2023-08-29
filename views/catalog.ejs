@@ -11,7 +11,6 @@
         var offset = 0;
         var user = JSON.parse('<%- JSON.stringify(user) %>');
         var search = JSON.parse('<%- JSON.stringify(search) %>');
-        console.log(user);
         try {
             $.ajax({
                 url: `/api/products?limit=${LIMIT}&offset=${offset}&search=${search}`,
@@ -76,8 +75,6 @@
         }
 
         const fun = (product) => {
-            console.log('add to cart');
-            console.log(product)
             if (user) {
                 // get the cart
                 $.ajax({
@@ -116,7 +113,6 @@
             }
         }
         const wish = (product) => {
-            console.log('add to wishlist');
             if (user) {
                 // get the cart
                 $.ajax({

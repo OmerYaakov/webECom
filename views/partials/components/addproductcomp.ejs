@@ -3,8 +3,6 @@
 <script>
 
     $(document).ready(function () {
-        console.log('ready!')
-
         $("#create-product").click(function (event) {
             // event.preventDefault(); // Prevent the default form submission
             // console.log("Form submitted");
@@ -34,7 +32,6 @@
             // });
 
 
-            console.log("category:", $("#exampleFormControlSelect1").val());
             $.ajax({
                 url: '/api/products',
                 type: 'POST',

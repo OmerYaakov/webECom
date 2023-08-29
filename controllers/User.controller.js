@@ -50,7 +50,6 @@ const create = async (req, res) => {
             .then(data => {
                 req.session.isAuth = true;
                 req.session.user = user;
-                console.log('User created:', data);
                 res.send(data);
             })
             .catch(err => {
@@ -91,7 +90,6 @@ const findOne = (req, res) => {
 };
 
 const update = (req, res) => {
-    console.log(req.params.id);
     User.findOneAndUpdate({ userId: req.params.id }, req.body, { new: true }).then(user => {
         res.send(user);
     }
@@ -104,7 +102,6 @@ const update = (req, res) => {
 };
 
 const remove = (req, res) => {
-    console.log(req.params.id);
     User.findOneAndDelete({ idNumber: req.params.id }).then(user => {
         res.send(user);
     }

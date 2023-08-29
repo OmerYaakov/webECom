@@ -1,9 +1,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
     $(document).ready(function () {
-        console.log('ready!')
         var user = JSON.parse('<%- JSON.stringify(user) %>');
-        console.log(user)
         var orders = user.orders
         for (let i = 0; i < orders.length; i++) {
             const order = orders[i]

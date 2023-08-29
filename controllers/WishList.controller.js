@@ -29,7 +29,6 @@ const create = async (req, res) => {
             id: req.body.id,
             products: req.body.products
         });
-        console.log("wishList", wishList)
         const savedWishList = await wishList.save();
         res.send(savedWishList);
     } catch (error) {
@@ -75,7 +74,6 @@ const update = (req, res) => {
 };
 
 const remove = (req, res) => {
-    console.log(req.params.id);
     WishList.findOneAndDelete({ idNumber: req.params.id }).then(wishlist => {
         res.send(wishlist);
     }

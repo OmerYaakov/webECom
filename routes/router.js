@@ -57,7 +57,7 @@ router.route('/cart').get((req, res) => {
     res.render('cart', { isAuth: req.session.isAuth, user: req.session.user });
 });
 router.route('/wishlist').get((req, res) => {
-    res.render('wishlist', { isAuth: req.session.isAuth , user: req.session.user });
+    res.render('wishlist', { isAuth: req.session.isAuth, user: req.session.user });
 });
 
 router.route('/catalog').get(async (req, res) => {
@@ -133,8 +133,7 @@ router.route('/sizeguide').get((req, res) => {
     res.render('sizeguide', { isAuth: req.session.isAuth });
 });
 router.route('/acountorders').get((req, res) => {
-    console.log('user from the router: ',req.session.user)
-    res.render('acountorders', { isAuth: req.session.isAuth, user:req.session.user });
+    res.render('acountorders', { isAuth: req.session.isAuth, user: req.session.user });
 });
 
 router.route('/admin/orders').get((req, res) => {

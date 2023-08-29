@@ -19,8 +19,6 @@
                 data: JSON.stringify(req),
                 contentType: "application/json",
                 success: function (res) {
-                    console.log("create collection success:", res);
-                    //navigate to admin page
                     window.location.href = "/admin";
                 },
                 error: function (err) {
