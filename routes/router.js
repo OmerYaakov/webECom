@@ -124,8 +124,8 @@ router.route('/editcouponsadmin').get((req, res) => {
 router.route('/deletecouponsadmin').get((req, res) => {
     res.render('deletecouponsadmin', { isAuth: req.session.isAuth });
 });
-router.route('/product/sizeguide').get((req, res) => {
-    res.render('/sizeguide', { isAuth: req.session.isAuth });
+router.route('/sizeguide').get((req, res) => {
+    res.render('sizeguide', { isAuth: req.session.isAuth });
 });
 
 router.route('/admin/orders').get((req, res) => {
