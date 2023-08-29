@@ -42,10 +42,10 @@
                 <div class="col-md-2 text-right" style="display: flex;flex-direction: column;">
                     <button class="btn userbtn" type="button">כללי</button>
                     <button class="btn userbtn" type="button" onclick="window.location.href='/acountorders'">הזמנות שלי</button>
-                    <button class="btn userbtn" type="button">הפרטים שלי</button>
-                    <button class="btn userbtn" type="button">כתובות למשלוח</button>
-                    <button class="btn userbtn" type="button">פרטי אשראי</button>
                     <button id="log-out-btn" class="btn userbtn" type="button">התנתקות</button>
+                     <% if (user.role=='admin' ) { %>
+                        <button id="adminpagebtt" class="btn userbtn" type="button">עמוד מנהל</button>
+                        <% } %>
                 </div>
                 <div class="col-md-8 text-right">
                     <h3>כללי</h3>
@@ -59,10 +59,7 @@
                     <p>
                         <%= user.username %> :שם משתמש
                     </p>
-                    <% if (user.role=='admin' ) { %>
-                        <p>:מנהל</p>
-                        <button id="adminpagebtt" class="btn userbtn" type="button">עמוד מנהל</button>
-                        <% } %>
+
                 </div>
             </div>
 
