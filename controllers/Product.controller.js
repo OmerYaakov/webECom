@@ -54,22 +54,10 @@ const findOne = (req, res) => {
         });
 };
 
-const findOneByName = (req, res) => {
-    ProductModel.findOne({ productName: req.productName })
-        .then((product) => {
-            console.log('Product fetched:', product); // Add this line
-            if (!product) {
-                return res.status(404).json({ message: 'Product not found' });
-            }
-            return product; // Return the product object
-        })
-        .catch((error) => {
-            console.error('Error:', error); // Add this line
-            return res.status(500).json({ message: error.message });
-        });
-    return res.status(500).json({ message: "error!, the productName is: " + req.productName });
-};
 
+const findOneByName = (productName) => {
+    return ProductModel.findOne({ productName });
+};
 
 
 const update = (req, res) => {
