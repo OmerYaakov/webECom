@@ -5,32 +5,27 @@
 
 <body>
 <%- include('partials/nav') %>
-<div class="container text-right">
-    <div class="row">
-        <div class="col-md-3">
-            <div class="row">
-                <div class="col-md-8 text-left">
-                    <h3>1000₪</h3>
+<div class="container mt-5">
+    <div class="row justify-content-start">
+        <div class="col-md-7">
+            <img src="<%= product.image %>" class="img-fluid" alt="<%= product.productName %>">
+        </div>
+        <div class="col-md-5">
+            <div class="card p-4 text-right h-100">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h3 class="mb-4" style="margin-top: 30%">₪<%= product.price %></h3>
+                    </div>
+                    <div class="col-md-6">
+                        <h1 class="display-4"><%= product.productName %></h1>
+                    </div>
                 </div>
-                <div class="col-md-4 text-right">
-                    <h1>עגיל מוזהב</h1>
+                <p class="text-muted mt-4"><%= product.details %></p>
+                <a href="/sizeguide" class="d-block mt-3" style="color: black">הצג מדריך גדלים</a>
+                <div class="mt-4">
+                    <button class="btn btn-dark btn-block" type="button">רכישה</button>
                 </div>
             </div>
-
-            <a href="#">הצג מדריך גדלים</a>
-            <br>
-            <button class="btn" type="button">אופציות</button>
-            <br>
-            <button class="btn" type="button">הוספת חריטה</button>
-            <br>
-            <button class="btn" type="button">רכישה</button>
-        </div>
-        <div class="col-md-6"><img src="./photos/PhotoRoom-20230620_201217.png" width="500" height="500"/></div>
-        <div class="col-md-3">
-            <p>דרך</p>
-            <p>תיאור</p>
-            <p>תיאור נוסף</p>
-            <p>חומרים</p>
         </div>
     </div>
 </div>

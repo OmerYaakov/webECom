@@ -4,12 +4,12 @@ import CartProductRoutes from "./CartProduct.routes.js";
 import CategoryRoutes from "./Category.routes.js";
 import UserRoutes from "./User.routes.js";
 import OrderRoutes from "./Order.routes.js";
-import ProductRoutes from "./Product.routes.js";
 import ContactRoutes from "./Contact.routes.js";
 import BranchRoutes from "./Branch.routes.js";
 import PhotosRoutes from "./photos.routes.js";
 import CollectionRoutes from "./Collection.routes.js";
 import WishListRoutes from './WishList.routes.js'
+import ProductRoutes from './Product.routes.js'
 
 const router = express.Router();
 
@@ -24,5 +24,6 @@ router.use('/branches', BranchRoutes);
 router.use('/photos', PhotosRoutes);
 router.use('/collections', CollectionRoutes);
 router.use('/wishlists', WishListRoutes);
+
 
 export default router;
