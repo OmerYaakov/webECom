@@ -1,7 +1,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
     $(document).ready(function () {
-      //remove product from wishlist...
+        //remove product from wishlist...
         const removeProductFromWishList = (product) => {
             $.ajax({
                 url: `/api/wishlists/${user.wishListId}`,
@@ -37,23 +37,21 @@
         }
 
 
-
-
         var user = JSON.parse('<%- JSON.stringify(user) %>');
         const url = `/api/wishlists/${user.wishListId}`
         // ajax request to get the wishlist
-            $.ajax({
-                url:url,
-                type:'GET',
-                success: function (wishlist){
-                    console.log(wishlist)
-                    for(let i =0 ; i<wishlist.products.length;i++){
-                        const  product = wishlist[i]
-                        var deleteBTN = $(`<button id="deleteBTN${product.id}" class="btn">X</button>`)
-                        deleteBTN.click(function () {
-                            removeProductFromWishList(product);
-                        })
-                        var productCard = `
+        $.ajax({
+            url: url,
+            type: 'GET',
+            success: function (wishlist) {
+                console.log(wishlist)
+                for (let i = 0; i < wishlist.products.length; i++) {
+                    const product = wishlist[i]
+                    var deleteBTN = $(`<button id="deleteBTN${product.id}" class="btn">X</button>`)
+                    deleteBTN.click(function () {
+                        removeProductFromWishList(product);
+                    })
+                    var productCard = `
                          <div class="row">
         <div class="col-12">
 
@@ -72,44 +70,39 @@
             <hr>
         </div>
                         `;
-                        $(".col-12").append(productCard)
-                    }
-                },
-            })
+                    $(".col-12").append(productCard)
+                }
+            },
+        })
 
     })
 
 
-
 </script>
-
-
-
-<h1 class="text-right">מוצרים שאהבתי</h1>
-<div class="wishlist" style="max-width: 300px; margin: auto;">
-    <form action="/add" method="post">
-        <label class="text-right d-block">:בחר קטגוריה</label>
-        <div class="wishlist-group">
-            <select class="wishlist-control" id="wishlist">
-                <option class="text-right">הכל</option>
-                <option class="text-right">שעונים</option>
-                <option class="text-right">טבעות</option>
-                <option class="text-right">צמידים</option>
-            </select>
-        </div>
-
-
-    </form>
-
-</div>
 <div class="container">
-    <div class="row">
-        <div  class="col-12">
-            <hr>
-        </div>
-            </div>
-            <hr>
+    <h1 class="text-right">מוצרים שאהבתי</h1>
+    <div class="row text-right">
+        <div class="col-md-12">
+            <form action="/add" method="post" class="form">
+                <label class="text-right">:בחר קטגוריה</label>
+                <div class="wishlist-group">
+                    <select class="wishlist-control" id="wishlist">
+                        <option class="text-right">הכל</option>
+                        <option class="text-right">שעונים</option>
+                        <option class="text-right">טבעות</option>
+                        <option class="text-right">צמידים</option>
+                    </select>
+                </div>
+            </form>
         </div>
 
     </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <hr>
+        </div>
+    </div>
+    <hr>
 </div>
