@@ -2,39 +2,133 @@
 <script>
     $(document).ready(function () {
         console.log('ready!')
-        $("#accept-order-btn").click(function (){
-
-            const user = "<%=user%>"
+        var user = JSON.parse('<%- JSON.stringify(user) %>');
+        var products_in_cart = [];
+        const removeProductFromCart = (product) => {
+            $.ajax({
+                url: `/api/carts/${user.cartId}`,
+                type: 'GET',
+                success: function (cart) {
+                    const userCart = cart[0].cartProducts;
+                    for (let i = 0; i < userCart.length; i++) {
+                        if (userCart[i].id === product.id) {
+                            userCart.splice(i, 1);
+                            break;
+                        }
+                    }
+                    $.ajax({
+                        url: `/api/carts/${user.cartId}`,
+                        type: 'PUT',
+                        data: JSON.stringify({
+                            cartProducts: userCart,
+                            totalPrice: cart[0].totalPrice - product.price
+                        }),
+                        contentType: "application/json",
+                        success: function (data) {
+                            console.log("success", data);
+                            window.location.href = "/cart";
+                        },
+                        error: function (err) {
+                            console.log(err);
+                        }
+                    });
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            });
+        }
+        $.ajax({
+            url: `/api/carts/${user.cartId}`,
+            type: 'GET',
+            success: function (cart) {
+                $(".totalPriceCart").text(cart[0].totalPrice);
+                $(".totalPriceDelivery").text(cart[0].totalPrice);
+                products_in_cart = JSON.parse(JSON.stringify(cart[0]));
+                const userCart = products_in_cart.cartProducts;
+                for (let i = 0; i < userCart.length; i++) {
+                    let product = userCart[i];
+                    console.log(product)
+                    var deleteBTN = $(`<button id="deleteBTN${product.id}" class="btn">X</button>`)
+                    deleteBTN.click(function () {
+                        removeProductFromCart(product);
+                    })
+                    $("#col-md-6").append(deleteBTN);
+                    // create the template that we need to append inside...
+                    var productCard = `
+                    <div>
+                        <hr>
+                        <div class="text-right">
+                            <div class="row d-flex justify-content-end">
+                                <div class="col-md-5">
+                                    <h5>שרשרת מכסף</h5>
+                                </div>
+                                <div class="col-md-2 ">
+                                    <img src="./photos/new.jpg" alt="product img" class="" style="max-height: 150px"/>
+                                </div>
+                            </div>
+                            <p  class="text-left">₪${product.price}</p>
+                        </div>
+                     </div>`;
+                    //add inside the div...
+                    $("#col-md-6").append(productCard);
+                }
+            },
+            error: function (err) {
+                console.log(err);
+            }
+        });
+        $("#accept-order-btn").click(function () {
+            const user = JSON.parse('<%- JSON.stringify(user) %>');
             const url = '/api/orders'
             $.ajax({
                 url: url,
                 type: "POST",
                 data: JSON.stringify({
-                   userId: user.userId,
+                    userId: user.userId,
                     cartId: user.cartId,
-                    totalPrice: Number.parseInt($("#price").text()),
+                    totalPrice: Number.parseInt($(".totalPriceDelivery").text()),
                     shipping: $("#delivery-home").is(':checked'),
                     self_pick_up: $("#delivery-pickup").is(':checked')
                 }),
                 contentType: "application/json",
                 success: function (res) {
-                    alert("Order success!");
-                    //navigate to home page
-                    // window.location.href = "/";
+                    console.log("Order success:", res);
+                    $.ajax({
+                        url: `/api/carts/${user.cartId}`,
+                        type: 'PUT',
+                        data: JSON.stringify({
+                            cartProducts: [],
+                            totalPrice: 0
+                        }),
+                        contentType: "application/json",
+                        success: function (data) {
+                            console.log("success", data);
+                            window.location.href = "/cart";
+                        },
+                        error: function (err) {
+                            console.log(err);
+                        }
+                    });
                 },
                 error: function (err) {
                     console.error("Order error:", err);
                 }
             });
         })
+        $("#delivery-home").click(function () {
+            if ($(this).is(':checked')) {
+                $(".totalPriceDelivery").text(Number.parseInt($(".totalPriceCart").text()) + 20);
+            }
+        })
+        $("#delivery-pickup").click(function () {
+            if ($(this).is(':checked')) {
+                $(".totalPriceDelivery").text($(".totalPriceCart").text());
+            }
+        })
     })
-
-
 </script>
-
-
 <h1 class="text-right"> סל קניות</h1>
-
 <div class="container">
     <div class="row">
         <div class="col-md-4">
@@ -43,73 +137,48 @@
                 <div class="order-details text-right d-block">
                     <div class="row d-flex justify-content-end">
                         <div class="col-md-6">
-                            <h6 class="text-left">₪1000</h6>
+                            <h6 class="text-left">₪
+                                <span class="totalPriceCart">1000</span>
+                            </h6>
                         </div>
                         <div class="col-md-6">
                             <h6 class="">סכום ביניים</h6>
                         </div>
                     </div>
-                    <hr/>
+                    <hr />
                     <div class="delivery-options">
-                        <div class="checkbox-container">
-                            <input class="checkbox" type="checkbox" name="delivery" id="delivery-home">
-                            <label  for="delivery-home">שליח עד הבית (7 עד ימי עסקים)</label>
+                        <div class="radio-container">
+                            <input class="radio" type="radio" name="delivery" id="delivery-home">
+                            <label for="delivery-home">שליח עד הבית (7 עד ימי עסקים)</label>
                         </div>
-                        <div class="checkbox-container">
-                            <input class="checkbox" type="checkbox" name="delivery" id="delivery-pickup">
-                            <label  for="delivery-pickup">איסוף עצמי (7 עד ימי עסקים)</label>
+                        <label> ₪ 20 + </label>
+                        <div class="radio-container">
+                            <input class="radio" type="radio" name="delivery" id="delivery-pickup">
+                            <label for="delivery-pickup">איסוף עצמי (7 עד ימי עסקים)</label>
                         </div>
                     </div>
-                    <hr/>
+                    <hr />
                     <div class="row d-flex justify-content-end">
                         <div class="col-md-6">
-                            <h5  class="text-left d-block">₪1000</h5>
+                            <h5 class="text-left d-block">
+                                ₪
+                                <span class="totalPriceDelivery"></span>
+                            </h5>
                         </div>
                         <div class="col-md-6">
                             <h3 class="text-right d-block">סה"כ</h3>
                         </div>
                     </div>
                     <div class="text-center">
-                        <button id="accept-order-btn" class="btn btn-dark mybtn" style="width: 95%;">מעבר לתשלום</button>
+                        <button id="accept-order-btn" class="btn btn-dark mybtn" style="width: 95%;">מעבר
+                            לתשלום</button>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-md-6">
-            <div>
-                <hr>
-                <button class="btn">X</button>
-                <div class="text-right">
-                    <div class="row d-flex justify-content-end">
-                        <div class="col-md-5">
-                            <h5>שרשרת מכסף</h5>
-                        </div>
-                        <div class="col-md-2 ">
-                            <img src="./photos/new.jpg" alt="product img" class="" style="max-height: 150px"/>
-                        </div>
-                    </div>
-                    <p  class="text-left">₪1000</p>
-                </div>
+        <div id="products_in_carts_container">
+            <div id="col-md-6">
             </div>
-
-            <div>
-                <hr>
-                <button class="btn">X</button>
-                <div class="text-right">
-                    <div class="row d-flex justify-content-end">
-                        <div class="col-md-5">
-                            <h5>שרשרת מכסף</h5>
-                        </div>
-                        <div class="col-md-2">
-                            <img src="./photos/new.jpg" alt="product img" style="max-height: 150px"/>
-                        </div>
-                    </div>
-                    <p id="price" class="text-left">₪1000</p>
-                </div>
-            </div>
-
-
         </div>
-
     </div>
 </div>
