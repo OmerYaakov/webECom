@@ -196,7 +196,7 @@ hr {
     display: flex;
     align-items: center;
     justify-content: flex-end; /* Align to the right */
-    margin-bottom: 10px; /* Optional: Add some spacing between checkbox containers */
+    /*margin-bottom: 10px; !* Optional: Add some spacing between checkbox containers *!*/
 }
 
 .radio-container input[type="radio"] {
