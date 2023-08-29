@@ -7,6 +7,8 @@
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script>
             $(document).ready(function () {
+                var user = JSON.parse('<%- JSON.stringify(user) %>');
+                console.log(user);
                 try {
                     $.ajax({
                         url: '/api/products',
@@ -15,7 +17,7 @@
                             const productList = $('.catalog-items');
                             productList.empty();
                             products.forEach(product => {
-                                const productItem = `<div class="col-md-3">
+                                const productItem = $(`<div class="col-md-3">
                                                          <div class="product-card">
                                                             <div class="product-image-container">
                                                                 <span class="badge badge-new">New</span>
@@ -34,18 +36,17 @@
                                                             <span class="price">₪${product.price}</span>
                                                         </div>
                                                     </div>
-                                                    <div id="button-container" class="text-center">
-                                                        <button id="add_to_cart_btn" key="${product.id}" class="add-to-cart-button btn">הוסף לסל</button>
-                                                        <button class="add-to-cart-button btn">אהבתי</button>
-                                                    </div>
                                                 </div>
                                             </div>
-                                            `;
-
-                                $("#add_to_cart_btn").click(() => {
-                                    console.log("clicked");
-                                    // addToCart(product.id);
+                                            `);
+                                let buttonContainer = $(`<div id="button-container" class="text-center">
+                                                    </div>`);
+                                let button = $(`<button class="product-card" id="product-index-${product.id}}">add to cart</button>`);
+                                button.click(() => {
+                                    fun(product);
                                 });
+                                buttonContainer.append(button);
+                                productItem.append(buttonContainer);
                                 productList.append(productItem);
                             });
                         },
@@ -55,6 +56,46 @@
                     });
                 } catch (error) {
                     console.error('Error fetching products:', error);
+                }
+
+                const fun = (product) => {
+                    console.log('add to cart');
+                    if (user) {
+                        // get the cart
+                        $.ajax({
+                            url: 'api/carts/' + user.cartId,
+                            type: 'GET',
+                            success: function (data) {
+                                let cart = data[0];
+                                // update the cart
+                                newProduct = {
+                                    productId: product.id,
+                                    quantity: 1,
+                                    price: product.price,
+                                    name: product.name,
+                                }
+                                cart.totalPrice += product.price * newProduct.quantity;
+                                cart.cartProducts.push(product);
+                                $.ajax({
+                                    url: 'api/carts/' + user.cartId,
+                                    type: 'PUT',
+                                    data: JSON.stringify(cart),
+                                    contentType: 'application/json',
+                                    success: function (data) {
+                                        alert('המוצר נוסף לעגלה');
+                                    },
+                                    error: function (err) {
+                                        console.log(err);
+                                    }
+                                });
+                            },
+                            error: function (err) {
+                                console.log(err);
+                            }
+                        });
+                    } else {
+                        alert('אנא התחבר כדי להוסיף מוצרים לעגלה');
+                    }
                 }
                 // $('#filter-form').on('submit', async function (event) {
                 //     event.preventDefault();
