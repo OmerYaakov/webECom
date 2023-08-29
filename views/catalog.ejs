@@ -7,11 +7,13 @@
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script>
             $(document).ready(function () {
+                const LIMIT = 2 * 4;
+                var offset = 0;
                 var user = JSON.parse('<%- JSON.stringify(user) %>');
                 console.log(user);
                 try {
                     $.ajax({
-                        url: '/api/products',
+                        url: `/api/products?limit=${LIMIT}&offset=${offset}`,
                         method: 'GET',
                         success: function (products) {
                             const productList = $('.catalog-items');

@@ -19,38 +19,51 @@ const create = async (req, res) => {
         const data = await product.save();
         res.status(201).json(data);
     } catch (error) {
-        res.status(500).json({message: error.message});
+        res.status(500).json({ message: error.message });
     }
 };
 
 const findAll = (req, res) => {
-    ProductModel.find()
-        .then((products) => {
-            res.status(200).json(products);
-        })
-        .catch((error) => {
-            res.status(500).json({message: error.message});
-        });
+    if (req.query.offset && req.query.limit) {
+        const offset = parseInt(req.query.offset);
+        const limit = parseInt(req.query.limit);
+        ProductModel.find().skip(offset).limit(limit)
+            .then((products) => {
+                res.status(200).json(products);
+            })
+            .catch((error) => {
+                res.status(500).json({ message: error.message });
+            });
+    }
+    else {
+        ProductModel.find()
+            .then((products) => {
+                res.status(200).json(products);
+            })
+            .catch((error) => {
+                res.status(500).json({ message: error.message });
+            });
+    }
 };
 
 const findOneByID = (req, res) => {
     console.log(req.params.id);
-    ProductModel.findOne({id: req.params.id}) // Use findOne instead of find for a single product
+    ProductModel.findOne({ id: req.params.id }) // Use findOne instead of find for a single product
         .then((product) => {
             res.status(200).json(product);
         })
         .catch((error) => {
-            res.status(500).json({message: error.message});
+            res.status(500).json({ message: error.message });
         });
 };
 const findOne = (req, res) => {
     console.log(req.params.id);
-    ProductModel.findOne({id: req.params.id}) // Use findOne instead of find for a single product
+    ProductModel.findOne({ id: req.params.id }) // Use findOne instead of find for a single product
         .then((product) => {
             res.status(200).json(product);
         })
         .catch((error) => {
-            res.status(500).json({message: error.message});
+            res.status(500).json({ message: error.message });
         });
 };
 
@@ -61,24 +74,24 @@ const findOneByName = (productName) => {
 
 
 const update = (req, res) => {
-    ProductModel.findOneAndUpdate({id: req.params.id}, {
+    ProductModel.findOneAndUpdate({ id: req.params.id }, {
         id: req.body.id,
         productName: req.body.productName,
         categoryId: req.body.categoryId,
         price: req.body.price,
         image: req.body.image,
-    }, {new: true}).then((product) => {
+    }, { new: true }).then((product) => {
         res.status(200).json(product);
     }).catch((error) => {
-        res.status(500).json({message: error.message});
+        res.status(500).json({ message: error.message });
     });
 };
 
 const remove = (req, res) => {
-    ProductModel.findOneAndDelete({id: req.params.id}).then((product) => {
+    ProductModel.findOneAndDelete({ id: req.params.id }).then((product) => {
         res.status(200).json(product);
     }).catch((error) => {
-        res.status(500).json({message: error.message});
+        res.status(500).json({ message: error.message });
     });
 }
 
