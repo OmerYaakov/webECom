@@ -42,16 +42,25 @@
                                                 </div>
                                             </div>
                                             `);
-                        let buttonContainer = $(`<div id="button-container" class="text-center">
+                        let buttonContainer = $(`<div id="button-container" class="text-center row ml-2" style="max-width: 100%">
                                                     </div>`);
-                        let cartbtn = $(`<button style="color: #181818" class="product-card btn btn-outline" id="product-index-${product.i}">הוספה לסל</button>`);
+                        let cartbtn = $(`<button style="color: #181818" class="product-card col-md-6 btn btn-outline" id="product-index-${product.i}">הוספה לסל</button>`);
                         cartbtn.click(() => {
                             fun(product);
                         });
-                        let wishbtn = $(`<button style="color: #181818" class="product-card btn btn-outline" id="product-index-${product.i}">הוספה לסל</button>`);
-                        cartbtn.click(() => {
+                        let wishbtn = $(`<button style="color: #181818" class="product-card col-md-2 btn btn-outline" id="product-index-${product.i}"><i class="bi bi-heart"></i></button>`);
+                        wishbtn.click(() => {
                             wish(product);
+                            if (wishbtn.hasClass('btn-outline')) {
+                                wishbtn.removeClass('btn-outline');
+                                wishbtn.addClass('btn-danger');
+                            } else {
+                                wishbtn.removeClass('btn-danger');
+                                wishbtn.addClass('btn-outline');
+                            }
                         });
+                        buttonContainer.append(wishbtn);
+
                         buttonContainer.append(cartbtn);
 
                         productItem.append(buttonContainer);
