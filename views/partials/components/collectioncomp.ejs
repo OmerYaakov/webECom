@@ -1,19 +1,18 @@
-<h1 class="text-right"> :ניהול קולקציות</h1>
-<div class="row">
-    <div class="col-md-2 text-right" style="display: flex;flex-direction: column;">
-        <button class="btn userbtn" type="button" onclick="window.location.href='/create_collection'">יצירת קולקציה
-        </button>
-        <button class="btn userbtn" type="button" onclick="window.location.href='/edit_collection'">עריכת קולקציה
-        </button>
-        <button class="btn userbtn" type="button" onclick="window.location.href='/delete_collection'">מחיקת קולקציה
-        </button>
-    </div>
-    <div class="col-md-8 text-right">
-        <%- include('create_collectioncomp.ejs') %>
-        <div class="container  text-right">
-            <div class="row justify-content-center">
-                <div class="col-md-8">
-                    <%- include('addproductcomp.ejs') %>
+<div class="container">
+    <h1 class="text-right">ניהול קולקציות</h1>
+    <div class="row">
+        <div class="col-md-12 text-right">
+            <%- include('create_collectioncomp.ejs') %>
+            <hr>
+            <%- include('edit_collectioncomp.ejs') %>
+            <hr>
+            <%- include('delete_collectioncomp.ejs') %>
+            <hr>
+            <div class="container  text-right">
+                <div class="row justify-content-center">
+                    <div class="col-md-8">
+                        <%- include('addproductcomp.ejs') %>
+                    </div>
                 </div>
             </div>
         </div>

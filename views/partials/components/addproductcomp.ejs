@@ -4,7 +4,7 @@
     $(document).ready(function () {
         $("#create-product").click(function (event) {
             event.preventDefault();
-            console.log($("#input-image")[0].files[0].name);
+            console.log($("#formFileMultiple")[0].files[0].name);
             $.ajax({
                 url: '/api/products',
                 type: 'POST',
@@ -19,7 +19,7 @@
                         diamondWeight: $("#diamond_weight").val(),
                         categoryName: $("#category").val(),
                         price: $("#price").val(),
-                        image: $("#input-image")[0].files[0].name
+                        image: $("#formFileMultiple")[0].files[0].name
                     }),
                 contentType: 'application/json',
                 success: function (res) {
@@ -32,7 +32,7 @@
             });
             // uploadImage:
             const formData = new FormData();
-            formData.append('file', $('#input-image')[0].files[0]);
+            formData.append('file', $('#formFileMultiple')[0].files[0]);
             $.ajax({
                 url: '/api/upload',
                 type: 'POST',
@@ -54,20 +54,21 @@
     });
 </script>
 <div class="container mt-5">
+    <h1 class="text-right">יצירת מוצר</h1>
+
     <div class="card">
         <div class="card-body">
-            <h3 class="text-center">יצירת מוצר</h3>
             <div class="form-group">
-                <input id="name" class="form-control text-right" type="text" name="name" placeholder="שם מוצר" />
+                <input id="name" class="form-control text-right" type="text" name="name" placeholder="שם מוצר"/>
             </div>
             <div class="form-group">
                 <input id="details" class="form-control text-right" type="text" name="details"
-                    placeholder="תיאור מוצר" />
+                       placeholder="תיאור מוצר"/>
             </div>
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <input id="model_number" class="form-control text-right" type="text" name="model_number"
-                        placeholder="מספר דגם" />
+                           placeholder="מספר דגם"/>
                 </div>
                 <div class="form-group col-md-6">
                     <select class="form-control text-right" id="category">
@@ -82,36 +83,40 @@
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <input id="gold_weight" class="form-control text-right" type="text" name="gold_weight"
-                        placeholder="משקל זהב" />
+                           placeholder="משקל זהב"/>
                 </div>
                 <div class="form-group col-md-6">
                     <input id="gold_type" class="form-control text-right" type="text" name="gold_type"
-                        placeholder="סוג זהב" />
+                           placeholder="סוג זהב"/>
                 </div>
             </div>
             <div class="form-row">
 
                 <div class="form-group col-md-6">
                     <input id="diamond_weight" class="form-control text-right" type="text" name="diamond_weight"
-                        placeholder="משקל יהלומים" />
+                           placeholder="משקל יהלומים"/>
                 </div>
                 <div class="form-group col-md-6">
                     <input id="diamond_number" class="form-control text-right" type="text" name="diamond_number"
-                        placeholder="כמות יהלומים" />
+                           placeholder="כמות יהלומים"/>
                 </div>
             </div>
 
             <div class="form-group">
-                <input id="price" class="form-control text-right" type="text" name="price" placeholder="מחיר" />
+                <input id="price" class="form-control text-right" type="text" name="price" placeholder="מחיר"/>
             </div>
             <div class="form-group">
-                <input type="file" id="input-image" name="avatar" class="form-control-file text-right">
+                <div class="custom-file">
+                    <input type="file" class="custom-file-input" id="formFileMultiple" name="avatar">
+                    <label class="custom-file-label text-left" for="formFileMultiple">בחר תמונה</label>
+                </div>
             </div>
-            <div class="form-group form-check checkbox-container">
+
+            <div class="form-group form-check checkbox-container justify-content-start">
                 <input class="form-check-input" type="checkbox" name="facebook" id="post">
-                <label class="form-check-label" for="post">פרסם בפייסבוק</label>
+                <label class="form-check-label " for="post">פרסם בפייסבוק</label>
             </div>
-            <hr />
+            <hr/>
             <button id="create-product" class="btn btn-dark d-block w-100">שלח</button>
         </div>
     </div>
