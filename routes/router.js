@@ -62,7 +62,12 @@ router.route('/wishlist').get((req, res) => {
 
 router.route('/catalog').get(async (req, res) => {
     try {
-        res.render('catalog', { isAuth: req.session.isAuth, user: req.session.user });
+        if (req.query.search?.length > 0) {
+            const search = req.query.search;
+            res.render('catalog', { isAuth: req.session.isAuth, user: req.session.user, search: search });
+        }
+        else
+            res.render('catalog', { isAuth: req.session.isAuth, user: req.session.user, search: '' });
     } catch (error) {
         console.error('Error fetching products:', error);
         res.status(500).send('Error fetching products'); // Send an appropriate error response
