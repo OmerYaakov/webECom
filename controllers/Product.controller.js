@@ -2,6 +2,7 @@ import ProductModel from "../models/Product.model.js";
 
 const create = async (req, res) => {
     try {
+        console.log(req.body.image.name);
         const product = new ProductModel({
             id: Math.floor(Math.random() * 1000),
             modelNumber: req.body.modelNumber,
@@ -14,7 +15,6 @@ const create = async (req, res) => {
             diamondNumber: req.body.diamondNumber,
             price: req.body.price,
             image: req.body.image,
-
         });
         const data = await product.save();
         res.status(201).json(data);
