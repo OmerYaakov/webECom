@@ -1,6 +1,6 @@
 <div class="container con">
     <style>
-        #productCarousel {
+        #productCarousel-l {
             .pc {
                 /*margin-top: 40px;*/
 
@@ -35,9 +35,22 @@
         }
     </style>
     <div class="row pi">
-
+        <!-- Collection Component -->
+        <div class="col-md-4 pi">
+            <div class="product-collection  p-4"
+                 style=" background-image: url('./photos/PhotoRoom-20230621_150845.png'); background-size: cover; background-position: center; position: relative; height: 100%; aspect-ratio: 1">
+                <div class="collection-overlay"></div> <!-- Overlay to improve text visibility -->
+                <div class="collection-info text-center d-flex align-items-center"
+                     style="position: relative; z-index: 1;flex-direction: column; margin-top: 70%">
+                    <h3 class="mb-3 glowing-text">Discover Our Collection</h3>
+                    <p class="mb-4 glowing-text">Explore a curated selection of products that resonate with style and
+                        quality.</p>
+<!--                    <a href="/collection" class="btn mybtn btn-lg">Shop Now</a>-->
+                </div>
+            </div>
+        </div>
         <div class="col-md-8 pi">
-            <div id="productCarousel" class="carousel slide text-right pi" data-ride="carousel">
+            <div id="productCarousel-l" class="carousel slide text-right pi" data-ride="carousel">
                 <div class="carousel-inner">
                     <div class="carousel-item active">
                         <div class="product-collection pc">
@@ -91,28 +104,14 @@
                     </div>
                     <!-- Add more carousel items as needed -->
                 </div>
-                <a class="carousel-control-prev pi changeblackandwhite" href="#productCarousel" role="button"
+                <a class="carousel-control-prev pi changeblackandwhite" href="#productCarousel-l" role="button"
                    data-slide="prev">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                 </a>
-                <a class="carousel-control-next pi changeblackandwhite" href="#productCarousel" role="button"
+                <a class="carousel-control-next pi changeblackandwhite" href="#productCarousel-l" role="button"
                    data-slide="next">
                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
                 </a>
-            </div>
-        </div>
-          <!-- Collection Component -->
-        <div class="col-md-4 pi">
-            <div class="product-collection  p-4"
-                 style=" background-image: url('./photos/PhotoRoom-20230621_150845.png'); background-size: cover; background-position: center; position: relative; height: 100%; aspect-ratio: 1">
-                <div class="collection-overlay"></div> <!-- Overlay to improve text visibility -->
-                <div class="collection-info text-center d-flex align-items-center"
-                     style="position: relative; z-index: 1;flex-direction: column; margin-top: 70%">
-                    <h3 class="mb-3 glowing-text">Discover Our Collection</h3>
-                    <p class="mb-4 glowing-text">Explore a curated selection of products that resonate with style and
-                        quality.</p>
-<!--                    <a href="/collection" class="btn mybtn btn-lg">Shop Now</a>-->
-                </div>
             </div>
         </div>
     </div>
