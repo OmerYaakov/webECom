@@ -27,7 +27,6 @@ const create = async (req, res) => {
     try {
         const wishList = new WishList({
             id: req.body.id,
-            userId: req.body.userId,
             products: req.body.products
         });
         console.log("wishList", wishList)

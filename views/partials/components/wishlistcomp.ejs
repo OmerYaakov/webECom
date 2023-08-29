@@ -1,3 +1,92 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        console.log('ready!')
+      //remove product from wishlist...
+        const removeProductFromWishList = (product) => {
+            $.ajax({
+                url: `/api/wishlists/${user.wishListId}`,
+                type: 'GET',
+                success: function (wishlist) {
+                    const userWishList = wishlist[0].products;
+                    for (let i = 0; i < userWishList.length; i++) {
+                        if (userWishList[i].id === product.id) {
+                            userWishList.splice(i, 1);
+                            break;
+                        }
+                    }
+                    $.ajax({
+                        url: `/api/wishlists/${user.wishListId}`,
+                        type: 'PUT',
+                        data: JSON.stringify({
+                            cartProducts: userWishList,
+                        }),
+                        contentType: "application/json",
+                        success: function (data) {
+                            console.log("success", data);
+                            window.location.href = "/wishlist";
+                        },
+                        error: function (err) {
+                            console.log(err);
+                        }
+                    });
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            });
+        }
+
+
+
+
+        var user = JSON.parse('<%- JSON.stringify(user) %>');
+        var products_in_wishlist = [];
+        const url = `/api/wishlists/${user.wishListId}`
+        // ajax request to get the wishlist
+            $.ajax({
+                url:url,
+                type:'GET',
+                success: function (wishlist){
+                    console.log(wishlist)
+                    for(let i =0 ; i<wishlist.products.length;i++){
+                        const  product = wishlist[i]
+                        var deleteBTN = $(`<button id="deleteBTN${product.id}" class="btn">X</button>`)
+                        deleteBTN.click(function () {
+                            removeProductFromWishList(product);
+                        })
+                        var productCard = `
+                         <div class="row">
+        <div class="col-12">
+
+            <div class="text-right">
+                <div class="row">
+                    <div class="col-md-9">
+                        <h5>${product.name}</h5>
+                    </div>
+                    <div class="col-md-3">
+                        <img src=${product.image} alt="product img" style="max-height: 150px"/>
+                    </div>
+
+                </div>
+                <p class="text-left">${product.price}</p>
+            </div>
+            <hr>
+        </div>
+                        `;
+                        $(".col-12").append(productCard)
+                    }
+                },
+            })
+
+    })
+
+
+
+</script>
+
+
+
 <h1 class="text-right">מוצרים שאהבתי</h1>
 <div class="wishlist" style="max-width: 300px; margin: auto;">
     <form action="/add" method="post">
@@ -17,21 +106,9 @@
 </div>
 <div class="container">
     <div class="row">
-        <div class="col-12">
+        <div  class="col-12">
             <hr>
-            <button class="btn">X</button>
-
-            <div class="text-right">
-                <div class="row">
-                    <div class="col-md-9">
-                        <h5>שרשרת מכסף</h5>
-                    </div>
-                    <div class="col-md-3">
-                        <img src="./photos/new.jpg" alt="product img" style="max-height: 150px"/>
-                    </div>
-
-                </div>
-                <p class="text-left">₪1000</p>
+        </div>
             </div>
             <hr>
         </div>

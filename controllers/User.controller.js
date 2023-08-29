@@ -23,7 +23,7 @@ const create = async (req, res) => {
         });
 
         const wishList = new WishListModel({
-            userId: userId,
+            userId: wishListId,
             products: [],
         });
 

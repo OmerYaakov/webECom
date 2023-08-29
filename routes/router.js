@@ -57,7 +57,7 @@ router.route('/cart').get((req, res) => {
     res.render('cart', { isAuth: req.session.isAuth, user: req.session.user });
 });
 router.route('/wishlist').get((req, res) => {
-    res.render('wishlist', { isAuth: req.session.isAuth });
+    res.render('wishlist', { isAuth: req.session.isAuth , user: req.session.user });
 });
 
 router.route('/catalog').get(async (req, res) => {
