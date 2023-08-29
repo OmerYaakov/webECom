@@ -9,7 +9,10 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12 d-flex justify-content-center">
-            <div id="chart"></div>
+            <div class="column">
+                <div id="chart"></div>
+                <div id="pi-chart"></div>
+            </div>
 
         </div>
     </div>
@@ -218,6 +221,67 @@
 
             svg.append('g')
                 .call(d3.axisLeft(yScale));
+        })
+        .catch(error => console.error(error));
+    const svg1 = d3.select('#pi-chart')
+        .append('svg')
+        .attr('width', width + margin.left + margin.right)
+        .attr('height', height + margin.top + margin.bottom)
+        .append('g')
+        .attr('transform', `translate(${margin.left},${margin.top})`);
+
+    fetch('/api/orders')
+        .then(response => response.json())
+        .then(data => {
+            // Filter out entries with invalid totalPrice, missing shipping status, or missing date
+            const validData = data.filter(d =>
+                typeof d.totalPrice === 'number' && !isNaN(d.totalPrice) &&
+                typeof d.shipping === 'boolean' && d.date !== null
+            );
+
+            // Group the valid data by shipping status
+            const aggregatedData = d3.rollups(
+                validData,
+                group => d3.sum(group, d => d.totalPrice),
+                d => d.shipping
+            );
+
+            // Calculate the total sum of order prices
+            const totalSum = d3.sum(aggregatedData, d => d[1]);
+
+            // Create an array of objects with the necessary properties for the pie chart
+            const pieData = aggregatedData.map(d => ({
+                label: d[0] ? 'Shipped' : 'Not Shipped',
+                value: d[1]
+            }));
+
+            // Create a color scale for the pie chart segments
+            const colorScale = d3.scaleOrdinal()
+                .domain(pieData.map(d => d.label))
+                .range(['blue', 'red']);
+
+            // Create a pie generator
+            const pie = d3.pie()
+                .value(d => d.value);
+
+            // Generate the pie chart data
+            const pieChartData = pie(pieData);
+
+            // Create the pie chart arcs
+            const arcGenerator = d3.arc()
+                .innerRadius(0)
+                .outerRadius(Math.min(width, height) / 2);
+
+            // Append pie chart arcs to the SVG
+            svg1.selectAll('path')
+                .data(pieChartData)
+                .enter()
+                .append('path')
+                .attr('d', arcGenerator)
+                .attr('fill', d => colorScale(d.data.label))
+                .attr('transform', `translate(${width / 2},${height / 2})`);
+
+            // ... Create axes or any other additional features here ...
         })
         .catch(error => console.error(error));
 
