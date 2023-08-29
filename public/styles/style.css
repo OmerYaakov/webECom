@@ -8,6 +8,7 @@
 
 html {
     /* Hide the scrollbar */
+    overflow-x: hidden;
 
     ::-webkit-scrollbar {
         width: 0;
