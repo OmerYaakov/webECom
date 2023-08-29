@@ -1,38 +1,24 @@
-<div style="margin: 15px;padding: 40px;">
-    <div class="container text-center">
-        <div class="row">
-
-            <div class="col-md-3">
-                <button class="btn btn-dark" type="button" style="padding: 50px;">מלאי</button>
-            </div>
-            <div class="col-md-3">
-                <button class="btn btn-dark" type="button" style="padding: 50px;"onclick="window.location.href='/admin/orders'">ניהול הזמנות</button>
-            </div>
-            <div class="col-md-3">
-                <button class="btn btn-dark" type="button" style="padding: 50px;" onclick="window.location.href='/admin/collection'">ניהול קולקציה</button>
-            </div>
-            <div class="col-md-3">
-                <button onclick="window.location.href='/admin/products'" class="btn btn-dark" type="button"
-                        style="padding: 50px;">מוצרים
-                </button>
-            </div>
-        </div>
-    </div>
-    <div class="container text-center" style="margin-top: 77px;">
-        <div class="row">
-             <div class="col-md-3">
-                <button class="btn btn-dark" type="button" style="padding: 50px;"> עוד </button>
-            </div>
-            <div class="col-md-3">
-                <button class="btn btn-dark" type="button" style="padding: 50px;">תקנון</button>
-            </div>
-            <div class="col-md-3">
-                <button class="btn btn-dark" type="button" style="padding: 50px;" onclick="window.location.href='/admin/editbranches'">סניפים</button>
-            </div>
-            <div class="col-md-3">
-                <button class="btn btn-dark" type="button" style="padding: 50px;" onclick="window.location.href='/admin/couponsadmin'">קופונים</button>
-            </div>
-
-        </div>
+<div class="container d-flex">
+    <style>
+        button {
+            padding: 100px 30px;
+            width: 100%;
+            font-size: 16px;
+            color: white;
+        }
+    </style>
+    <div class="btn-container text-center" style="  display: flex;
+            flex-direction: row;
+            gap: 10px;
+justify-content: space-between;
+width: 100%;
+height: 500px;
+">
+        <button class="btn mybtn" type="button">מלאי</button>
+        <button class="btn mybtn" type="button" onclick="window.location.href='/admin/orders'">ניהול הזמנות</button>
+        <button class="btn mybtn" type="button" onclick="window.location.href='/admin/collection'">ניהול קולקציה
+        </button>
+        <button class="btn mybtn" type="button" onclick="window.location.href='/admin/products'">מוצרים</button>
+        <button class="btn mybtn" type="button" onclick="window.location.href='/admin/editbranches'">סניפים</button>
     </div>
 </div>
