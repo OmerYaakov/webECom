@@ -2,32 +2,32 @@
 <html data-bs-theme="auto" lang="he">
 
 <%- include('partials/head') %>
-    <%- include('logics/addtocartlogics') %>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script>
-            $(document).ready(function () {
-                const LIMIT = 2 * 4;
-                var offset = 0;
-                var user = JSON.parse('<%- JSON.stringify(user) %>');
-                var search = JSON.parse('<%- JSON.stringify(search) %>');
-                console.log(user);
-                try {
-                    $.ajax({
-                        url: `/api/products?limit=${LIMIT}&offset=${offset}&search=${search}`,
-                        method: 'GET',
-                        success: function (products) {
-                            const productList = $('.catalog-items');
-                            productList.empty();
-                            products.forEach(product => {
-                                const productItem = $(`<div class="col-md-3">
+<%- include('logics/addtocartlogics') %>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        const LIMIT = 2 * 4;
+        var offset = 0;
+        var user = JSON.parse('<%- JSON.stringify(user) %>');
+        var search = JSON.parse('<%- JSON.stringify(search) %>');
+        console.log(user);
+        try {
+            $.ajax({
+                url: `/api/products?limit=${LIMIT}&offset=${offset}&search=${search}`,
+                method: 'GET',
+                success: function (products) {
+                    const productList = $('.catalog-items');
+                    productList.empty();
+                    products.forEach(product => {
+                        const productItem = $(`<div class="col-md-3">
                                                          <div class="product-card">
                                                             <div class="product-image-container">
                                                                 <span class="badge badge-new">New</span>
                                                                 <a href="/product/${product.productName}" class="product-link" title="${product.productName}">
                                                                     ${product.image && product.image !== "sdasdasdsa" ?
-                                        `<img src="${product.image}" class="product-image" alt="${product.productName}">` :
-                                        `<img src="https://placehold.jp/300x300.png" class="product-image" alt="Default Image">`}
+                            `<img src="${product.image}" class="product-image" alt="${product.productName}">` :
+                            `<img src="https://placehold.jp/300x300.png" class="product-image" alt="Default Image">`}
                                                                 </a>
                                                             </div>
                                                         <div class="product-details row" style="flex-direction: row;">
@@ -42,164 +42,216 @@
                                                 </div>
                                             </div>
                                             `);
-                                let buttonContainer = $(`<div id="button-container" class="text-center">
+                        let buttonContainer = $(`<div id="button-container" class="text-center row ml-2" style="max-width: 100%">
                                                     </div>`);
-                                let button = $(`<button class="product-card btn
-" id="product-index-${product.id}}">הוסף לסל</button>`);
-                                button.click(() => {
-                                    fun(product);
-                                });
-                                buttonContainer.append(button);
-                                productItem.append(buttonContainer);
-                                productList.append(productItem);
-                            });
-                        },
-                        error: function (error) {
-                            console.error('Error fetching products:', error);
-                        }
+                        let cartbtn = $(`<button style="color: #181818" class="product-card col-md-6 btn btn-outline" id="product-index-${product.i}">הוספה לסל</button>`);
+                        cartbtn.click(() => {
+                            fun(product);
+                        });
+                        let wishbtn = $(`<button style="color: #181818" class="product-card col-md-2 btn btn-outline" id="product-index-${product.i}"><i class="bi bi-heart"></i></button>`);
+                        wishbtn.click(() => {
+                            wish(product);
+                            if (wishbtn.hasClass('btn-outline')) {
+                                wishbtn.removeClass('btn-outline');
+                                wishbtn.addClass('btn-danger');
+                            } else {
+                                wishbtn.removeClass('btn-danger');
+                                wishbtn.addClass('btn-outline');
+                            }
+                        });
+                        buttonContainer.append(wishbtn);
+
+                        buttonContainer.append(cartbtn);
+
+                        productItem.append(buttonContainer);
+                        productList.append(productItem);
                     });
-                } catch (error) {
+                },
+                error: function (error) {
                     console.error('Error fetching products:', error);
                 }
+            });
+        } catch (error) {
+            console.error('Error fetching products:', error);
+        }
 
-                const fun = (product) => {
-                    console.log('add to cart');
-                    if (user) {
-                        // get the cart
+        const fun = (product) => {
+            console.log('add to cart');
+            if (user) {
+                // get the cart
+                $.ajax({
+                    url: 'api/carts/' + user.cartId,
+                    type: 'GET',
+                    success: function (data) {
+                        let cart = data[0];
+                        // update the cart
+                        newProduct = {
+                            productId: product.id,
+                            quantity: 1,
+                            price: product.price,
+                            name: product.name,
+                        }
+                        cart.totalPrice += product.price * newProduct.quantity;
+                        cart.cartProducts.push(product);
                         $.ajax({
                             url: 'api/carts/' + user.cartId,
-                            type: 'GET',
+                            type: 'PUT',
+                            data: JSON.stringify(cart),
+                            contentType: 'application/json',
                             success: function (data) {
-                                let cart = data[0];
-                                // update the cart
-                                newProduct = {
-                                    productId: product.id,
-                                    quantity: 1,
-                                    price: product.price,
-                                    name: product.name,
-                                }
-                                cart.totalPrice += product.price * newProduct.quantity;
-                                cart.cartProducts.push(product);
-                                $.ajax({
-                                    url: 'api/carts/' + user.cartId,
-                                    type: 'PUT',
-                                    data: JSON.stringify(cart),
-                                    contentType: 'application/json',
-                                    success: function (data) {
-                                        alert('המוצר נוסף לעגלה');
-                                    },
-                                    error: function (err) {
-                                        console.log(err);
-                                    }
-                                });
+                                alert('המוצר נוסף לעגלה');
                             },
                             error: function (err) {
                                 console.log(err);
                             }
                         });
-                    } else {
-                        alert('אנא התחבר כדי להוסיף מוצרים לעגלה');
+                    },
+                    error: function (err) {
+                        console.log(err);
                     }
-                }
-                // $('#filter-form').on('submit', async function (event) {
-                //     event.preventDefault();
-                //     const category = $('#category-select').val();
-                //     const minPrice = $('#price-min').val();
-                //     const maxPrice = $('#price-max').val();
+                });
+            } else {
+                alert('אנא התחבר כדי להוסיף מוצרים לעגלה');
+            }
+        }
+        const wish = (product) => {
+            console.log('add to wishlist');
+            if (user) {
+                // get the cart
+                $.ajax({
+                    url: 'api/wishlist/' + user.wishListId,
+                    type: 'GET',
+                    success: function (data) {
+                        let wishlist = data[0];
+                        // update the cart
+                        newProduct = {
+                            productId: product.id,
+                            quantity: 1,
+                            price: product.price,
+                            name: product.name,
+                        }
+                        wishlist.totalPrice += product.price * newProduct.quantity;
+                        wishlist.cartProducts.push(product);
+                        $.ajax({
+                            url: 'api/wishlist/' + user.wishListId,
+                            type: 'PUT',
+                            data: JSON.stringify(wishlist),
+                            contentType: 'application/json',
+                            success: function (data) {
+                                alert('המוצר נוסף לעגלה');
+                            },
+                            error: function (err) {
+                                console.log(err);
+                            }
+                        });
+                    },
+                    error: function (err) {
+                        console.log(err);
+                    }
+                });
+            } else {
+                alert('אנא התחבר כדי להוסיף מוצרים לרשימת משאלות');
+            }
+        }
+        // $('#filter-form').on('submit', async function (event) {
+        //     event.preventDefault();
+        //     const category = $('#category-select').val();
+        //     const minPrice = $('#price-min').val();
+        //     const maxPrice = $('#price-max').val();
 
-                //     const queryParams = new URLSearchParams({
-                //         category: category,
-                //         minPrice: minPrice,
-                //         maxPrice: maxPrice,
-                //     });
-                //     console.log(queryParams.toString());
-                //     try {
-                //         const response = await fetch(`/api/products?${queryParams.toString()}`);
-                //         const filteredProducts = await response.json();
+        //     const queryParams = new URLSearchParams({
+        //         category: category,
+        //         minPrice: minPrice,
+        //         maxPrice: maxPrice,
+        //     });
+        //     console.log(queryParams.toString());
+        //     try {
+        //         const response = await fetch(`/api/products?${queryParams.toString()}`);
+        //         const filteredProducts = await response.json();
 
-                //         const productList = $('.catalog-items');
-                //         productList.empty();
+        //         const productList = $('.catalog-items');
+        //         productList.empty();
 
-                //         filteredProducts.forEach(product => {
-                //             const productItem = $('<div>').addClass('col-md-3').html(`
-                //         <div class="product-card">
-                //             <div class="product-image-container">
-                //                 <span class="badge badge-new">New</span>
-                //                 <a href="/product/${product.productName}" class="product-link" title="${product.productName}">
-                //                     ${product.image && product.image !== "sdasdasdsa" ?
-                //                     `<img src="${product.image}" class="product-image" alt="${product.productName}">` :
-                //                     `<img src="https://placehold.jp/300x300.png" class="product-image" alt="Default Image">`}
-                //                 </a>
-                //             </div>
-                //             <div class="product-details row" style="flex-direction: row;">
-                //                 <div class="col-md-8">
-                //                     <a id="product-name" href="/product/${product.productName}" class="product-name text-right" style="color: black;"
-                //                         title="${product.productName}">${product.productName}</a>
-                //                 </div>
-                //                 <div class="product-price col-md-1">
-                //                     <span class="price">₪${product.price}</span>
-                //                 </div>
-                //             </div>
-                //             <div class="text-center">
-                //                 <button id="add_to_cart_btn" class="add-to-cart-button btn">הוסף לסל</button>
-                //                 <button class="add-to-cart-button btn">אהבתי</button>
-                //             </div>
-                //         </div>
-                // `);
-                //             productList.append(productItem);
-                //         });
-                //     } catch (error) {
-                //         console.error('Error fetching products:', error);
-                //     }
-                // });
-            });
-        </script>
+        //         filteredProducts.forEach(product => {
+        //             const productItem = $('<div>').addClass('col-md-3').html(`
+        //         <div class="product-card">
+        //             <div class="product-image-container">
+        //                 <span class="badge badge-new">New</span>
+        //                 <a href="/product/${product.productName}" class="product-link" title="${product.productName}">
+        //                     ${product.image && product.image !== "sdasdasdsa" ?
+        //                     `<img src="${product.image}" class="product-image" alt="${product.productName}">` :
+        //                     `<img src="https://placehold.jp/300x300.png" class="product-image" alt="Default Image">`}
+        //                 </a>
+        //             </div>
+        //             <div class="product-details row" style="flex-direction: row;">
+        //                 <div class="col-md-8">
+        //                     <a id="product-name" href="/product/${product.productName}" class="product-name text-right" style="color: black;"
+        //                         title="${product.productName}">${product.productName}</a>
+        //                 </div>
+        //                 <div class="product-price col-md-1">
+        //                     <span class="price">₪${product.price}</span>
+        //                 </div>
+        //             </div>
+        //             <div class="text-center">
+        //                 <button id="add_to_cart_btn" class="add-to-cart-button btn">הוסף לסל</button>
+        //                 <button class="add-to-cart-button btn">אהבתי</button>
+        //             </div>
+        //         </div>
+        // `);
+        //             productList.append(productItem);
+        //         });
+        //     } catch (error) {
+        //         console.error('Error fetching products:', error);
+        //     }
+        // });
+    });
+</script>
 
-        <body>
-            <%- include('partials/nav') %>
-                <div class="text-right px-2">
-                    <h1>קטלוג מוצרים</h1>
+<body>
+<%- include('partials/nav') %>
+<div class="text-right px-2">
+    <h1>קטלוג מוצרים</h1>
+</div>
+<!-- Filter form -->
+<div class="container">
+    <div class="row justify-content-end mb-3">
+        <div class="col-md-12 text-right">
+            <form id="filter-form" class="form-inline">
+                <button type="submit" class="btn btn-primary mr-3">סנן</button>
+                <div class="form-group mr-3">
+                    <label class="mr-2" for="price-range">טווח מחירים: </label>
+                    <input type="number" class="form-control" id="price-min" placeholder="מחיר מינימלי"
+                           name="minPrice">
                 </div>
-                <!-- Filter form -->
-                <div class="container">
-                    <div class="row justify-content-end mb-3">
-                        <div class="col-md-12 text-right">
-                            <form id="filter-form" class="form-inline">
-                                <button type="submit" class="btn btn-primary mr-3">סנן</button>
-                                <div class="form-group mr-3">
-                                    <label class="mr-2" for="price-range">טווח מחירים: </label>
-                                    <input type="number" class="form-control" id="price-min" placeholder="מחיר מינימלי"
-                                        name="minPrice">
-                                </div>
 
-                                <div class="form-group">
-                                    <input type="number" class="form-control" id="price-max" placeholder="מחיר מקסימלי"
-                                        name="maxPrice">
-                                </div>
-                                <div class="form-group">
-                                    <label class="mr-2" for="category-select">סנן לפי קטגוריה: </label>
-                                    <select class="custom-select" id="category-select" name="category">
-                                        <option value="">הכל</option>
-                                        <!-- Add options for your categories here -->
-                                        <option value="bracelet">צמיד</option>
-                                        <option value="necklace">שרשרת</option>
-                                        <option value="ring">טבעת</option>
-                                        <option value="earring">עגיל</option>
-                                        <option value="pendant">תליון</option>
-                                        <option value="watch">שעון</option>
-                                        <option value="other">אחר</option>
-                                        <!-- ... more categories ... -->
-                                    </select>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
+                <div class="form-group">
+                    <input type="number" class="form-control" id="price-max" placeholder="מחיר מקסימלי"
+                           name="maxPrice">
                 </div>
-                <div class="container">
-                    <div class="row catalog-items">
-                    </div>
+                <div class="form-group">
+                    <label class="mr-2" for="category-select">סנן לפי קטגוריה: </label>
+                    <select class="custom-select" id="category-select" name="category">
+                        <option value="">הכל</option>
+                        <!-- Add options for your categories here -->
+                        <option value="bracelet">צמיד</option>
+                        <option value="necklace">שרשרת</option>
+                        <option value="ring">טבעת</option>
+                        <option value="earring">עגיל</option>
+                        <option value="pendant">תליון</option>
+                        <option value="watch">שעון</option>
+                        <option value="other">אחר</option>
+                        <!-- ... more categories ... -->
+                    </select>
                 </div>
-                <%- include('partials/footer') %>
-        </body>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row catalog-items">
+    </div>
+</div>
+<%- include('partials/footer') %>
+</body>
 
 </html>
