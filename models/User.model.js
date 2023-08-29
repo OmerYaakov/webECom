@@ -11,7 +11,8 @@ const UserSchema = mongoose.Schema({
     role: String,
     cartId: Number,
     isAdmin: Boolean,
-    wishListId:String
+    wishListId:String,
+    orders:[{orderId:Number , totalPrice:Number , date : Date}]
 });
 const userModel = mongoose.model('User', UserSchema);
 export default userModel;

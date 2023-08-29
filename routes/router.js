@@ -133,7 +133,8 @@ router.route('/sizeguide').get((req, res) => {
     res.render('sizeguide', { isAuth: req.session.isAuth });
 });
 router.route('/acountorders').get((req, res) => {
-    res.render('acountorders', { isAuth: req.session.isAuth });
+    console.log('user from the router: ',req.session.user)
+    res.render('acountorders', { isAuth: req.session.isAuth, user:req.session.user });
 });
 
 router.route('/admin/orders').get((req, res) => {

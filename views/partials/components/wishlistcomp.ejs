@@ -41,7 +41,6 @@
 
 
         var user = JSON.parse('<%- JSON.stringify(user) %>');
-        var products_in_wishlist = [];
         const url = `/api/wishlists/${user.wishListId}`
         // ajax request to get the wishlist
             $.ajax({

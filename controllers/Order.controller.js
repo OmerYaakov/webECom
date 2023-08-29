@@ -1,5 +1,5 @@
 import OrderModel from "../models/Order.model.js";
-
+import UserModel from "../models/User.model.js";
 const create = async (req, res) => {
     try {
         const order = new OrderModel({
@@ -15,7 +15,27 @@ const create = async (req, res) => {
             self_pick_up:req.body.self_pick_up
         });
         const createdOrder = await order.save();
-        res.status(201).send({ message: "New Order Created", order: createdOrder });
+
+        // Fetch the user by userId
+        const user = await UserModel.findOne({ userId: req.body.userId });
+
+        if (!user) {
+            return res.status(404).send({ message: "User not found" });
+        }
+
+        // Add the new order to the user's orders array
+        user.orders.push({
+            orderId: order.id,
+            totalPrice: order.totalPrice,
+            date: order.date
+        });
+
+        // Save the updated user document
+        await user.save();
+         //save the new user..
+        req.session.user=user
+
+        res.status(201).send({ message: "New Order Created", order: createdOrder, user: user  });
     } catch (error) {
         res.status(500).send({ message: error.message ? error.message : "Error in Creating Order" });
     }
