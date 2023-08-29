@@ -23,9 +23,37 @@
     })
 
 </script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        var user = JSON.parse('<%- JSON.stringify(user) %>');
+        $("#adminpagebtt").click(function (event) {
+            window.location.href = "/admin";
+        });
 
+        $("#log-out-btn").click(function (event) {
+            const url = '/logout'
+            $.ajax({
+                url: url,
+                type: "GET",
+                data: JSON.stringify({}),
+                contentType: "application/json",
+                success: function (res) {
+                    console.log('log out successfully applied!')
+                    window.location.href = "/";
+                },
+                error: function (err) {
+                    alert("log out failed! Please try again.");
+                    console.error("log out! error:", err);
+                }
+            });
+        });
+    });
+</script>
+
+<div class="container">
 <h1 class="text-right">:ההזמנות שלי</h1>
-
+</div>
 <div class="row">
     <div class="col-md-2 text-right" style="display: flex;flex-direction: column;">
         <button class="btn userbtn" type="button" onclick="window.location.href='/account'">כללי</button>
