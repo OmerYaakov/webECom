@@ -27,13 +27,25 @@ const findAll = (req, res) => {
     if (req.query.offset && req.query.limit) {
         const offset = parseInt(req.query.offset);
         const limit = parseInt(req.query.limit);
-        ProductModel.find().skip(offset).limit(limit)
-            .then((products) => {
-                res.status(200).json(products);
-            })
-            .catch((error) => {
-                res.status(500).json({ message: error.message });
-            });
+        if (req.query.search) {
+            const search = req.query.search;
+            ProductModel.find({ $or: [{ productName: { $regex: search, $options: 'i' } }, { categoryName: { $regex: search, $options: 'i' } }, { details: { $regex: search, $options: 'i' } }] })
+                .skip(offset).limit(limit).then((products) => {
+                    res.status(200).json(products);
+                }
+                ).catch((error) => {
+                    res.status(500).json({ message: error.message });
+                });
+        }
+        else {
+            ProductModel.find().skip(offset).limit(limit)
+                .then((products) => {
+                    res.status(200).json(products);
+                })
+                .catch((error) => {
+                    res.status(500).json({ message: error.message });
+                });
+        }
     }
     else {
         ProductModel.find()
