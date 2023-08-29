@@ -132,6 +132,9 @@ router.route('/deletecouponsadmin').get((req, res) => {
 router.route('/sizeguide').get((req, res) => {
     res.render('sizeguide', { isAuth: req.session.isAuth });
 });
+router.route('/acountorders').get((req, res) => {
+    res.render('acountorders', { isAuth: req.session.isAuth });
+});
 
 router.route('/admin/orders').get((req, res) => {
     res.render('adminorders', { isAuth: req.session.isAuth });
