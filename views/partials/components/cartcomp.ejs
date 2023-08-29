@@ -49,7 +49,7 @@
                 for (let i = 0; i < userCart.length; i++) {
                     let product = userCart[i];
                     console.log(product)
-                    var deleteBTN = $(`<button id="deleteBTN${product.id}" class="btn">X</button>`)
+                    var deleteBTN = $(`<hr> <button id="deleteBTN${product.id}" class="btn">X</button>`)
                     deleteBTN.click(function () {
                         removeProductFromCart(product);
                     })
@@ -57,14 +57,13 @@
                     // create the template that we need to append inside...
                     var productCard = `
                     <div>
-                        <hr>
                         <div class="text-right">
                             <div class="row d-flex justify-content-end">
                                 <div class="col-md-5">
-                                    <h5>שרשרת מכסף</h5>
+                                    <h5>${product.productName}</h5>
                                 </div>
                                 <div class="col-md-2 ">
-                                    <img src="./photos/new.jpg" alt="product img" class="" style="max-height: 150px"/>
+                                    <img src="${product.image}}" alt="product img" class="" style="max-height: 150px"/>
                                 </div>
                             </div>
                             <p  class="text-left">₪${product.price}</p>
