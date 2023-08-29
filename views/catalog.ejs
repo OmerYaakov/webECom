@@ -209,40 +209,46 @@
 <div class="text-right px-2">
     <h1>קטלוג מוצרים</h1>
 </div>
-<!-- Filter form -->
-<div class="container">
-    <div class="row justify-content-end mb-3">
-        <div class="col-md-12 text-right">
-            <form id="filter-form" class="form-inline">
-                <button type="submit" class="btn btn-primary mr-3">סנן</button>
-                <div class="form-group mr-3">
-                    <label class="mr-2" for="price-range">טווח מחירים: </label>
-                    <input type="number" class="form-control" id="price-min" placeholder="מחיר מינימלי"
-                           name="minPrice">
-                </div>
+<div class="container ">
+    <div class="row">
+        <div class="col-md-12 ">
+            <form id="filter-form" class="form text-right">
+                <div class="row">
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            <label class="mr-2" for="category-select">:סנן לפי קטגוריה</label>
+                            <select class="custom-select" id="category-select" name="category">
+                                <option value="">הכל</option>
+                                <option value="bracelet">צמיד</option>
+                                <option value="necklace">שרשרת</option>
+                                <option value="ring">טבעת</option>
+                                <option value="earring">עגיל</option>
+                                <option value="pendant">תליון</option>
+                                <option value="watch">שעון</option>
+                                <option value="other">אחר</option>
+                                <!-- ... more categories ... -->
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            <label class="mr-2" for="limit">:מגבלה</label>
+                            <select class="custom-select" id="limit" name="limit">
+                                <option value="10">10</option>
+                                <option value="25">25</option>
+                                <option value="50">50</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-1">
+                        <button type="submit" class="btn mybtn ml-2">סנן</button>
+                    </div>
 
-                <div class="form-group">
-                    <input type="number" class="form-control" id="price-max" placeholder="מחיר מקסימלי"
-                           name="maxPrice">
                 </div>
-                <div class="form-group">
-                    <label class="mr-2" for="category-select">סנן לפי קטגוריה: </label>
-                    <select class="custom-select" id="category-select" name="category">
-                        <option value="">הכל</option>
-                        <!-- Add options for your categories here -->
-                        <option value="bracelet">צמיד</option>
-                        <option value="necklace">שרשרת</option>
-                        <option value="ring">טבעת</option>
-                        <option value="earring">עגיל</option>
-                        <option value="pendant">תליון</option>
-                        <option value="watch">שעון</option>
-                        <option value="other">אחר</option>
-                        <!-- ... more categories ... -->
-                    </select>
-                </div>
-            </form>
         </div>
+        </form>
     </div>
+</div>
 </div>
 <div class="container">
     <div class="row catalog-items">
