@@ -7,7 +7,6 @@
         var orders = user.orders
         for (let i = 0; i < orders.length; i++) {
             const order = orders[i]
-            console.log("date : " , order.date)
             orderCard = `
                      <h3 class="text-center">פרטי הזמנה</h3>
             <div class="order-details text-right d-block">
@@ -16,7 +15,7 @@
                         <h6 class="date_order">:תאריך הזמנה</h6>
                                <p> ${order.date}</p>
                         <h6>:סכום הזמנה</h6>
-                               <p> ${order.price}</p>
+                               <p> ${order.totalPrice}</p>
                     </div>
                 </div>
             `;
