@@ -15,7 +15,7 @@
                             const productList = $('.catalog-items');
                             productList.empty();
                             products.forEach(product => {
-                                const productItem = `<div class="col-md-3">
+                                const productItem = $(`<div class="col-md-3">
                                                          <div class="product-card">
                                                             <div class="product-image-container">
                                                                 <span class="badge badge-new">New</span>
@@ -34,18 +34,17 @@
                                                             <span class="price">₪${product.price}</span>
                                                         </div>
                                                     </div>
-                                                    <div id="button-container" class="text-center">
-                                                        <button id="add_to_cart_btn" key="${product.id}" class="add-to-cart-button btn">הוסף לסל</button>
-                                                        <button class="add-to-cart-button btn">אהבתי</button>
-                                                    </div>
                                                 </div>
                                             </div>
-                                            `;
+                                            `);
+                                let buttonContainer = $(`<div id="button-container" class="text-center">
+                                                    </div>`);
+                                let button = $(`<button class="product-card" id="product-index-${product.id}}">add to cart</button>`);
+                                button.click(() => {
 
-                                $("#add_to_cart_btn").click(() => {
-                                    console.log("clicked");
-                                    // addToCart(product.id);
                                 });
+                                buttonContainer.append(button);
+                                productItem.append(buttonContainer);
                                 productList.append(productItem);
                             });
                         },
