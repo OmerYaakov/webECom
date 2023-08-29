@@ -50,6 +50,7 @@
                         });
                         let wishbtn = $(`<button style="color: #181818" class="product-card col-md-2 btn btn-outline" id="product-index-${product.i}"><i class="bi bi-heart"></i></button>`);
                         wishbtn.click(() => {
+
                             wish(product);
                             if (wishbtn.hasClass('btn-outline')) {
                                 wishbtn.removeClass('btn-outline');
@@ -116,30 +117,32 @@
             }
         }
         const wish = (product) => {
-            console.log('add to wishlist');
             if (user) {
                 // get the cart
                 $.ajax({
-                    url: 'api/wishlist/' + user.wishListId,
+                    url: 'api/wishlists/' + user.wishListId,
                     type: 'GET',
                     success: function (data) {
-                        let wishlist = data[0];
+                        let wishlist = data;
                         // update the cart
                         newProduct = {
-                            productId: product.id,
-                            quantity: 1,
+                            id: product.id,
                             price: product.price,
                             name: product.productName,
+                            image:product.image
                         }
-                        wishlist.totalPrice += product.price * newProduct.quantity;
-                        wishlist.cartProducts.push(product);
+                        wishlist.push(newProduct);
+                        console.log(wishlist)
                         $.ajax({
                             url: 'api/wishlist/' + user.wishListId,
                             type: 'PUT',
-                            data: JSON.stringify(wishlist),
+                            data: JSON.stringify({
+                               products: wishlist
+                            }),
                             contentType: 'application/json',
                             success: function (data) {
-                                alert('המוצר נוסף לעגלה');
+                                alert('המוצר נוסף בהצלחה');
+                                console.log(data)
                             },
                             error: function (err) {
                                 console.log(err);
