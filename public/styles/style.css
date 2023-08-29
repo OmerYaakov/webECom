@@ -66,11 +66,12 @@ a:hover {
     direction: rtl;
     width: 200px;
     flex-direction: column;
+
 }
 
 .product-image {
     aspect-ratio: 1;
-    max-height: 200px;
+    height: 200px;
 }
 
 .product-name a {
