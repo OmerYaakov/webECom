@@ -1,0 +1,20 @@
+<h1 class="text-right">עריכת סניפים</h1>
+<div class="login-container" style="max-width: 300px; margin: auto;">
+    <form action="../api/branches" method="POST"> <!-- Specify the action and method attributes -->
+        <label class="text-right d-block">:סניף</label>
+        <input type="text" class="form-control text-right" name="name" required> <!-- Add input fields with name attributes -->
+
+        <label class="text-right d-block">:כתובת</label>
+        <input type="text" class="form-control text-right" name="address" required>
+
+        <label class="text-right d-block">:שעות פתיחה</label>
+        <input type="text" class="form-control text-right" name="hours" required>
+
+        <label class="text-right d-block">:טלפון</label>
+        <input type="tel" class="form-control text-right" name="phone" required>
+
+        <div class="form-group text-right">
+            <button type="submit" class="btn mybtn">הוספה</button> <!-- Use type="submit" to submit the form -->
+        </div>
+    </form>
+</div>

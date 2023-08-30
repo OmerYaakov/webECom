@@ -1,0 +1,131 @@
+<div class="container con">
+    <style>
+        #productCarousel {
+            .pc {
+                /*margin-top: 40px;*/
+
+                .img-fluid {
+                    width: 100%;
+                    max-height: 300px;
+                    object-fit: cover;
+                }
+
+                .carousel-inner {
+                    height: 100px;
+                }
+            }
+        }
+
+        .pi {
+            height: 350px;
+        }
+
+        .con {
+            margin-bottom: 25px;
+        }
+
+        .glowing-text {
+            color: transparent;
+            -webkit-text-stroke: 0.5px white;
+            mix-blend-mode: normal;
+        }
+
+        .changeblackandwhite {
+            mix-blend-mode: difference;
+        }
+    </style>
+    <div class="row pi">
+
+        <div class="col-md-8 pi">
+            <div id="productCarousel" class="carousel slide text-right pi" data-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <div class="product-collection pc">
+                            <div class="row">
+                                <div class="col-md-6 pi">
+                                    <img src="./photos/PhotoRoom-20230621_162307.png" class="img-fluid rounded"
+                                         alt="Product 1"/>
+                                    <div class="column">
+                                        <p class="product-price text-right">₪1000</p>
+                                        <h4 class="text-right">Product Title 1</h4>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 pi">
+                                    <img src="./photos/PhotoRoom-20230621_161130.png" class="img-fluid rounded"
+                                         alt="Product 2"/>
+                                    <div class="column">
+                                        <p class="product-price text-right">₪2000</p>
+                                        <h4 class="text-rignt">Product Title 2</h4>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="product-collection pc">
+                            <div class="row">
+                                <div class="col-md-6 pi">
+                                    <img src="./photos/PhotoRoom-20230621_153259.png" class="img-fluid rounded"
+                                         alt="Product 3"/>
+                                    <div class="column">
+                                        <p class="product-price text-right">₪1000</p>
+
+                                        <h4 class="text-right">Product Title 3</h4>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-6 pi">
+                                    <img src="./photos/PhotoRoom-20230621_160111.png" class="img-fluid rounded"
+                                         alt="Product 4"/>
+                                    <div class="column">
+                                        <p class="product-price text-right">₪2000</p>
+                                        <h4 class="text-right">Product Title 4</h4>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <!-- Add more carousel items as needed -->
+                </div>
+                <a class="carousel-control-prev pi changeblackandwhite" href="#productCarousel" role="button"
+                   data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                </a>
+                <a class="carousel-control-next pi changeblackandwhite" href="#productCarousel" role="button"
+                   data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                </a>
+            </div>
+        </div>
+          <!-- Collection Component -->
+        <div class="col-md-4 pi">
+            <div class="product-collection  p-4"
+                 style=" background-image: url('./photos/PhotoRoom-20230621_150845.png'); background-size: cover; background-position: center; position: relative; height: 100%; aspect-ratio: 1">
+                <div class="collection-overlay"></div> <!-- Overlay to improve text visibility -->
+                <div class="collection-info text-center d-flex align-items-center"
+                     style="position: relative; z-index: 1;flex-direction: column; margin-top: 70%">
+                    <h3 class="mb-3 glowing-text">Discover Our Collection</h3>
+                    <p class="mb-4 glowing-text">Explore a curated selection of products that resonate with style and
+                        quality.</p>
+<!--                    <a href="/collection" class="btn mybtn btn-lg">Shop Now</a>-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<hr>
+
+<!-- Include jQuery -->
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+
+<!-- Include Popper.js -->
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>-->
+
+<!-- Include Bootstrap JS -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

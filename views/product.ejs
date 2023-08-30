@@ -1,0 +1,87 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        console.log('ready!')
+        var user = JSON.parse('<%- JSON.stringify(user) %>');
+        var product = JSON.parse('<%- JSON.stringify(product) %>');
+
+        $("#buy-now-btn").click(function (){
+            if (user) {
+                // get the cart
+                $.ajax({
+                    url: 'api/carts/' + user.cartId,
+                    type: 'GET',
+                    success: function (data) {
+                        let cart = data[0];
+                        // update the cart
+                        newProduct = {
+                            productId: product.id,
+                            quantity: 1,
+                            price: product.price,
+                            productName: product.productName,
+                        }
+                        cart.totalPrice += product.price * newProduct.quantity;
+                        cart.cartProducts.push(product);
+                        $.ajax({
+                            url: 'api/carts/' + user.cartId,
+                            type: 'PUT',
+                            data: JSON.stringify(cart),
+                            contentType: 'application/json',
+                            success: function (data) {
+                                alert('המוצר נוסף לעגלה');
+                            },
+                            error: function (err) {
+                                console.log('error : ',err);
+                            }
+                        });
+                    },
+                    error: function (err) {
+                        console.log('error : ',err);
+
+                    }
+                });
+            } else {
+                alert('אנא התחבר כדי להוסיף מוצרים לעגלה');
+            }
+        })
+
+    })
+</script>
+
+<!DOCTYPE html>
+<html data-bs-theme="auto" lang="he" dir="ltr">
+
+
+<%- include('partials/head') %>
+
+<body>
+<%- include('partials/nav') %>
+<div class="container mt-5">
+    <div class="row justify-content-start">
+        <div class="col-md-7">
+            <img src="<%= product.image %>" style="max-width: 100%; height: 500px;" class="img-fluid" alt="<%= product.productName %>">
+        </div>
+        <div class="col-md-5">
+            <div class="card p-4 text-right h-100">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h3 class="mb-4" style="margin-top: 30%">₪<%= product.price %></h3>
+                    </div>
+                    <div class="col-md-6">
+                        <h1 class="display-4"><%= product.productName %></h1>
+                    </div>
+                </div>
+                <p class="text-muted mt-4"><%= product.details %></p>
+                <a href="/sizeguide" class="d-block mt-3" style="color: black">הצג מדריך גדלים</a>
+                <div class="mt-4">
+                    <button id="buy-now-btn" class="btn btn-dark btn-block" type="button">רכישה</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<%- include('partials/footer') %>
+</body>
+
+</html>

@@ -1,0 +1,59 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        console.log("Contact page is up!")
+        $("#send-contact-btn").click(function () {
+            console.log("send-contact-btn pressed!")
+
+            $.ajax({
+                url: "/api/contacts",
+                type: "POST",
+                data: {
+                    // we need to handle the id of the contact msg's
+                    id: Math.abs(Math.floor(Math.random())),
+                    name: $("#nameLbl").val(),
+                    phoneNumber: $("#numLbl").val(),
+                    mail: $("#email").val(),
+                    message: $("#message").val()
+                },
+                success: function (res) {
+                    alert("contact msg successfully sent")
+                    // we need to render the page again but empty...
+                },
+                error: function (err) {
+                    console.error("contact msg unsuccessfully sent")
+                }
+            })
+
+        })
+
+    });
+</script>
+<div class="container">
+    <div class="card shadow">
+        <div class="card-body">
+            <h1 class="card-title text-right">צור קשר</h1>
+            <form>
+                <div class="form-group">
+                    <label for="nameLbl" class="text-right d-block">שם</label>
+                    <input type="text" id="nameLbl" name="fullName" class="form-control" placeholder="הכנס שם מלא" required>
+                </div>
+                <div class="form-group">
+                    <label for="numLbl" class="text-right d-block">טלפון</label>
+                    <input type="tel" id="numLbl" name="phoneNum" class="form-control" placeholder="הכנס מספר טלפון" required>
+                </div>
+                <div class="form-group">
+                    <label for="email" class="text-right d-block">אימייל</label>
+                    <input type="email" id="email" name="email" class="form-control" placeholder="הכנס אימייל" required>
+                </div>
+                <div class="form-group">
+                    <label for="message" class="text-right d-block">הודעה</label>
+                    <textarea id="message" name="message" class="form-control" placeholder="הכנס הודעה" required></textarea>
+                </div>
+                <div class="form-group text-right">
+                    <button id="send-contact-btn" type="button" class="btn mybtn">שלח</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

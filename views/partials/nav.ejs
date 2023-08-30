@@ -1,0 +1,65 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        var input = ""
+        $("#search-bar").on("enter", function () {
+            input  = $(this).val().toLowerCase();
+        });
+        $("#search-btn").click(function () {
+            console.log("clicked");
+            input  = $("#search-bar").val().toLowerCase();
+            window.location.href = "/catalog?search=" + input;
+        });
+    });
+</script>
+
+<!-- Top Delivery Information -->
+<div class="text-white text-center">
+    <p id="mishlohim">משלוחים לכל הארץ</p>
+</div>
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"><i class="bi bi-list"></i></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <!--                this is false for now but we need a function to check if logged in-->
+                <% if (isAuth) { %>
+                    <a class="nav-link" href="/account">החשבון שלי</a>
+                    <% } else { %>
+                        <a class="nav-link" href="/login">התחברות</a>
+                        <% } %>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/wishlist"><i class="bi bi-heart"></i></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/cart"><i class="bi bi-cart"></i></a>
+            </li>
+        </ul>
+        <a class="navbar-brand navbar-brand-centered" href="/">
+            <img src="logo.png" />
+        </a>
+        <ul class="navbar-nav ml-auto">
+            <li>
+                <div class="input-group rounded">
+                    <input id="search-bar" type="search" class="form-control rounded mt-2" placeholder="Search"
+                        aria-label="Search" aria-describedby="search-addon" />
+                    <span class="input-group-text border-0" style="background: none;color: white;" id="search-addon">
+                        <button id="search-btn" class="btn">
+                            <i class="bi bi-search" style="color: white;"></i>
+                        </button>
+                    </span>
+
+                </div>
+            </li>
+            <li class="nav-item mt-1">
+                <a class="nav-link" href="/catalog">חנות</a>
+            </li>
+
+        </ul>
+    </div>
+</nav>

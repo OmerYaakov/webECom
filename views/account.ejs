@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html data-bs-theme="auto" lang="he" dir="rtl">
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        var user = JSON.parse('<%- JSON.stringify(user) %>');
+        $("#adminpagebtt").click(function (event) {
+            window.location.href = "/admin";
+        });
+
+        $("#log-out-btn").click(function (event) {
+            const url = '/logout'
+            $.ajax({
+                url: url,
+                type: "GET",
+                data: JSON.stringify({}),
+                contentType: "application/json",
+                success: function (res) {
+                    console.log('log out successfully applied!')
+                    window.location.href = "/";
+                },
+                error: function (err) {
+                    alert("log out failed! Please try again.");
+                    console.error("log out! error:", err);
+                }
+            });
+        });
+    });
+</script>
+
+<%- include('partials/head') %>
+
+<body>
+<%- include('partials/nav') %>
+<div class="container py-4"></div>
+<div class="row">
+    <div class="col-md-2 text-right" style="display: flex;flex-direction: column;">
+        <button class="btn userbtn" type="button" onclick="window.location.href='/account'">כללי</button>
+        <button class="btn userbtn" type="button" onclick="window.location.href='/acountorders'">הזמנות שלי</button>
+        <button id="log-out-btn" class="btn userbtn" type="button">התנתקות</button>
+        <% if (user.role == 'admin' ) { %>
+            <button id="adminpagebtt" class="btn userbtn" type="button">עמוד מנהל</button>
+        <% } %>
+    </div>
+    <div class="col-md-8 text-right">
+        <h3>כללי</h3>
+        <p>
+            <%= user.userId %> :מספר מזהה
+        </p>
+        <!--                    <p><%= user.firstName %> :שם פרטי</p>-->
+        <!--                    <p><%= user.lastName %> :שם משפחה</p>-->
+        <!--                    <p><%= user.phoneNumber %> :טלפון</p>-->
+        <!--                    <p><%= user.email %> :אימייל</p>-->
+        <p>
+            <%= user.username %> :שם משתמש
+        </p>
+
+    </div>
+</div>
+
+<%- include('partials/footer') %>
+</body>
+
+</html>

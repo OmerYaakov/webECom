@@ -1,0 +1,90 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        var user = JSON.parse('<%- JSON.stringify(user) %>');
+        var orders = user.orders
+        console.log(orders)
+        for (let i = 0; i < orders.length; i++) {
+            const order = orders[i]
+            orderCard = `
+                     <h3 class="text-center">פרטי הזמנה</h3>
+            <div class="order-details text-right d-block">
+                <div class="row d-flex justify-content-end">
+                    <div class="col-md-6">
+                        <h6 class="date_order">:תאריך הזמנה</h6>
+                               <p> ${order.date}</p>
+                        <h6>:סכום הזמנה</h6>
+                               <p> ${order.totalPrice}</p>
+                    </div>
+                </div>
+            `;
+            //adding order to the  component
+            $("#products_in_myorder_container").append(orderCard)
+        }
+
+        $("#adminpagebtt").click(function (event) {
+            window.location.href = "/admin";
+        });
+
+        $("#log-out-btn").click(function (event) {
+            const url = '/logout'
+            $.ajax({
+                url: url,
+                type: "GET",
+                data: JSON.stringify({}),
+                contentType: "application/json",
+                success: function (res) {
+                    console.log('log out successfully applied!')
+                    window.location.href = "/";
+                },
+                error: function (err) {
+                    alert("log out failed! Please try again.");
+                    console.error("log out! error:", err);
+                }
+            });
+        });
+    })
+
+</script>
+</script>
+<div class="container py-4">
+</div>
+<div class="row">
+    <div class="col-md-2 text-right" style="display: flex;flex-direction: column;">
+        <button class="btn userbtn" type="button" onclick="window.location.href='/account'">כללי</button>
+        <button class="btn userbtn" type="button" onclick="window.location.href='/acountorders'">הזמנות שלי</button>
+        <button id="log-out-btn" class="btn userbtn" type="button">התנתקות</button>
+        <% if (user.role == 'admin' ) { %>
+            <button id="adminpagebtt" class="btn userbtn" type="button">עמוד מנהל</button>
+        <% } %>
+    </div>
+    <div class="col-md-8 text-right">
+        <h3 class="text-right">ההזמנות שלי</h3>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card products-card" id="products_in_myorder_container">
+                    <!-- Your content for products_in_myorder_container here -->
+
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card order-summary-card">
+                    <div class="card-body">
+                        <h3 class="order-header">:סה"כ הזמנות</h3>
+                        <h3 class="order-header">:מחיר כל ההזמנות</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col container text-right ">
+
+    </div>
+
+
+</div>
+</div>
+
+

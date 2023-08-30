@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html data-bs-theme="auto" lang="he" dir="rtl">
+
+
+<%- include('partials/head') %>
+<script>
+    $(document).ready(function () {
+        $('#create_collectionbtt').click(() => {
+            const url = `/api/categories/`;
+
+            const req = {
+                categoryName: $('#collectName').val(),
+                categoryImage: "test",
+            };
+
+            // Make the AJAX GET request
+            $.ajax({
+                url: url,
+                type: "POST",
+                data: JSON.stringify(req),
+                contentType: "application/json",
+                success: function (res) {
+                    window.location.href = "/admin";
+                },
+                error: function (err) {
+                    console.error("error:", err);
+                }
+            });
+        });
+    })
+</script>
+
+<body>
+<%- include('partials/nav') %>
+<%- include('partials/components/create_collectioncomp.ejs') %>
+<div class="container  text-right">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <%- include('partials/components/addproductcomp.ejs') %>
+        </div>
+    </div>
+</div>
+<%- include('partials/footer') %>
+</body>
+
+</html>

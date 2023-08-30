@@ -1,0 +1,32 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#sign-up").click(function () {
+            const url = `/api/users/`;
+            const username = $("#email").val();
+            const password = $("#password-up").val();
+
+
+            // Make the AJAX GET request
+            $.ajax({
+                url: url,
+                type: "POST",
+                data: JSON.stringify({
+                    username: username,
+                    password: password,
+                }),
+                contentType: "application/json",
+                success: function (res) {
+                    window.location.href = "/";
+                },
+                error: function (err) {
+                    alert("Sign up failed! Please try again.");
+                    console.error("Sign up! error:", err);
+                }
+            });
+
+
+
+        });
+    });
+</script>
