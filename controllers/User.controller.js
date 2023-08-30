@@ -12,7 +12,6 @@ const create = async (req, res) => {
         const hash = bcrypt.hashSync(req.body.password, salt);
         const userId = Math.floor(Math.random() * 1000000000);
         const cartId = Math.floor(Math.random() * 1000000000);
-        const wishListId = Math.floor(Math.random() * 1000000000);
 
         // Create CartModel and WishListModel instances
         const cart = new CartModel({
@@ -23,7 +22,7 @@ const create = async (req, res) => {
         });
 
         const wishList = new WishListModel({
-            userId: wishListId,
+            userId: userId,
             products: [],
         });
 
@@ -34,7 +33,6 @@ const create = async (req, res) => {
         const user = new User({
             userId: userId,
             cartId: cartId,
-            wishListId: wishList._id, // Use the automatically generated _id
             firstName: req.body.firstName ? req.body.firstName : '',
             lastName: req.body.lastName ? req.body.lastName : '',
             username: req.body.username,

@@ -64,10 +64,11 @@ router.route('/catalog').get(async (req, res) => {
     try {
         if (req.query.search?.length > 0) {
             const search = req.query.search;
-            res.render('catalog', { isAuth: req.session.isAuth, user: req.session.user, search: search });
+
+            res.render('catalog', { isAuth: req.session.isAuth, user: req.session.user, search: search, limit: req.query.limit ? req.query.limit : 40 });
         }
         else
-            res.render('catalog', { isAuth: req.session.isAuth, user: req.session.user, search: '' });
+            res.render('catalog', { isAuth: req.session.isAuth, user: req.session.user, search: '', limit: req.query.limit ? req.query.limit : 40 });
     } catch (error) {
         console.error('Error fetching products:', error);
         res.status(500).send('Error fetching products'); // Send an appropriate error response

@@ -8,8 +8,8 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function () {
-        const LIMIT = 10 * 4;
         var offset = 0;
+        const LIMIT = JSON.parse('<%- JSON.stringify(limit) %>');
         var user = JSON.parse('<%- JSON.stringify(user) %>');
         var search = JSON.parse('<%- JSON.stringify(search) %>');
         try {
@@ -59,11 +59,9 @@
                                 wishbtn.addClass('btn-outline');
                             }
                         });
+
                         buttonContainer.append(cartbtn);
-
                         buttonContainer.append(wishbtn);
-
-
                         productItem.append(buttonContainer);
                         productList.append(productItem);
                     });
@@ -116,26 +114,23 @@
         }
         const wish = (product) => {
             if (user) {
-                // get the cart
                 $.ajax({
-                    url: 'api/wishlists/' + user.wishListId,
+                    url: 'api/wishlists/' + user.userId,
                     type: 'GET',
                     success: function (data) {
-                        let wishlist = data;
-                        // update the cart
+                        let wishlist = data[0].products;
                         newProduct = {
                             id: product.id,
                             price: product.price,
                             name: product.productName,
-                            image:product.image
+                            image: product.image
                         }
                         wishlist.push(newProduct);
-                        console.log(wishlist)
                         $.ajax({
-                            url: 'api/wishlist/' + user.wishListId,
+                            url: 'api/wishlists/' + user.userId,
                             type: 'PUT',
                             data: JSON.stringify({
-                               products: wishlist
+                                products: wishlist
                             }),
                             contentType: 'application/json',
                             success: function (data) {
@@ -155,57 +150,17 @@
                 alert('אנא התחבר כדי להוסיף מוצרים לרשימת משאלות');
             }
         }
-        // $('#filter-form').on('submit', async function (event) {
-        //     event.preventDefault();
-        //     const category = $('#category-select').val();
-        //     const minPrice = $('#price-min').val();
-        //     const maxPrice = $('#price-max').val();
 
-        //     const queryParams = new URLSearchParams({
-        //         category: category,
-        //         minPrice: minPrice,
-        //         maxPrice: maxPrice,
-        //     });
-        //     console.log(queryParams.toString());
-        //     try {
-        //         const response = await fetch(`/api/products?${queryParams.toString()}`);
-        //         const filteredProducts = await response.json();
 
-        //         const productList = $('.catalog-items');
-        //         productList.empty();
+        // filter form
+        $('#filter-form').submit(function (e) {
+            e.preventDefault();
+            const category = $('#category-select').val();
+            const limit = $('#limit-select').val();
+            window.location.href = `/catalog?limit=${limit}&search=${category}`;
+        });
 
-        //         filteredProducts.forEach(product => {
-        //             const productItem = $('<div>').addClass('col-md-3').html(`
-        //         <div class="product-card">
-        //             <div class="product-image-container">
-        //                 <span class="badge badge-new">New</span>
-        //                 <a href="/product/${product.productName}" class="product-link" title="${product.productName}">
-        //                     ${product.image && product.image !== "sdasdasdsa" ?
-        //                     `<img src="${product.image}" class="product-image" alt="${product.productName}">` :
-        //                     `<img src="https://placehold.jp/300x300.png" class="product-image" alt="Default Image">`}
-        //                 </a>
-        //             </div>
-        //             <div class="product-details row" style="flex-direction: row;">
-        //                 <div class="col-md-8">
-        //                     <a id="product-name" href="/product/${product.productName}" class="product-name text-right" style="color: black;"
-        //                         title="${product.productName}">${product.productName}</a>
-        //                 </div>
-        //                 <div class="product-price col-md-1">
-        //                     <span class="price">₪${product.price}</span>
-        //                 </div>
-        //             </div>
-        //             <div class="text-center">
-        //                 <button id="add_to_cart_btn" class="add-to-cart-button btn">הוסף לסל</button>
-        //                 <button class="add-to-cart-button btn">אהבתי</button>
-        //             </div>
-        //         </div>
-        // `);
-        //             productList.append(productItem);
-        //         });
-        //     } catch (error) {
-        //         console.error('Error fetching products:', error);
-        //     }
-        // });
+
     });
 </script>
 
@@ -239,7 +194,8 @@
                     <div class="col-md-5">
                         <div class="form-group">
                             <label class="mr-2" for="limit">:מגבלה</label>
-                            <select class="custom-select" id="limit" name="limit">
+                            <select class="custom-select" id="limit-select" name="limit">
+                                <option value="1">1</option>
                                 <option value="10">10</option>
                                 <option value="25">25</option>
                                 <option value="50">50</option>
@@ -254,7 +210,6 @@
         </div>
         </form>
     </div>
-</div>
 </div>
 <div class="container">
     <div class="row catalog-items">
