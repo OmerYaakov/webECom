@@ -26,7 +26,7 @@ const __dirname = dirname(__filename);
 const app = express();
 
 // Set up EJS as the view engine
-mongoose.connect('mongodb+srv://AvivNat:AvivKaved@shagal.jaexhqx.mongodb.net/', {
+mongoose.connect("" + process.env.DB_URI, {
     useNewUrlParser: true, useUnifiedTopology: true
 }).then(() => {
     console.log("Successfully connected to the database");
@@ -45,7 +45,7 @@ app.use(express.static(__dirname + '/facebookAPI'));
 //code for locations...
 app.get('/api/map', async (req, res) => {
     try {
-        const collection = mongoose.connection.db.collection('branches'); // Replace with your collection name
+        const collection = mongoose.connection.db.collection('branches');
 
         // Fetch data from MongoDB
         const data = await collection.find({}).toArray();
@@ -63,6 +63,19 @@ app.delete('/api/map/:name', async (req, res) => {
         // Fetch data from MongoDB
         console.log(req.params.name);
         const data = await collection.findOneAndDelete({ name: req.params.name });
+        res.status(200).json(data);
+    } catch (error) {
+        console.error('Error fetching data from MongoDB:', error);
+        res.status(500).json({ error: 'Error fetching data from MongoDB' });
+    }
+});
+app.delete('/api/map', async (req, res) => {
+    try {
+        const collection = mongoose.connection.db.collection('branches');
+
+        // Fetch data from MongoDB
+        const data = await collection.findOneAndDelete({ name: req.body.index });
+        // Send the data to the frontend
         res.status(200).json(data);
     } catch (error) {
         console.error('Error fetching data from MongoDB:', error);
