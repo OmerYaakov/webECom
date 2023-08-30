@@ -20,7 +20,17 @@
                 displayErrorMessage("אנא מלא את כל השדות");
                 return;
             }
+            const phoneNumberRegex = /^[0-9\+]+$/;
+            if (!phoneNumber.match(phoneNumberRegex)) {
+                displayErrorMessage("מספר הטלפון חייב להכיל ספרות וסימן + בלבד");
+                return;
+            }
 
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!email.match(emailRegex)) {
+                displayErrorMessage("אימייל לא תקין");
+                return;
+            }
             $.ajax({
                 url: "/api/contacts",
                 type: "POST",
