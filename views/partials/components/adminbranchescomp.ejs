@@ -2,16 +2,24 @@
     <h1 class="text-right"> סניפים</h1>
     <div class="row">
         <div class="col-md-6">
+            <%- include ('editbranchescomp') %>
+        </div>
+        <div class="col-md-6">
+            <h1 class="text-right">מחיקת סניף</h1>
+            <p class="text-right d-block">בחר סניף למחיקה:</p>
+            <div class="form-group">
+                <select class="form-control" id="dropdown-branches">
+                    <option>בחר סניף</option>
+                </select>
+            </div>
+            <button class="btn mybtn d-block w-100" id="deletebranch">מחק סניף</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
             <div id="myMap" style="width: 100%; min-height: 700px"></div>
         </div>
         <div class="col-md-6 branch-details">
-            <button class="btn btn-dark d-block w-100" id="addbranch" onclick="window.location.href='/addbranches'">הוסף סניף</button>
-        <p class="text-right d-block">בחר סניף למחיקה:</p>
-        <div class="form-group">
-            <select class="form-control" id="dropdown-branches">
-                <option>בחר סניף</option>
-            </select>
-        </div><button class="btn btn-dark d-block w-100" id="deletebranch">מחק סניף</button>
         </div>
     </div>
 </div>
@@ -61,6 +69,7 @@
                 }
             });
     }
+
     function populateDropdown(data) {
         const selectDropdown = document.getElementById('dropdown-branches');
         selectDropdown.innerHTML = '';
