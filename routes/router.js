@@ -139,6 +139,8 @@ router.route('/acountorders').get((req, res) => {
 
 router.route('/admin/orders').get((req, res) => {
     res.render('adminorders', { isAuth: req.session.isAuth });
+});router.route('/admin/quantitiesadmin').get((req, res) => {
+    res.render('quantitiesadmin', { isAuth: req.session.isAuth });
 });
 
 router.route('/logout').get((req, res) => {
