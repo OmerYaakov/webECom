@@ -19,7 +19,8 @@
                         diamondWeight: $("#diamond_weight").val(),
                         categoryName: $("#category").val(),
                         price: $("#price").val(),
-                        image: $("#formFileMultiple")[0].files[0].name
+                        image: $("#formFileMultiple")[0].files[0].name,
+                        inventory: $("#inventory").val(),
                     }),
                 contentType: 'application/json',
                 success: function (res) {
@@ -101,9 +102,16 @@
                            placeholder="כמות יהלומים"/>
                 </div>
             </div>
+            <div class="form-row">
 
-            <div class="form-group">
+            <div class="form-group col-md-6">
                 <input id="price" class="form-control text-right" type="text" name="price" placeholder="מחיר"/>
+            </div>
+
+                <div class="form-group col-md-6">
+                    <input id="inventory" class="form-control text-right" type="text" name="inventory"
+                           placeholder="מלאי"/>
+                </div>
             </div>
             <div class="form-group">
                 <div class="custom-file">
