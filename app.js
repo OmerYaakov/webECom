@@ -57,6 +57,19 @@ app.get('/api/map', async (req, res) => {
     }
 });
 
+app.delete('/api/map', async (req, res) => {
+    try {
+        const collection = mongoose.connection.db.collection('branches');
+        // Fetch data from MongoDB
+        const data = await collection.findOneAndDelete({ name: req.body.name });
+        // Send the data to the frontend
+        res.status(200).json(data);
+    } catch (error) {
+        console.error('Error fetching data from MongoDB:', error);
+        res.status(500).json({ error: 'Error fetching data from MongoDB' });
+    }
+});
+
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
         cb(null, 'public/photos/'); // Uploads will be stored in the 'uploads' folder

@@ -28,11 +28,11 @@
 <script>
     $(document).ready(function () {
         const deleteButton = $('#deletebranch');
-
         deleteButton.on('click', function () {
             const selectedIndex = $('#dropdown-branches').prop('selectedIndex');
             if (selectedIndex > 0) {
                 const branchIdToDelete = $('#dropdown-branches').val();
+                console.log('Deleting branch:', branchIdToDelete);
                 $.ajax({
                     url: `/api/map`,
                     method: 'DELETE',
@@ -87,7 +87,7 @@
             .then(data => {
                 if (data.resourceSets.length > 0 && data.resourceSets[0].resources.length > 0) {
                     const location = data.resourceSets[0].resources[0].point.coordinates;
-                    return {latitude: location[0], longitude: location[1]};
+                    return { latitude: location[0], longitude: location[1] };
                 } else {
                     return null; // Geocoding failed
                 }
