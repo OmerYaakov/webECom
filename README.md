@@ -48,7 +48,7 @@ Our project is an e-commerce platform designed to manage and visualize product d
 
 ## Installation
 
-1. Clone the repository: `git clone https://github.com/your-username/your-repo.git`
+1. Clone the repository: `git clone https://github.com/OmerYaakov/webECom.git`
 2. Navigate to the project directory: `cd webECom`
 3. Install dependencies: `npm install`
 
