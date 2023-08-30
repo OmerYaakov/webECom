@@ -78,7 +78,7 @@ Our project is an e-commerce platform designed to manage and visualize product d
 
 ## Contributors
 
-- Nir
-- Eilon
-- Aviv
-- Omer
+- Nir Tuttnauer
+- Eilon Alter
+- Aviv Nataf
+- Omer Yaakov
