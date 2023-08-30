@@ -1,7 +1,6 @@
 import express from 'express';
 const router = express.Router();
 import { create, findAll, remove, findOneByName, findOneByID, update } from '../../controllers/Product.controller.js';
-import multer from 'multer';
 
 
 router.post('/', create);

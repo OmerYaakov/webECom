@@ -1,28 +1,5 @@
 import WishList from '../models/WishList.model.js';
 
-// const create = async (req, res) => {
-//     try {
-//
-//         const wishList = new wishList({
-//             id: req.body.id,
-//             userId: req.body.userId,
-//             products: req.body.products
-//         });
-//         user.save()
-//             .then(data => {
-//                 res.send(data);
-//             }).catch(err => {
-//                 res.status(500).send({
-//                     message: err.message || "Some error occurred while creating the wish list."
-//                 });
-//             });
-//     } catch (error) {
-//         console.log("error");
-//         return res.status(400).send({
-//             message: error.message || "Some error occurred while creating the wish list."
-//         });
-//     }
-// };
 const create = async (req, res) => {
     try {
         const wishList = new WishList({
@@ -51,6 +28,7 @@ const findAll = (req, res) => {
 
 const findOne = (req, res) => {
     WishList.find({ userId: req.params.id }).then(wishlist => {
+        console.log("findOne" + req.params.id);
         res.send(wishlist);
     }
     ).catch(err => {
@@ -63,6 +41,7 @@ const findOne = (req, res) => {
 
 const update = (req, res) => {
     WishList.findOneAndUpdate({ userId: req.params.id }, req.body, { new: true }).then(wishlist => {
+        console.log("findOne" + req.params.id);
         res.send(wishlist);
     }
     ).catch(err => {
