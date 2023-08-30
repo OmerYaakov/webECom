@@ -10,7 +10,10 @@
             $(document).ready(function () {
                 var offset = 0;
                 const LIMIT = JSON.parse('<%- JSON.stringify(limit) %>');
-                var user = JSON.parse('<%- JSON.stringify(user) %>');
+                var user = '<%- user %>';
+                if (user) {
+                    user = JSON.parse('<%- JSON.stringify(user) %>');
+                }
                 var search = JSON.parse('<%- JSON.stringify(search) %>');
                 try {
                     $.ajax({

@@ -15,7 +15,7 @@ const create = async (req, res) => {
             diamondNumber: req.body.diamondNumber,
             price: req.body.price,
             image: "/photos/" + req.body.image,
-            inventory: req.body.inventory,
+            quantity: req.body.quantity,
         });
         const data = await product.save();
         res.status(201).json(data);
@@ -83,7 +83,6 @@ const findOneByName = (productName) => {
     return ProductModel.findOne({ productName });
 };
 
-
 const update = (req, res) => {
     ProductModel.findOneAndUpdate({ id: req.params.id }, {
         id: req.body.id,
@@ -91,6 +90,7 @@ const update = (req, res) => {
         categoryId: req.body.categoryId,
         price: req.body.price,
         image: req.body.image,
+        quantity: req.body.quantity,
     }, { new: true }).then((product) => {
         res.status(200).json(product);
     }).catch((error) => {
