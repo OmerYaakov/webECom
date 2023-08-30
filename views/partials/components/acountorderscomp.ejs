@@ -3,6 +3,7 @@
     $(document).ready(function () {
         var user = JSON.parse('<%- JSON.stringify(user) %>');
         var orders = user.orders
+        console.log(orders)
         for (let i = 0; i < orders.length; i++) {
             const order = orders[i]
             orderCard = `
@@ -18,15 +19,9 @@
                 </div>
             `;
             //adding order to the  component
-            $(".myorder-comp").append(orderCard)
+            $("#products_in_myorder_container").append(orderCard)
         }
-    })
 
-</script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script>
-    $(document).ready(function () {
-        var user = JSON.parse('<%- JSON.stringify(user) %>');
         $("#adminpagebtt").click(function (event) {
             window.location.href = "/admin";
         });
@@ -48,7 +43,9 @@
                 }
             });
         });
-    });
+    })
+
+</script>
 </script>
 <div class="container py-4">
 </div>
@@ -67,6 +64,7 @@
             <div class="col-md-12">
                 <div class="card products-card" id="products_in_myorder_container">
                     <!-- Your content for products_in_myorder_container here -->
+
                 </div>
             </div>
         </div>
