@@ -7,16 +7,29 @@
         for (let i = 0; i < orders.length; i++) {
             const order = orders[i]
             orderCard = `
-                     <h3 class="text-center">פרטי הזמנה</h3>
-            <div class="order-details text-right d-block">
-                <div class="row d-flex justify-content-end">
-                    <div class="col-md-6">
-                        <h6 class="date_order"> תאריך הזמנה</h6>
-                               <p> ${order.date}</p>
-                        <h6> סכום הזמנה</h6>
-                               <p> ${order.totalPrice}</p>
-                    </div>
+   <div class="card mb-3">
+    <h3 class="text-right">פרטי הזמנה</h3>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="mb-3">
+                <div class="card-body">
+                    <h6 class="card-title">תאריך הזמנה</h6>
+                    <p class="card-text">${order.date}</p>
                 </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="mb-3">
+                <div class="card-body">
+                    <h6 class="card-title">סכום הזמנה</h6>
+                    <p class="card-text">₪${order.totalPrice}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
             `;
             //adding order to the  component
             $("#products_in_myorder_container").append(orderCard)
@@ -62,19 +75,9 @@
         <h3 class="text-right">ההזמנות שלי</h3>
         <div class="row">
             <div class="col-md-12">
-                <div class="card products-card" id="products_in_myorder_container">
+                <div class="products-card" id="products_in_myorder_container">
                     <!-- Your content for products_in_myorder_container here -->
 
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card order-summary-card">
-                    <div class="card-body">
-                        <h3 class="order-header">:סה"כ הזמנות</h3>
-                        <h3 class="order-header">:מחיר כל ההזמנות</h3>
-                    </div>
                 </div>
             </div>
         </div>
