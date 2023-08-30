@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html data-bs-theme="auto" lang="he">
+<html data-bs-theme="auto" lang="he" dir="rtl">
+
 
 <%- include('partials/head') %>
 <script>
@@ -19,8 +20,6 @@
                 data: JSON.stringify(req),
                 contentType: "application/json",
                 success: function (res) {
-                    console.log("create collection success:", res);
-                    //navigate to admin page
                     window.location.href = "/admin";
                 },
                 error: function (err) {

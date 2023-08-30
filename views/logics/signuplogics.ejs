@@ -1,9 +1,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
     $(document).ready(function () {
-        console.log("ready!");
         $("#sign-up").click(function () {
-            console.log("sign up button pressed!");
             const url = `/api/users/`;
             const username = $("#email").val();
             const password = $("#password-up").val();

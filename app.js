@@ -1,5 +1,4 @@
 import dotenv from 'dotenv';
-
 dotenv.config();
 import express from "express";
 import mainRouter from "./routes/router.js";
@@ -7,14 +6,14 @@ import apiRoutes from "./routes/apiRoutes/index.js";
 import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
 import path from 'path';
-import {fileURLToPath} from 'url';
-import {dirname} from 'path';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
 import http from "http";
-import {Server as SocketIOServer} from 'socket.io';
+import { Server as SocketIOServer } from 'socket.io';
 import session from 'express-session'
 import MongeDBSession from 'connect-mongodb-session'
 import multer from 'multer'
-import {uploadFile, getFileStream} from "./s3.js";
+import { uploadFile, getFileStream } from "./s3.js";
 import fs from 'fs'
 import util from 'util'
 
@@ -54,8 +53,24 @@ app.get('/api/map', async (req, res) => {
         res.json(data);
     } catch (error) {
         console.error('Error fetching data from MongoDB:', error);
-        res.status(500).json({error: 'Error fetching data from MongoDB'});
+        res.status(500).json({ error: 'Error fetching data from MongoDB' });
     }
+});
+
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'public/photos/'); // Uploads will be stored in the 'uploads' folder
+    },
+    filename: (req, file, cb) => {
+        cb(null, file.originalname);
+    }
+});
+
+const upload = multer({ storage: storage });
+
+app.post('/api/upload', upload.single('file'), (req, res) => {
+    console.log("file uploaded " + req.file.originalname);
+    res.status(200).json({ message: 'success!' });
 });
 
 app.get('/api/facebook', async (req, res) => {
@@ -69,9 +84,8 @@ app.get('/api/facebook', async (req, res) => {
     }
 });
 
-
 app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 
 app.use(session({
@@ -82,35 +96,35 @@ app.use(session({
 }))
 
 // importing multer + util+fs
-const upload = multer({dest: 'uploads/'})
-const unlinkFile = util.promisify(fs.unlink)
+// const upload = multer({ dest: 'uploads/' })
+// const unlinkFile = util.promisify(fs.unlink)
 
-// all of these '/images' we need to get out to a router...
-app.get('images/:key', (req, res) => {
-    const key = req.params.Key
-    const readStream = getFileStream(key)
-    readStream.pipe(res)
-})
+// // all of these '/images' we need to get out to a router...
+// app.get('images/:key', (req, res) => {
+//     const key = req.params.Key
+//     const readStream = getFileStream(key)
+//     readStream.pipe(res)
+// })
 
-app.post('/images', upload.single('avatar'), async (req, res) => {
-    try {
-        //uploading the file to s3 bucket
-        const result = await uploadFile(req.file);
+// app.post('/images', upload.single('avatar'), async (req, res) => {
+//     try {
+//         //uploading the file to s3 bucket
+//         const result = await uploadFile(req.file);
 
-        //delete the file from the uploads folder...
-        await unlinkFile(req.file.path)
+//         //delete the file from the uploads folder...
+//         await unlinkFile(req.file.path)
 
-        console.log('Upload result:', result);
+//         console.log('Upload result:', result);
 
-        //right now result.Key undefined,...need to be fixed!
-        res.send(`/images/${result.Key}`)
+//         //right now result.Key undefined,...need to be fixed!
+//         res.send(`/images/${result.Key}`)
 
 
-    } catch (error) {
-        console.error('Error uploading image:', error);
-        res.status(500).send("Error uploading image.");
-    }
-});
+//     } catch (error) {
+//         console.error('Error uploading image:', error);
+//         res.status(500).send("Error uploading image.");
+//     }
+// });
 
 
 // Set up EJS as the view engine
@@ -118,8 +132,8 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 // Static files
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.urlencoded({extended: true}))
-app.use(express.urlencoded({extended: true}))
+app.use(express.urlencoded({ extended: true }))
+app.use(express.urlencoded({ extended: true }))
 
 // Use the router
 app.use('/', mainRouter); // Use the router for the main path

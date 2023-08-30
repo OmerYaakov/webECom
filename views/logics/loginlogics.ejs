@@ -3,14 +3,10 @@
     $(document).ready(function () {
         console.log("ready!");
         $("#sign-in").click(function () {
-            console.log("login button pressed!");
-
             const username = $("#email-in").val();
             const password = $("#password-in").val();
 
             const url = `/api/users/?username=${username}&password=${password}`;
-            console.log(username, password)
-
             // Make the AJAX GET request
             $.ajax({
                 url: url,
@@ -21,7 +17,6 @@
                 }),
                 contentType: "application/json",
                 success: function (res) {
-                    console.log("Login success:", res);
                     //navigate to home page
                     window.location.href = "/";
                 },
@@ -31,7 +26,6 @@
             });
         });
         $("#sign-up-nav").click(function () {
-            console.log("sign-up button pressed!");
             // Make the AJAX GET request
             $.ajax({
                 url: "/signup",
