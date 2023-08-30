@@ -63,7 +63,9 @@
                                     <img src="${product.image}" alt="product img" class="" style="max-height: 150px; aspect-ratio: 1"/>
                                 </div>
                                 <div class="col-md-3">
-                                    <h5>${product.productName}</h5>
+                                    <h5>${product.name}</h5>
+                                    <br>
+                                    <p>כמות: ${product.quantity}</p>
                                 </div>
                             </div>
                             <p  class="text-left">₪<span>${product.price}</span></p>
@@ -147,7 +149,7 @@
                         </div>
 
                     </div>
-                    <hr/>
+                    <hr />
                     <div class="delivery-options">
                         <div class="radio-container justify-content-start">
                             <input class="radio" type="radio" name="delivery" id="delivery-pickup">
@@ -161,7 +163,7 @@
 
 
                     </div>
-                    <hr/>
+                    <hr />
                     <div class="row d-flex justify-content-end">
 
                         <div class="col-md-6">

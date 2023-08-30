@@ -1,3 +1,44 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $.ajax({
+            url: `/api/products`,
+            type: 'GET',
+            success: function (products) {
+                console.log(products.length);
+                for (let i = 0; i < products.length; i++) {
+                    let product = products[i];
+                    var productCard = `
+                         <div class="row">
+                            <div class="col-12">
+                                <div class="text-right">
+                                    <div class="row">
+                                        <div class="col-md-9">
+                                            <h5>${product.productName}</h5>
+                                            product id: ${product.id}
+                                            product category: ${product.category}
+                                            product price: ${product.price}
+                                            quantity: ${product.quantity}
+                                            </div>
+                                        <div class="col-md-3">
+                                            <img src=${product.image} alt="product img" style="max-height: 150px"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr>
+                            </div>
+                        </div>
+                    `;
+                }
+                $("#product-container").append(productCard);
+            },
+            error: function (err) {
+                console.log(err);
+            }
+        });
+    });
+</script>
+
 <div class="container" style="max-width: 500px; margin: auto;">
     <h2 class="text-right">בחר קטגוריה לצפייה:</h2>
     <div class="form-group">
@@ -11,12 +52,6 @@
         </select>
     </div>
 </div>
-<div class="container product-container text-right" style="background-color: #EFEFEF; width: 30em; height: auto" >
-    <p class="text-right">details</p>
-    <label class="text-right mt-4"> משקל זהב: </label><br/>
-    <label class="text-right mt-4"> סוג זהב: </label><br/>
-    <label class="text-right mt-4"> כמות יהלומים: </label><br/>
-    <label class="text-right mt-4">  משקל יהלומים: </label><br/>
-    <label class="text-right mt-4">  כמות במלאי: </label><br/>
-    <img alt="תמונת מוצר">
+<div id="product-container" class="container product-container text-right"
+    style="background-color: #EFEFEF; width: 30em; height: auto">
 </div>

@@ -53,6 +53,7 @@
                     deleteBTN.click(function () {
                         removeProductFromWishList(product);
                     })
+                    $(`#products-in-wish`).append(deleteBTN);
                     var productCard = `
                          <div class="row">
         <div class="col-12">
@@ -103,8 +104,6 @@
 <div class="container">
     <div class="row">
         <div id="products-in-wish" class="col-md-12">
-            <hr>
         </div>
     </div>
-    <hr>
 </div>
