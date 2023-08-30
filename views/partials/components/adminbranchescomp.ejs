@@ -34,12 +34,11 @@
                 const branchIdToDelete = $('#dropdown-branches').val();
                 console.log('Deleting branch:', branchIdToDelete);
                 $.ajax({
-                    url: `/api/map`,
+                    url: `/api/map/${branchIdToDelete}`,
                     method: 'DELETE',
-                    data: {name: branchIdToDelete},
                     success: function (response) {
-                        data.splice(selectedIndex - 1, 1);
-                        // Remove the pin from the map and clear the details if needed
+                        console.log('Branch deleted successfully:', response);
+                        window.location.reload();
                     },
                     error: function (error) {
                         console.error('Error deleting branch:', error);
