@@ -18,14 +18,16 @@
     </div>
     <div class="col-md-6">
         <div class="row">
-            <div class="col-md-4">
+ <div class="col-md-6 mt-4">
+                <label for="quantity-${product.id}">כמות:</label>
+<br>
+                <input type="number" id="quantity-${product.id}" name="quantity-${product.id}" value="${product.quantity}" min="0">
+                <button type="button" class="btn mybtn mt-4" style="width: 75%" onclick="updateProduct(${product.id})">עדכן</button>
+            </div>
+            <div class="col-md-3">
                 <img src="${product.image}" alt="תמונת המוצר" style="max-height: 150px; aspect-ratio: 1" class="mt-2"/>
             </div>
-            <div class="col-md-2 mt-4">
-                <label for="quantity-${product.id}">כמות:</label>
-                <input type="number" id="quantity-${product.id}" name="quantity-${product.id}" value="${product.quantity}" min="0">
-                <button type="button" class="btn mybtn" style="width: 100%" onclick="updateProduct(${product.id})">עדכן</button>
-            </div>
+
         </div>
     </div>
 </div>
