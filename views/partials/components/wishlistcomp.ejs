@@ -49,7 +49,7 @@
                 for (let i = 0; i < wishlistProducts.length; i++) {
                     const product = wishlistProducts[i];
                     console.log(product)
-                    var deleteBTN = $(`<button id="deleteBTN${product.id}" class="btn">X</button>`)
+                    var deleteBTN = $(`<button id="deleteBTN${product.id}" class="btn">X</button>`);
                     deleteBTN.click(function () {
                         removeProductFromWishList(product);
                     })
