@@ -2,6 +2,8 @@
 <script src="/socket.io/socket.io.js"></script>
 <script>
     $(document).ready(function () {
+        var socket = io();
+
         const displayProducts = (products) => {
             $("#product-container").empty();
             for (let i = 0; i < products.length; i++) {
@@ -64,8 +66,8 @@
             }
         });
 
-        var socket = io();
         socket.on('storageUpdate', function (msg) {
+            console.log(msg);
             $.ajax({
                 url: '/api/products',
                 type: 'GET',

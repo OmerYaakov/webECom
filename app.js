@@ -144,9 +144,9 @@ const io = new SocketIOServer(server);
 
 io.on('connection', client => {
     console.log('New WS Connection...');
-    client.on('message', (message) => {
+    client.on('storageUpdate', (message) => {
         console.log(message);
-        io.emit('message', message);
+        io.emit('storageUpdate', message);
     });
 });
 
