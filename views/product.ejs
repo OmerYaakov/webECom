@@ -10,21 +10,21 @@
             if (user) {
                 // get the cart
                 $.ajax({
-                    url: 'api/carts/' + user.cartId,
+                    url: '/api/carts/' + user.cartId,
                     type: 'GET',
                     success: function (data) {
                         let cart = data[0];
                         // update the cart
                         newProduct = {
                             productId: product.id,
-                            quantity: 1,
+                            // quantity: 1,
                             price: product.price,
                             productName: product.productName,
                         }
                         cart.totalPrice += product.price * newProduct.quantity;
                         cart.cartProducts.push(product);
                         $.ajax({
-                            url: 'api/carts/' + user.cartId,
+                            url: '/api/carts/' + user.cartId,
                             type: 'PUT',
                             data: JSON.stringify(cart),
                             contentType: 'application/json',

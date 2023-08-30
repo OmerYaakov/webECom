@@ -14,7 +14,8 @@ const create = async (req, res) => {
             diamondWeight: req.body.diamondWeight,
             diamondNumber: req.body.diamondNumber,
             price: req.body.price,
-            image: "photos/" + req.body.image,
+            image: "/photos/" + req.body.image,
+            inventory: req.body.inventory,
         });
         const data = await product.save();
         res.status(201).json(data);
