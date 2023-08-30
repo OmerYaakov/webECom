@@ -35,6 +35,66 @@
     $(document).ready(function () {
 
         $("#create-product").click(function (event) {
+            function isPositiveNumber(value) {
+                return parseFloat(value) > 0;
+            }
+
+            function isEmpty(value) {
+                return value === "";
+            }
+
+            function displayErrorMessage(message) {
+                $("#error-label").text(message);
+            }
+
+            function handleValidationFailure() {
+                displayErrorMessage("אנא מלא את כל השדות או הכנס ערכים חיוביים");
+                event.preventDefault();
+            }
+
+// Retrieve field values
+            const nameValue = $("#name").val();
+            const modelNumberValue = $("#model_number").val();
+            const detailsValue = $("#details").val();
+            const goldWeightValue = $("#gold_weight").val();
+            const goldTypeValue = $("#gold_type").val();
+            const diamondNumberValue = $("#diamond_number").val();
+            const diamondWeightValue = $("#diamond_weight").val();
+            const categoryValue = $("#category").val();
+            const priceValue = $("#price").val();
+            const inventoryValue = $("#inventory").val();
+            const fileInput = $("#formFileMultiple")[0];
+
+// Define validation conditions
+            const isAnyFieldEmpty =
+                isEmpty(nameValue) ||
+                isEmpty(modelNumberValue) ||
+                isEmpty(detailsValue) ||
+                isEmpty(goldWeightValue) ||
+                isEmpty(goldTypeValue) ||
+                isEmpty(diamondNumberValue) ||
+                isEmpty(diamondWeightValue) ||
+                isEmpty(categoryValue) ||
+                isEmpty(priceValue) ||
+                isEmpty(inventoryValue) ||
+                !fileInput.files.length ||
+                !fileInput.files[0].size;
+
+            const isAnyNumberNotPositive =
+                !isPositiveNumber(goldWeightValue) ||
+                !isPositiveNumber(diamondNumberValue) ||
+                !isPositiveNumber(diamondWeightValue) ||
+                !isPositiveNumber(priceValue) ||
+                !isPositiveNumber(inventoryValue);
+
+// Validate the form
+            if (isAnyFieldEmpty || isAnyNumberNotPositive) {
+                handleValidationFailure();
+            } else {
+                displayErrorMessage("");
+            }
+
+
             event.preventDefault();
             console.log($("#formFileMultiple")[0].files[0].name);
             $.ajax({
@@ -94,6 +154,9 @@
 
     <div class="card">
         <div class="card-body">
+            <div class="form-group">
+                <label id="error-label" class="text-danger"></label>
+            </div>
             <div class="form-group">
                 <input id="name" class="form-control text-right" type="text" name="name" placeholder="שם מוצר"/>
             </div>
