@@ -26,6 +26,30 @@
 
 <script type="text/javascript" src="https://www.bing.com/api/maps/mapcontrol?callback=loadMapScenario"></script>
 <script>
+    $(document).ready(function () {
+        const deleteButton = $('#deletebranch');
+
+        deleteButton.on('click', function () {
+            const selectedIndex = $('#dropdown-branches').prop('selectedIndex');
+            if (selectedIndex > 0) {
+                const branchIdToDelete = $('#dropdown-branches').val();
+                $.ajax({
+                    url: `/api/map`,
+                    method: 'DELETE',
+                    data: {name: branchIdToDelete},
+                    success: function (response) {
+                        data.splice(selectedIndex - 1, 1);
+                        // Remove the pin from the map and clear the details if needed
+                    },
+                    error: function (error) {
+                        console.error('Error deleting branch:', error);
+                    }
+                });
+            }
+        });
+    });
+
+
     function displayBranchDetails(branch) {
         const detailsDiv = document.querySelector('.branch-details');
 
