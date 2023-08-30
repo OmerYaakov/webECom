@@ -34,6 +34,53 @@
 <script>
     $(document).ready(function () {
 
+        var productId = "<%- productId %>" ? "<%- productId %>" : null;
+        if (productId != null) {
+            productId = JSON.parse(productId);
+            console.log("productId:", productId);
+            // get product by id
+            $.ajax({
+                url: '/api/products/' + productId,
+                type: 'GET',
+                contentType: 'application/json',
+                success: function (res) {
+                    console.log("get product success:", res);
+                    $("#name").val(res.productName);
+                    $("#model_number").val(res.modelNumber);
+                    $("#details").val(res.details);
+                    $("#gold_weight").val(res.goldWeight);
+                    $("#gold_type").val(res.goldType);
+                    $("#diamond_number").val(res.diamondNumber);
+                    $("#diamond_weight").val(res.diamondWeight);
+                    $("#category").val(res.categoryName);
+                    $("#price").val(res.price);
+                    $("#inventory").val(res.quantity);
+
+                    $("#create-product").text("עדכן מוצר");
+                    let removeBtn = $(`<button type="button" class="btn mybtn mt-4" style="width: 100%">מחק מוצר</button>`)
+                    removeBtn.click(function () {
+                        $.ajax({
+                            url: `/api/products/${productId}`,
+                            type: 'DELETE',
+                            success: function (res) {
+                                console.log(res);
+                                alert("המוצר נמחק בהצלחה!");
+                                window.location.href = "/admin/products";
+                            },
+                            error: function (err) {
+                                console.log(err);
+                            }
+                        });
+                    });
+                    $("#product-form").append(removeBtn);
+
+                },
+                error: function (err) {
+                    console.error("get product error:", err);
+                }
+            });
+        }
+
         $("#create-product").click(function (event) {
             function isPositiveNumber(value) {
                 return parseFloat(value) > 0;
@@ -52,7 +99,7 @@
                 event.preventDefault();
             }
 
-// Retrieve field values
+            // Retrieve field values
             const nameValue = $("#name").val();
             const modelNumberValue = $("#model_number").val();
             const detailsValue = $("#details").val();
@@ -65,7 +112,7 @@
             const inventoryValue = $("#inventory").val();
             const fileInput = $("#formFileMultiple")[0];
 
-// Define validation conditions
+            // Define validation conditions
             const isAnyFieldEmpty =
                 isEmpty(nameValue) ||
                 isEmpty(modelNumberValue) ||
@@ -76,9 +123,7 @@
                 isEmpty(diamondWeightValue) ||
                 isEmpty(categoryValue) ||
                 isEmpty(priceValue) ||
-                isEmpty(inventoryValue) ||
-                !fileInput.files.length ||
-                !fileInput.files[0].size;
+                isEmpty(inventoryValue)
 
             const isAnyNumberNotPositive =
                 !isPositiveNumber(goldWeightValue) ||
@@ -87,7 +132,7 @@
                 !isPositiveNumber(priceValue) ||
                 !isPositiveNumber(inventoryValue);
 
-// Validate the form
+            // Validate the form
             if (isAnyFieldEmpty || isAnyNumberNotPositive) {
                 handleValidationFailure();
                 return;
@@ -97,52 +142,78 @@
 
 
             event.preventDefault();
-            console.log($("#formFileMultiple")[0].files[0].name);
-            $.ajax({
-                url: '/api/products',
-                type: 'POST',
-                data:
-                    JSON.stringify({
-                        productName: $("#name").val(),
-                        modelNumber: $("#model_number").val(),
-                        details: $("#details").val(),
-                        goldWeight: $("#gold_weight").val(),
-                        goldType: $("#gold_type").val(),
-                        diamondNumber: $("#diamond_number").val(),
-                        diamondWeight: $("#diamond_weight").val(),
-                        categoryName: $("#category").val(),
-                        price: $("#price").val(),
-                        image: $("#formFileMultiple")[0].files[0].name,
-                        quantity: $("#inventory").val()
-                    }),
+            if (!productId || productId == null) {
+                console.log($("#formFileMultiple")[0].files[0].name);
+                $.ajax({
+                    url: '/api/products',
+                    type: 'POST',
+                    data:
+                        JSON.stringify({
+                            productName: $("#name").val(),
+                            modelNumber: $("#model_number").val(),
+                            details: $("#details").val(),
+                            goldWeight: $("#gold_weight").val(),
+                            goldType: $("#gold_type").val(),
+                            diamondNumber: $("#diamond_number").val(),
+                            diamondWeight: $("#diamond_weight").val(),
+                            categoryName: $("#category").val(),
+                            price: $("#price").val(),
+                            image: $("#formFileMultiple")[0].files[0].name,
+                            quantity: $("#inventory").val()
+                        }),
 
-                contentType: 'application/json',
-                success: function (res) {
+                    contentType: 'application/json',
+                    success: function (res) {
 
-                    console.log("upload success:", res);
-                },
-                error: function (err) {
-                    console.error("upload error:", err);
-                }
-
-            });
-            // uploadImage:
-            const formData = new FormData();
-            formData.append('file', $('#formFileMultiple')[0].files[0]);
-            $.ajax({
-                url: '/api/upload',
-                type: 'POST',
-                data: formData,
-                contentType: false,
-                processData: false,
-                success: function (res) {
-
-                    console.log("upload success:", res);
-                },
-                error: function (err) {
-                    console.error("upload error:", err);
-                }
-            })
+                        console.log("upload success:", res);
+                    },
+                    error: function (err) {
+                        console.error("upload error:", err);
+                    }
+                });
+                // uploadImage:
+                const formData = new FormData();
+                formData.append('file', $('#formFileMultiple')[0].files[0]);
+                $.ajax({
+                    url: '/api/upload',
+                    type: 'POST',
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function (res) {
+                        console.log("upload success:", res);
+                    },
+                    error: function (err) {
+                        console.error("upload error:", err);
+                    }
+                })
+            }
+            else {
+                $.ajax({
+                    url: '/api/products/' + productId,
+                    type: 'PUT',
+                    data:
+                        JSON.stringify({
+                            productName: $("#name").val(),
+                            modelNumber: $("#model_number").val(),
+                            details: $("#details").val(),
+                            goldWeight: $("#gold_weight").val(),
+                            goldType: $("#gold_type").val(),
+                            diamondNumber: $("#diamond_number").val(),
+                            diamondWeight: $("#diamond_weight").val(),
+                            categoryName: $("#category").val(),
+                            price: $("#price").val(),
+                            quantity: $("#inventory").val()
+                        }),
+                    contentType: 'application/json',
+                    success: function (res) {
+                        console.log("upload success:", res);
+                    },
+                    error: function (err) {
+                        console.error("upload error:", err);
+                    }
+                });
+            }
         });
         // $("#post-to-facebook").click(function () {
         //     console.log("post to facebook");
@@ -157,20 +228,19 @@
             <div class="form-group">
                 <label id="error-label" class="text-danger"></label>
             </div>
-
             <form id="product-form">
                 <div class="form-group">
                     <input id="name" class="form-control text-right" type="text" name="name" placeholder="שם מוצר"
-                           required>
+                        required>
                 </div>
                 <div class="form-group">
                     <input id="details" class="form-control text-right" type="text" name="details"
-                           placeholder="תיאור מוצר">
+                        placeholder="תיאור מוצר">
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <input id="model_number" class="form-control text-right" type="text" name="model_number"
-                               placeholder="מספר דגם" required>
+                            placeholder="מספר דגם" required>
                     </div>
                     <div class="form-group col-md-6">
                         <select class="form-control text-right" id="category" required>
@@ -186,33 +256,34 @@
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <input id="gold_weight" class="form-control text-right" type="text" name="gold_weight"
-                               placeholder="משקל זהב"/>
+                            placeholder="משקל זהב" />
                     </div>
                     <div class="form-group col-md-6">
                         <input id="gold_type" class="form-control text-right" type="text" name="gold_type"
-                               placeholder="סוג זהב"/>
+                            placeholder="סוג זהב" />
                     </div>
                 </div>
                 <div class="form-row">
 
                     <div class="form-group col-md-6">
                         <input id="diamond_weight" class="form-control text-right" type="text" name="diamond_weight"
-                               placeholder="משקל יהלומים"/>
+                            placeholder="משקל יהלומים" />
                     </div>
                     <div class="form-group col-md-6">
                         <input id="diamond_number" class="form-control text-right" type="text" name="diamond_number"
-                               placeholder="כמות יהלומים"/>
+                            placeholder="כמות יהלומים" />
                     </div>
                 </div>
                 <div class="form-row">
 
                     <div class="form-group col-md-6">
-                        <input id="price" class="form-control text-right" type="text" name="price" placeholder="מחיר" required/>
+                        <input id="price" class="form-control text-right" type="text" name="price" placeholder="מחיר"
+                            required />
                     </div>
 
                     <div class="form-group col-md-6">
                         <input id="inventory" class="form-control text-right" type="text" name="inventory"
-                               placeholder="מלאי" required/>
+                            placeholder="מלאי" required />
                     </div>
                 </div>
                 <div class="form-group">
@@ -221,12 +292,7 @@
                         <label class="custom-file-label text-left" for="formFileMultiple" required>בחר תמונה</label>
                     </div>
                 </div>
-
-                <!--            <div class="form-group form-check checkbox-container justify-content-start">-->
-                <!--                <input class="form-check-input" type="checkbox" name="facebook" id="post">-->
-                <!--                <label class="form-check-label " for="post">פרסם בפייסבוק</label>-->
-                <!--            </div>-->
-                <hr/>
+                <hr />
                 <div class="buttons">
                     <button id="create-product" class="btn btn-dark d-block w-100">שלח</button>
                     <button id="post" class="btn btn-dark d-block w-100" onclick="postToFacebook()">פרסם בפייסבוק

@@ -31,8 +31,8 @@
                 </div>
                 <hr>
                 `;
-                let updateBtn = $(`<button type="button" class="btn mybtn mt-4" style="width: 75%">עדכן</button>`)
-                updateBtn.click(function () {
+                let changeStorageBtn = $(`<button type="button" class="btn mybtn mt-4" style="width: 75%">עדכן</button>`)
+                changeStorageBtn.click(function () {
                     let quantity = $(`#quantity-${product.id}`).val();
                     $.ajax({
                         url: `/api/products/${product.id}`,
@@ -50,8 +50,13 @@
                         }
                     });
                 });
+                let editBtn = $(`<button type="button" class="btn mybtn mt-4" style="width: 75%">ערוך מוצר</button>`)
+                editBtn.click(function () {
+                    window.location.href = `/admin/products?productId=${product.id}`;
+                });
                 $("#product-container").append(productCard);
-                $("#" + product.id).append(updateBtn);
+                $("#" + product.id).append(changeStorageBtn);
+                $("#" + product.id).append(editBtn);
             }
         }
 
