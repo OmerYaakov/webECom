@@ -9,25 +9,28 @@
                 for (let i = 0; i < products.length; i++) {
                     let product = products[i];
                     var productCard = `
-                         <div class="row">
-                            <div class="col-12">
-                                <div class="text-right">
-                                    <div class="row">
-                                        <div class="col-md-9">
-                                            <h5>${product.productName}</h5>
-                                            product id: ${product.id}
-                                            product category: ${product.category}
-                                            product price: ${product.price}
-                                            quantity: ${product.quantity}
-                                            </div>
-                                        <div class="col-md-3">
-                                            <img src=${product.image} alt="product img" style="max-height: 150px"/>
-                                        </div>
-                                    </div>
-                                </div>
-                                <hr>
-                            </div>
-                        </div>
+<div class="row product-item">
+    <div class="col-md-6">
+        <h5>${product.productName}</h5>
+        <p><strong>מק"ט:</strong> ${product.id}</p>
+        <p><strong>קטגוריה:</strong> ${product.category}</p>
+        <p><strong>מחיר:</strong> ₪${product.price}</p>
+    </div>
+    <div class="col-md-6">
+        <div class="row">
+            <div class="col-md-4">
+                <img src="${product.image}" alt="תמונת המוצר" style="max-height: 150px; aspect-ratio: 1" class="mt-2"/>
+            </div>
+            <div class="col-md-2 mt-4">
+                <label for="quantity-${product.id}">כמות:</label>
+                <input type="number" id="quantity-${product.id}" name="quantity-${product.id}" value="${product.quantity}" min="0">
+                <button type="button" class="btn mybtn" style="width: 100%" onclick="updateProduct(${product.id})">עדכן</button>
+            </div>
+        </div>
+    </div>
+</div>
+<hr>
+
                     `;
                     $("#product-container").append(productCard);
                 }
@@ -52,6 +55,6 @@
         </select>
     </div>
 </div>
-<div id="product-container" class="container product-container text-right"
-    style="background-color: #EFEFEF; width: 30em; height: auto">
+<div id="product-container" class="container product-container text-right py-3"
+    style="background-color: #EFEFEF; height: auto">
 </div>
