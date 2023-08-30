@@ -1,7 +1,39 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<!-- <script src="/api/facebook"></script> -->
+<script>
+    function postToFacebook() {
+        // Set up the necessary parameters
+        const accessToken = "EAAPIDLpXx9sBO3N9rWkSIJvoQxliei0N2lEmuJHvhMvmjSu1MUbzGPcegfuAUTaSbgBMZADjZCrNZCVj9PlmGUZCdLCpl0N7MNDWffDwMcLvQpAWAQZBq7hkg0QfZApq3aEnBiRGZCkTKEcPCieKAeHC4vJiGKrg8dRApFW8Vo67d2Vp4I4TK9wD7s8GI36cyVFrBoEzkeA2Uy5H1RbcNuAWrbj2YrTYpgZD"; // Replace with your Facebook access token
+        const postMessage = `  פרסמנו ${$("#name").val()}\n נשמח לראות בתגובות מה אתם חושבים על ה${$("#category option:selected").text()} `;
+        const pageId = "122285680960785";
+
+        // Construct the API endpoint URL
+        const apiUrl = `https://graph.facebook.com/v16.0/${pageId}/feed`; // Use the 'pageId' variable
+
+        // Set up the post data
+        const postData = new URLSearchParams({
+            message: postMessage,
+            access_token: accessToken,
+        });
+
+        // Send the post request
+        fetch(apiUrl, {
+            method: "POST",
+            body: postData, // Use the 'postData' variable
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                console.log("Post successfully sent!");
+                alert("Post successfully sent!");
+            })
+            .catch((error) => {
+                console.log("Post request failed. Error:", error);
+            });
+    }
+</script>
+
 <script>
     $(document).ready(function () {
+
         $("#create-product").click(function (event) {
             event.preventDefault();
             console.log($("#formFileMultiple")[0].files[0].name);
@@ -22,8 +54,10 @@
                         image: $("#formFileMultiple")[0].files[0].name,
                         quantity: $("#inventory").val()
                     }),
+
                 contentType: 'application/json',
                 success: function (res) {
+
                     console.log("upload success:", res);
                 },
                 error: function (err) {
@@ -41,6 +75,7 @@
                 contentType: false,
                 processData: false,
                 success: function (res) {
+
                     console.log("upload success:", res);
                 },
                 error: function (err) {
@@ -48,10 +83,10 @@
                 }
             })
         });
-        $("#post-to-facebook").click(function () {
-            console.log("post to facebook");
-            postToFacebook(); // Call the function when the button is clicked
-        });
+        // $("#post-to-facebook").click(function () {
+        //     console.log("post to facebook");
+        //     postToFacebook(); // Call the function when the button is clicked
+        // });
     });
 </script>
 <div class="container mt-5">
@@ -60,16 +95,16 @@
     <div class="card">
         <div class="card-body">
             <div class="form-group">
-                <input id="name" class="form-control text-right" type="text" name="name" placeholder="שם מוצר" />
+                <input id="name" class="form-control text-right" type="text" name="name" placeholder="שם מוצר"/>
             </div>
             <div class="form-group">
                 <input id="details" class="form-control text-right" type="text" name="details"
-                    placeholder="תיאור מוצר" />
+                       placeholder="תיאור מוצר"/>
             </div>
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <input id="model_number" class="form-control text-right" type="text" name="model_number"
-                        placeholder="מספר דגם" />
+                           placeholder="מספר דגם"/>
                 </div>
                 <div class="form-group col-md-6">
                     <select class="form-control text-right" id="category">
@@ -84,33 +119,33 @@
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <input id="gold_weight" class="form-control text-right" type="text" name="gold_weight"
-                        placeholder="משקל זהב" />
+                           placeholder="משקל זהב"/>
                 </div>
                 <div class="form-group col-md-6">
                     <input id="gold_type" class="form-control text-right" type="text" name="gold_type"
-                        placeholder="סוג זהב" />
+                           placeholder="סוג זהב"/>
                 </div>
             </div>
             <div class="form-row">
 
                 <div class="form-group col-md-6">
                     <input id="diamond_weight" class="form-control text-right" type="text" name="diamond_weight"
-                        placeholder="משקל יהלומים" />
+                           placeholder="משקל יהלומים"/>
                 </div>
                 <div class="form-group col-md-6">
                     <input id="diamond_number" class="form-control text-right" type="text" name="diamond_number"
-                        placeholder="כמות יהלומים" />
+                           placeholder="כמות יהלומים"/>
                 </div>
             </div>
             <div class="form-row">
 
                 <div class="form-group col-md-6">
-                    <input id="price" class="form-control text-right" type="text" name="price" placeholder="מחיר" />
+                    <input id="price" class="form-control text-right" type="text" name="price" placeholder="מחיר"/>
                 </div>
 
                 <div class="form-group col-md-6">
                     <input id="inventory" class="form-control text-right" type="text" name="inventory"
-                        placeholder="מלאי" />
+                           placeholder="מלאי"/>
                 </div>
             </div>
             <div class="form-group">
@@ -120,12 +155,15 @@
                 </div>
             </div>
 
-            <div class="form-group form-check checkbox-container justify-content-start">
-                <input class="form-check-input" type="checkbox" name="facebook" id="post">
-                <label class="form-check-label " for="post">פרסם בפייסבוק</label>
+            <!--            <div class="form-group form-check checkbox-container justify-content-start">-->
+            <!--                <input class="form-check-input" type="checkbox" name="facebook" id="post">-->
+            <!--                <label class="form-check-label " for="post">פרסם בפייסבוק</label>-->
+            <!--            </div>-->
+            <hr/>
+            <div class="buttons">
+                <button id="create-product" class="btn btn-dark d-block w-100">שלח</button>
+                <button id="post" class="btn btn-dark d-block w-100" onclick="postToFacebook()">פרסם בפייסבוק</button>
             </div>
-            <hr />
-            <button id="create-product" class="btn btn-dark d-block w-100">שלח</button>
         </div>
     </div>
 </div>
