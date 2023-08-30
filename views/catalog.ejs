@@ -3,31 +3,31 @@
 
 
 <%- include('partials/head') %>
-    <%- include('logics/addtocartlogics') %>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script>
-            $(document).ready(function () {
-                var offset = 0;
-                const LIMIT = JSON.parse('<%- JSON.stringify(limit) %>');
-                var user = JSON.parse('<%- JSON.stringify(user) %>');
-                var search = JSON.parse('<%- JSON.stringify(search) %>');
-                try {
-                    $.ajax({
-                        url: `/api/products?limit=${LIMIT}&offset=${offset}&search=${search}`,
-                        method: 'GET',
-                        success: function (products) {
-                            const productList = $('.catalog-items');
-                            productList.empty();
-                            products.forEach(product => {
-                                const productItem = $(`<div class="col-md-3">
+<%- include('logics/addtocartlogics') %>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        var offset = 0;
+        const LIMIT = JSON.parse('<%- JSON.stringify(limit) %>');
+        var user = JSON.parse('<%- JSON.stringify(user) %>');
+        var search = JSON.parse('<%- JSON.stringify(search) %>');
+        try {
+            $.ajax({
+                url: `/api/products?limit=${LIMIT}&offset=${offset}&search=${search}`,
+                method: 'GET',
+                success: function (products) {
+                    const productList = $('.catalog-items');
+                    productList.empty();
+                    products.forEach(product => {
+                        const productItem = $(`<div class="col-md-3">
                                                          <div class="product-card">
                                                             <div class="product-image-container">
                                                                 <span class="badge badge-new">New</span>
                                                                 <a href="/product/${product.productName}" class="product-link" title="${product.productName}">
                                                                     ${product.image && product.image !== "sdasdasdsa" ?
-                                        `<img src="${product.image}" class="product-image" alt="${product.productName}">` :
-                                        `<img src="https://placehold.jp/300x300.png" class="product-image" alt="Default Image">`}
+                            `<img src="${product.image}" class="product-image" alt="${product.productName}">` :
+                            `<img src="https://placehold.jp/300x300.png" class="product-image" alt="Default Image">`}
                                                                 </a>
                                                             </div>
                                                         <div class="product-details row" style="flex-direction: row;">
@@ -42,181 +42,180 @@
                                                 </div>
                                             </div>
                                             `);
-                                let buttonContainer = $(`<div id="button-container" class="text-center row ml-2" style="max-width: 100%">
+                        let buttonContainer = $(`<div id="button-container" class="text-center row ml-2" style="max-width: 100%">
                                                     </div>`);
-                                let cartbtn = $(`<button style="color: #181818" class="product-card col-md-6 btn btn-outline" id="product-index-${product.i}">הוספה לסל</button>`);
-                                cartbtn.click(() => {
-                                    fun(product);
-                                });
-                                let wishbtn = $(`<button style="color: #181818" class="product-card col-md-2 btn btn-outline" id="product-index-${product.i}"><i class="bi bi-heart"></i></button>`);
-                                wishbtn.click(() => {
-                                    wish(product);
-                                    if (wishbtn.hasClass('btn-outline')) {
-                                        wishbtn.removeClass('btn-outline');
-                                        wishbtn.addClass('btn-danger');
-                                    } else {
-                                        wishbtn.removeClass('btn-danger');
-                                        wishbtn.addClass('btn-outline');
-                                    }
-                                });
+                        let cartbtn = $(`<button style="color: #181818" class="product-card col-md-6 btn btn-outline" id="product-index-${product.i}">הוספה לסל</button>`);
+                        cartbtn.click(() => {
+                            fun(product);
+                        });
+                        let wishbtn = $(`<button style="color: #181818" class="product-card col-md-2 btn btn-outline" id="product-index-${product.i}"><i class="bi bi-heart"></i></button>`);
+                        wishbtn.click(() => {
+                            wish(product);
+                            if (wishbtn.hasClass('btn-outline')) {
+                                wishbtn.removeClass('btn-outline');
+                                wishbtn.addClass('btn-danger');
+                            } else {
+                                wishbtn.removeClass('btn-danger');
+                                wishbtn.addClass('btn-outline');
+                            }
+                        });
 
-                                buttonContainer.append(cartbtn);
-                                buttonContainer.append(wishbtn);
-                                productItem.append(buttonContainer);
-                                productList.append(productItem);
-                            });
-                        },
-                        error: function (error) {
-                            console.error('Error fetching products:', error);
-                        }
+                        buttonContainer.append(cartbtn);
+                        buttonContainer.append(wishbtn);
+                        productItem.append(buttonContainer);
+                        productList.append(productItem);
                     });
-                } catch (error) {
+                },
+                error: function (error) {
                     console.error('Error fetching products:', error);
                 }
+            });
+        } catch (error) {
+            console.error('Error fetching products:', error);
+        }
 
-                const fun = (product) => {
-                    if (user) {
-                        // get the cart
+        const fun = (product) => {
+            if (user) {
+                // get the cart
+                $.ajax({
+                    url: 'api/carts/' + user.cartId,
+                    type: 'GET',
+                    success: function (data) {
+                        let cart = data[0];
+                        // update the cart
+                        newProduct = {
+                            productId: product.id,
+                            quantity: 1,
+                            price: product.price,
+                            productName: product.productName,
+                        }
+                        cart.totalPrice += product.price * newProduct.quantity;
+                        cart.cartProducts.push(product);
                         $.ajax({
                             url: 'api/carts/' + user.cartId,
-                            type: 'GET',
+                            type: 'PUT',
+                            data: JSON.stringify(cart),
+                            contentType: 'application/json',
                             success: function (data) {
-                                let cart = data[0];
-                                // update the cart
-                                newProduct = {
-                                    productId: product.id,
-                                    quantity: 1,
-                                    price: product.price,
-                                    productName: product.productName,
-                                }
-                                cart.totalPrice += product.price * newProduct.quantity;
-                                cart.cartProducts.push(product);
-                                $.ajax({
-                                    url: 'api/carts/' + user.cartId,
-                                    type: 'PUT',
-                                    data: JSON.stringify(cart),
-                                    contentType: 'application/json',
-                                    success: function (data) {
-                                        // alert('המוצר נוסף לעגלה');
-                                    },
-                                    error: function (err) {
-                                        console.log(err);
-                                    }
-                                });
+                                // alert('המוצר נוסף לעגלה');
                             },
                             error: function (err) {
                                 console.log(err);
                             }
                         });
-                    } else {
-                        alert('אנא התחבר כדי להוסיף מוצרים לעגלה');
+                    },
+                    error: function (err) {
+                        console.log(err);
                     }
-                }
-                const wish = (product) => {
-                    if (user) {
+                });
+            } else {
+                alert('אנא התחבר כדי להוסיף מוצרים לעגלה');
+            }
+        }
+        const wish = (product) => {
+            if (user) {
+                $.ajax({
+                    url: 'api/wishlists/' + user.userId,
+                    type: 'GET',
+                    success: function (data) {
+                        let wishlist = data[0].products;
+                        newProduct = {
+                            id: product.id,
+                            price: product.price,
+                            name: product.productName,
+                            image: product.image
+                        }
+                        wishlist.push(newProduct);
                         $.ajax({
                             url: 'api/wishlists/' + user.userId,
-                            type: 'GET',
+                            type: 'PUT',
+                            data: JSON.stringify({
+                                products: wishlist
+                            }),
+                            contentType: 'application/json',
                             success: function (data) {
-                                let wishlist = data[0].products;
-                                newProduct = {
-                                    id: product.id,
-                                    price: product.price,
-                                    name: product.productName,
-                                    image: product.image
-                                }
-                                wishlist.push(newProduct);
-                                $.ajax({
-                                    url: 'api/wishlists/' + user.userId,
-                                    type: 'PUT',
-                                    data: JSON.stringify({
-                                        products: wishlist
-                                    }),
-                                    contentType: 'application/json',
-                                    success: function (data) {
-                                        alert('המוצר נוסף בהצלחה');
-                                        console.log(data)
-                                    },
-                                    error: function (err) {
-                                        console.log(err);
-                                    }
-                                });
+                                alert('המוצר נוסף בהצלחה');
+                                console.log(data)
                             },
                             error: function (err) {
                                 console.log(err);
                             }
                         });
-                    } else {
-                        alert('אנא התחבר כדי להוסיף מוצרים לרשימת משאלות');
+                    },
+                    error: function (err) {
+                        console.log(err);
                     }
-                }
-            
-            
-                // filter form
-                $('#filter-form').submit(function (e) {
-                    e.preventDefault();
-                    const category = $('#category-select').val();
-                    const limit = $('#limit-select').val();
-                    window.location.href = `/catalog?limit=${limit}&search=${category}`;
                 });
-            
-            
-            });
-        </script>
+            } else {
+                alert('אנא התחבר כדי להוסיף מוצרים לרשימת משאלות');
+            }
+        }
 
-        <body>
-            <%- include('partials/nav') %>
 
-                <div class="container ">
-                    <div class="text-right px-2">
-                        <h1>קטלוג מוצרים</h1>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12 ">
-                            <form id="filter-form" class="form text-right">
-                                <div class="row">
-                                    <div class="col-md-5">
-                                        <div class="form-group">
-                                            <label class="mr-2" for="category-select">:סנן לפי קטגוריה</label>
-                                            <select class="custom-select" id="category-select" name="category">
-                                                <option value="">הכל</option>
-                                                <option value="bracelet">צמיד</option>
-                                                <option value="necklace">שרשרת</option>
-                                                <option value="ring">טבעת</option>
-                                                <option value="earring">עגיל</option>
-                                                <option value="pendant">תליון</option>
-                                                <option value="watch">שעון</option>
-                                                <option value="other">אחר</option>
-                                                <!-- ... more categories ... -->
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-5">
-                                        <div class="form-group">
-                                            <label class="mr-2" for="limit">:מגבלה</label>
-                                            <select class="custom-select" id="limit-select" name="limit">
-                                                <option value="1">1</option>
-                                                <option value="10">10</option>
-                                                <option value="25">25</option>
-                                                <option value="50">50</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-1">
-                                        <button type="submit" class="btn mybtn ml-2 mt-4">סנן</button>
-                                    </div>
+        // filter form
+        $('#filter-form').submit(function (e) {
+            e.preventDefault();
+            const category = $('#category-select').val();
+            const limit = $('#limit-select').val();
+            window.location.href = `/catalog?limit=${limit}&search=${category}`;
+        });
 
-                                </div>
+
+    });
+</script>
+
+<body>
+<%- include('partials/nav') %>
+
+<div class="container ">
+    <div class="text-right px-2">
+        <h1>קטלוג מוצרים</h1>
+    </div>
+    <div class="row">
+        <div class="col-md-12 ">
+            <form id="filter-form" class="form text-right">
+                <div class="row">
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            <label class="mr-2" for="category-select">:סנן לפי קטגוריה</label>
+                            <select class="custom-select" id="category-select" name="category">
+                                <option value="">הכל</option>
+                                <option value="bracelet">צמיד</option>
+                                <option value="necklace">שרשרת</option>
+                                <option value="ring">טבעת</option>
+                                <option value="earring">עגיל</option>
+                                <option value="pendant">תליון</option>
+                                <option value="watch">שעון</option>
+                                <option value="other">אחר</option>
+                                <!-- ... more categories ... -->
+                            </select>
                         </div>
-                        </form>
                     </div>
-                </div>
-                </div>
-                <div class="container">
-                    <div class="row catalog-items">
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            <label class="mr-2" for="limit">:מגבלה</label>
+                            <select class="custom-select" id="limit-select" name="limit">
+                                <option value="1">1</option>
+                                <option value="10">10</option>
+                                <option value="25">25</option>
+                                <option value="50">50</option>
+                            </select>
+                        </div>
                     </div>
+                    <div class="col-md-1">
+                        <button type="submit" class="btn mybtn ml-2 mt-4">סנן</button>
+                    </div>
+
                 </div>
-                <%- include('partials/footer') %>
-        </body>
+        </div>
+        </form>
+    </div>
+</div>
+<div class="container">
+    <div class="row catalog-items">
+    </div>
+</div>
+<%- include('partials/footer') %>
+</body>
 
 </html>
