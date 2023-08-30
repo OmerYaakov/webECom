@@ -97,9 +97,9 @@
     function populateDropdown(data) {
         const selectDropdown = document.getElementById('dropdown-branches');
         selectDropdown.innerHTML = '';
-        data.forEach((branch, index) => {
+        data.forEach((branch) => {
             const option = document.createElement('option');
-            option.value = index; // You can use any value that you need
+            option.value = branch.name; // You can use any value that you need
             option.textContent = branch.name; // Use the branch name
 
             selectDropdown.appendChild(option); // Add the option to the dropdown
