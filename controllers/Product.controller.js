@@ -91,6 +91,7 @@ const update = (req, res) => {
         price: req.body.price,
         image: req.body.image,
         quantity: req.body.quantity,
+        modelNumber: req.body.modelNumber,
     }, { new: true }).then((product) => {
         res.status(200).json(product);
     }).catch((error) => {

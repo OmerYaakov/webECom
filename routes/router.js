@@ -97,7 +97,10 @@ router.route('/addbranches').get((req, res) => {
     res.render('addbranches', { isAuth: req.session.isAuth });
 });
 router.route('/admin/products').get((req, res) => {
-    res.render('admincrudproducts', { isAuth: req.session.isAuth });
+    if (req.query.productId) {
+        res.render('admincrudproducts', { isAuth: req.session.isAuth, productId: req.query.productId });
+    }
+    res.render('admincrudproducts', { isAuth: req.session.isAuth, productId: '' });
 });
 router.route('/admin/salestrack').get((req, res) => {
     res.render('salestrack', { isAuth: req.session.isAuth });
@@ -139,7 +142,7 @@ router.route('/acountorders').get((req, res) => {
 
 router.route('/admin/orders').get((req, res) => {
     res.render('adminorders', { isAuth: req.session.isAuth });
-});router.route('/admin/quantitiesadmin').get((req, res) => {
+}); router.route('/admin/quantitiesadmin').get((req, res) => {
     res.render('quantitiesadmin', { isAuth: req.session.isAuth });
 });
 router.route('/admin/adminbranches').get((req, res) => {
