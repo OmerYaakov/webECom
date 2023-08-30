@@ -1,46 +1,69 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
     $(document).ready(function () {
-        console.log("Contact page is up!")
+        console.log("Contact page is up!");
+
+        function resetForm() {
+            $("#nameLbl, #numLbl, #email, #message").val("");
+            $("#error-label").text("");
+        }
+
         $("#send-contact-btn").click(function () {
-            console.log("send-contact-btn pressed!")
+            console.log("send-contact-btn pressed!");
+
+            const name = $("#nameLbl").val();
+            const phoneNumber = $("#numLbl").val();
+            const email = $("#email").val();
+            const message = $("#message").val();
+
+            if (!name || !phoneNumber || !email || !message) {
+                displayErrorMessage("אנא מלא את כל השדות");
+                return;
+            }
 
             $.ajax({
                 url: "/api/contacts",
                 type: "POST",
                 data: {
-                    // we need to handle the id of the contact msg's
                     id: Math.abs(Math.floor(Math.random())),
-                    name: $("#nameLbl").val(),
-                    phoneNumber: $("#numLbl").val(),
-                    mail: $("#email").val(),
-                    message: $("#message").val()
+                    name: name,
+                    phoneNumber: phoneNumber,
+                    mail: email,
+                    message: message
                 },
                 success: function (res) {
-                    alert("contact msg successfully sent")
-                    // we need to render the page again but empty...
+                    alert("הודעת קשר נשלחה בהצלחה");
+                    resetForm();
                 },
                 error: function (err) {
-                    console.error("contact msg unsuccessfully sent")
+                    console.error("שליחת הודעת קשר נכשלה");
                 }
-            })
+            });
+        });
 
-        })
-
+        function displayErrorMessage(message) {
+            $("#error-label").text(message);
+        }
     });
 </script>
+
 <div class="container">
     <div class="card shadow">
         <div class="card-body">
             <h1 class="card-title text-right">צור קשר</h1>
             <form>
+                <div class="form-group text-right">
+                    <label id="error-label" class="text-danger"></label>
+                </div>
                 <div class="form-group">
                     <label for="nameLbl" class="text-right d-block">שם</label>
-                    <input type="text" id="nameLbl" name="fullName" class="form-control" placeholder="הכנס שם מלא" required>
+                    <input type="text" id="nameLbl" name="fullName" class="form-control" placeholder="הכנס שם מלא"
+                           required>
                 </div>
                 <div class="form-group">
                     <label for="numLbl" class="text-right d-block">טלפון</label>
-                    <input type="tel" id="numLbl" name="phoneNum" class="form-control" placeholder="הכנס מספר טלפון" required>
+                    <input type="tel" id="numLbl" name="phoneNum" class="form-control" placeholder="הכנס מספר טלפון"
+                           required>
                 </div>
                 <div class="form-group">
                     <label for="email" class="text-right d-block">אימייל</label>
@@ -48,7 +71,8 @@
                 </div>
                 <div class="form-group">
                     <label for="message" class="text-right d-block">הודעה</label>
-                    <textarea id="message" name="message" class="form-control" placeholder="הכנס הודעה" required></textarea>
+                    <textarea id="message" name="message" class="form-control" placeholder="הכנס הודעה"
+                              required></textarea>
                 </div>
                 <div class="form-group text-right">
                     <button id="send-contact-btn" type="button" class="btn mybtn">שלח</button>
