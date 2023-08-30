@@ -12,7 +12,7 @@ const ProductSchema = mongoose.Schema({
     diamondNumber: Number,
     price: Number,
     image: String,
-    inventory: Number,
+    quantity: Number,
 });
 
 const ProductModel = mongoose.model('Product', ProductSchema);
