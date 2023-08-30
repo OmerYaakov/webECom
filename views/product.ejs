@@ -10,21 +10,21 @@
             if (user) {
                 // get the cart
                 $.ajax({
-                    url: 'api/carts/' + user.cartId,
+                    url: '/api/carts/' + user.cartId,
                     type: 'GET',
                     success: function (data) {
                         let cart = data[0];
                         // update the cart
                         newProduct = {
                             productId: product.id,
-                            quantity: 1,
+                            // quantity: 1,
                             price: product.price,
                             productName: product.productName,
                         }
                         cart.totalPrice += product.price * newProduct.quantity;
                         cart.cartProducts.push(product);
                         $.ajax({
-                            url: 'api/carts/' + user.cartId,
+                            url: '/api/carts/' + user.cartId,
                             type: 'PUT',
                             data: JSON.stringify(cart),
                             contentType: 'application/json',
@@ -73,6 +73,10 @@
                     </div>
                 </div>
                 <p class="text-muted mt-4"><%= product.details %></p>
+                <label class="text-right mt-4"> <%= product.goldWeight %>:משקל זהב </label>
+                <label class="text-right mt-4"> <%= product.goldType %>:סוג זהב </label>
+                <label class="text-right mt-4"> <%= product.diamondNumber %>: כמות יהלומים </label>
+                <label class="text-right mt-4"> <%= product.diamondWeight %>: משקל יהלומים </label>
                 <a href="/sizeguide" class="d-block mt-3" style="color: black">הצג מדריך גדלים</a>
                 <div class="mt-4">
                     <button id="buy-now-btn" class="btn btn-dark btn-block" type="button">רכישה</button>

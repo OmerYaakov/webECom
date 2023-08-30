@@ -1,20 +1,63 @@
-<h1 class="text-right">עריכת סניפים</h1>
-<div class="login-container" style="max-width: 300px; margin: auto;">
-    <form action="../api/branches" method="POST"> <!-- Specify the action and method attributes -->
-        <label class="text-right d-block">:סניף</label>
-        <input type="text" class="form-control text-right" name="name" required> <!-- Add input fields with name attributes -->
+<div class="container">
+    <h1 class="text-right"> יצירת סניף</h1>
+    <div class="login-container" style="max-width: 300px; margin: auto;">
+        <form action="../api/branches" method="POST" id="branches-form">
+            <!-- Specify the action and method attributes -->
+            <div class="form-group">
+                <label class="text-right d-block">:סניף</label>
+                <input type="text" class="form-control text-right" name="name" required>
+                <!-- Add input fields with name attributes -->
+            </div>
 
-        <label class="text-right d-block">:כתובת</label>
-        <input type="text" class="form-control text-right" name="address" required>
+            <div class="form-group">
+                <label class="text-right d-block">:כתובת</label>
+                <input type="text" class="form-control text-right" name="address" required>
+            </div>
 
-        <label class="text-right d-block">:שעות פתיחה</label>
-        <input type="text" class="form-control text-right" name="hours" required>
+            <div class="form-group">
+                <label class="text-right d-block">:שעות פתיחה</label>
+                <input type="text" class="form-control text-right" name="hours" required>
+            </div>
 
-        <label class="text-right d-block">:טלפון</label>
-        <input type="tel" class="form-control text-right" name="phone" required>
+            <div class="form-group">
+                <label class="text-right d-block">:טלפון</label>
+                <input type="tel" class="form-control text-right" name="phone" required>
+            </div>
 
-        <div class="form-group text-right">
-            <button type="submit" class="btn mybtn">הוספה</button> <!-- Use type="submit" to submit the form -->
-        </div>
-    </form>
+            <div class="form-group text-right">
+                <button type="submit" class="btn mybtn w-100">הוספה</button>
+            </div>
+        </form>
+
+        <div id="error-label" class="text-danger text-right"></div>
+    </div>
 </div>
+
+<script>
+    $(document).ready(function () {
+        $("#branches-form").on("submit", function (event) {
+            event.preventDefault();
+
+
+                const name = $("input[name='name']").val();
+                const address = $("input[name='address']").val();
+                const hours = $("input[name='hours']").val();
+                const phone = $("input[name='phone']").val();
+
+                // Validate required fields
+                if (name === "" || address === "" || hours === "" || phone === "") {
+                    $("#error-label").text("אנא מלא את כל השדות");
+                    return;
+                }
+
+                // Validate phone number format
+                if (phone.length !== 10 || !/^\d+$/.test(phone)) {
+                    $("#error-label").text("מספר הטלפון חייב להיות בעל 10 ספרות");
+                    return;
+                }
+
+                $("#error-label").text("");
+                this.submit();
+        });
+    });
+</script>

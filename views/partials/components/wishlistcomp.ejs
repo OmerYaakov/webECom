@@ -4,7 +4,7 @@
         //remove product from wishlist...
         const removeProductFromWishList = (product) => {
             $.ajax({
-                url: `/api/wishlists/${user.wishListId}`,
+                url: `/api/wishlists/${user.userId}`,
                 type: 'GET',
                 success: function (wishlist) {
                     const userWishList = wishlist[0].products;
@@ -15,10 +15,10 @@
                         }
                     }
                     $.ajax({
-                        url: `/api/wishlists/${user.wishListId}`,
+                        url: `/api/wishlists/${user.userId}`,
                         type: 'PUT',
                         data: JSON.stringify({
-                            cartProducts: userWishList,
+                            products: userWishList,
                         }),
                         contentType: "application/json",
                         success: function (data) {
@@ -38,19 +38,22 @@
 
 
         var user = JSON.parse('<%- JSON.stringify(user) %>');
-        const url = `/api/wishlists/${user.wishListId}`
+        const url = `/api/wishlists/${user.userId}`
         // ajax request to get the wishlist
         $.ajax({
             url: url,
             type: 'GET',
             success: function (wishlist) {
-                console.log(wishlist)
-                for (let i = 0; i < wishlist.products.length; i++) {
-                    const product = wishlist[i]
-                    var deleteBTN = $(`<button id="deleteBTN${product.id}" class="btn">X</button>`)
+                console.log(wishlist[0].products)
+                let wishlistProducts = wishlist[0].products;
+                for (let i = 0; i < wishlistProducts.length; i++) {
+                    const product = wishlistProducts[i];
+                    console.log(product)
+                    var deleteBTN = $(`<button id="deleteBTN${product.id}" class="btn">X</button>`);
                     deleteBTN.click(function () {
                         removeProductFromWishList(product);
                     })
+                    $(`#products-in-wish`).append(deleteBTN);
                     var productCard = `
                          <div class="row">
         <div class="col-12">
@@ -70,7 +73,7 @@
             <hr>
         </div>
                         `;
-                    $(".col-12").append(productCard)
+                    $("#products-in-wish").append(productCard)
                 }
             },
         })
@@ -87,10 +90,12 @@
                 <label class="text-right">:בחר קטגוריה</label>
                 <div class="wishlist-group">
                     <select class="wishlist-control" id="wishlist">
-                        <option class="text-right">הכל</option>
-                        <option class="text-right">שעונים</option>
-                        <option class="text-right">טבעות</option>
-                        <option class="text-right">צמידים</option>
+                        <option value="">הכל</option>
+                        <option value="bracelet">צמיד</option>
+                        <option value="necklace">שרשרת</option>
+                        <option value="ring">טבעת</option>
+                        <option value="earring">עגיל</option>
+                        <option value="watch">שעון</option>
                     </select>
                 </div>
             </form>
@@ -100,9 +105,7 @@
 </div>
 <div class="container">
     <div class="row">
-        <div class="col-md-12">
-            <hr>
+        <div id="products-in-wish" class="col-md-12">
         </div>
     </div>
-    <hr>
 </div>

@@ -26,7 +26,7 @@ const __dirname = dirname(__filename);
 const app = express();
 
 // Set up EJS as the view engine
-mongoose.connect('mongodb+srv://AvivNat:AvivKaved@shagal.jaexhqx.mongodb.net/', {
+mongoose.connect("" + process.env.DB_URI, {
     useNewUrlParser: true, useUnifiedTopology: true
 }).then(() => {
     console.log("Successfully connected to the database");
@@ -45,12 +45,38 @@ app.use(express.static(__dirname + '/facebookAPI'));
 //code for locations...
 app.get('/api/map', async (req, res) => {
     try {
-        const collection = mongoose.connection.db.collection('branches'); // Replace with your collection name
+        const collection = mongoose.connection.db.collection('branches');
 
         // Fetch data from MongoDB
         const data = await collection.find({}).toArray();
         // Send the data to the frontend
         res.json(data);
+    } catch (error) {
+        console.error('Error fetching data from MongoDB:', error);
+        res.status(500).json({ error: 'Error fetching data from MongoDB' });
+    }
+});
+
+app.delete('/api/map/:name', async (req, res) => {
+    try {
+        const collection = mongoose.connection.db.collection('branches');
+        // Fetch data from MongoDB
+        console.log(req.params.name);
+        const data = await collection.findOneAndDelete({ name: req.params.name });
+        res.status(200).json(data);
+    } catch (error) {
+        console.error('Error fetching data from MongoDB:', error);
+        res.status(500).json({ error: 'Error fetching data from MongoDB' });
+    }
+});
+app.delete('/api/map', async (req, res) => {
+    try {
+        const collection = mongoose.connection.db.collection('branches');
+
+        // Fetch data from MongoDB
+        const data = await collection.findOneAndDelete({ name: req.body.index });
+        // Send the data to the frontend
+        res.status(200).json(data);
     } catch (error) {
         console.error('Error fetching data from MongoDB:', error);
         res.status(500).json({ error: 'Error fetching data from MongoDB' });
@@ -95,38 +121,6 @@ app.use(session({
     store: store
 }))
 
-// importing multer + util+fs
-// const upload = multer({ dest: 'uploads/' })
-// const unlinkFile = util.promisify(fs.unlink)
-
-// // all of these '/images' we need to get out to a router...
-// app.get('images/:key', (req, res) => {
-//     const key = req.params.Key
-//     const readStream = getFileStream(key)
-//     readStream.pipe(res)
-// })
-
-// app.post('/images', upload.single('avatar'), async (req, res) => {
-//     try {
-//         //uploading the file to s3 bucket
-//         const result = await uploadFile(req.file);
-
-//         //delete the file from the uploads folder...
-//         await unlinkFile(req.file.path)
-
-//         console.log('Upload result:', result);
-
-//         //right now result.Key undefined,...need to be fixed!
-//         res.send(`/images/${result.Key}`)
-
-
-//     } catch (error) {
-//         console.error('Error uploading image:', error);
-//         res.status(500).send("Error uploading image.");
-//     }
-// });
-
-
 // Set up EJS as the view engine
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -144,9 +138,9 @@ const io = new SocketIOServer(server);
 
 io.on('connection', client => {
     console.log('New WS Connection...');
-    client.emit('newConnection', 'Welcome to the webapp!');
-    client.on('whatever', msg => {
-        console.log(msg);
+    client.on('storageUpdate', (message) => {
+        console.log(message);
+        io.emit('storageUpdate', message);
     });
 });
 

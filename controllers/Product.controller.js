@@ -2,7 +2,7 @@ import ProductModel from "../models/Product.model.js";
 
 const create = async (req, res) => {
     try {
-        console.log(req.body.image.name);
+        console.log(req.body.image);
         const product = new ProductModel({
             id: Math.floor(Math.random() * 1000),
             modelNumber: req.body.modelNumber,
@@ -14,7 +14,8 @@ const create = async (req, res) => {
             diamondWeight: req.body.diamondWeight,
             diamondNumber: req.body.diamondNumber,
             price: req.body.price,
-            image: req.body.image,
+            image: "/photos/" + req.body.image,
+            quantity: req.body.quantity,
         });
         const data = await product.save();
         res.status(201).json(data);
@@ -82,7 +83,6 @@ const findOneByName = (productName) => {
     return ProductModel.findOne({ productName });
 };
 
-
 const update = (req, res) => {
     ProductModel.findOneAndUpdate({ id: req.params.id }, {
         id: req.body.id,
@@ -90,6 +90,8 @@ const update = (req, res) => {
         categoryId: req.body.categoryId,
         price: req.body.price,
         image: req.body.image,
+        quantity: req.body.quantity,
+        modelNumber: req.body.modelNumber,
     }, { new: true }).then((product) => {
         res.status(200).json(product);
     }).catch((error) => {

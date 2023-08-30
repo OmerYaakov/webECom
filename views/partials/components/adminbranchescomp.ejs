@@ -1,0 +1,141 @@
+<div class="branches-container container" style="max-width: 900px;">
+    <h1 class="text-right"> סניפים</h1>
+    <div class="row">
+        <div class="col-md-6">
+            <%- include ('editbranchescomp') %>
+        </div>
+        <div class="col-md-6">
+            <h1 class="text-right">מחיקת סניף</h1>
+            <p class="text-right d-block">בחר סניף למחיקה:</p>
+            <div class="form-group">
+                <select class="form-control" id="dropdown-branches">
+                    <option>בחר סניף</option>
+                </select>
+            </div>
+            <button class="btn mybtn d-block w-100" id="deletebranch">מחק סניף</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div id="myMap" style="width: 100%; min-height: 700px"></div>
+        </div>
+        <div class="col-md-6 branch-details">
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="https://www.bing.com/api/maps/mapcontrol?callback=loadMapScenario"></script>
+<script>
+    $(document).ready(function () {
+        const deleteButton = $('#deletebranch');
+        deleteButton.on('click', function () {
+            const selectedIndex = $('#dropdown-branches').prop('selectedIndex');
+            if (selectedIndex > 0) {
+                const branchIdToDelete = $('#dropdown-branches').val();
+                console.log('Deleting branch:', branchIdToDelete);
+                $.ajax({
+                    url: `/api/map/${branchIdToDelete}`,
+                    method: 'DELETE',
+                    success: function (response) {
+                        console.log('Branch deleted successfully:', response);
+                        window.location.reload();
+                    },
+                    error: function (error) {
+                        console.error('Error deleting branch:', error);
+                    }
+                });
+            }
+        });
+    });
+
+
+    function displayBranchDetails(branch) {
+        const detailsDiv = document.querySelector('.branch-details');
+
+        const detailsHTML = `
+    <div class="branch-details-inner text-right column">
+        <div class="detail">
+            <span class="value">${branch.name}</span>
+            <span class="label"> - סניף</span>
+        </div>
+        <div class="detail">
+            <span class="value">${branch.address}</span>
+            <span class="label"> - כתובת</span>
+        </div>
+        <div class="detail">
+            <span class="value">${branch.hours}</span>
+            <span class="label"> - שעות פתיחה</span>
+
+        </div>
+        <div class="detail">
+            <span class="value">${branch.phone}</span>
+            <span class="label"> - טלפון</span>
+        </div>
+    </div>
+`;
+
+
+        detailsDiv.innerHTML += detailsHTML;
+    }
+
+    function geocodeAddress(address, apiKey) {
+        const geocodeUrl = `https://dev.virtualearth.net/REST/v1/Locations?query=${encodeURIComponent(address)}&key=${apiKey}`;
+
+        return fetch(geocodeUrl)
+            .then(response => response.json())
+            .then(data => {
+                if (data.resourceSets.length > 0 && data.resourceSets[0].resources.length > 0) {
+                    const location = data.resourceSets[0].resources[0].point.coordinates;
+                    return { latitude: location[0], longitude: location[1] };
+                } else {
+                    return null; // Geocoding failed
+                }
+            });
+    }
+
+    function populateDropdown(data) {
+        const selectDropdown = document.getElementById('dropdown-branches');
+        selectDropdown.innerHTML = '';
+        data.forEach((branch) => {
+            const option = document.createElement('option');
+            option.value = branch.name; // You can use any value that you need
+            option.textContent = branch.name; // Use the branch name
+
+            selectDropdown.appendChild(option); // Add the option to the dropdown
+        });
+    }
+
+    function loadMapScenario() {
+        const apiKey = 'Ag9UjiKRlsiGF-fONrs9aSpqTNGWkGTt0l4Qz0SF-JmZ6NVa0hLMWIcvWgicjGxU';
+
+        fetch('/api/map')
+            .then(response => response.json())
+            .then(data => {
+                populateDropdown(data);
+                var map = new Microsoft.Maps.Map(document.getElementById('myMap'), {
+                    credentials: apiKey
+                });
+
+                Promise.all(data.map(item => geocodeAddress(item.address, apiKey)))
+                    .then(locations => {
+                        locations.forEach((location, index) => {
+                            if (location) {
+                                var pin = new Microsoft.Maps.Pushpin(new Microsoft.Maps.Location(location.latitude, location.longitude));
+                                map.entities.push(pin);
+
+                                Microsoft.Maps.Events.addHandler(pin, 'click', function () {
+                                    // highlightBranchDetails(data[index]);
+                                });
+                                displayBranchDetails(data[index]);
+                            }
+                        });
+                    })
+                    .catch(error => {
+                        console.error('Error geocoding addresses:', error);
+                    });
+            })
+            .catch(error => {
+                console.error('Error fetching or processing data:', error);
+            });
+    }
+</script>
