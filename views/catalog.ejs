@@ -46,7 +46,7 @@
                                                     </div>`);
                                 let cartbtn = $(`<button style="color: #181818" class="product-card col-md-6 btn btn-outline" id="product-index-${product.i}">הוספה לסל</button>`);
                                 cartbtn.click(() => {
-                                    fun(product);
+                                    addToCart(product);
                                 });
                                 let wishbtn = $(`<button style="color: #181818" class="product-card col-md-2 btn btn-outline" id="product-index-${product.i}"><i class="bi bi-heart"></i></button>`);
                                 wishbtn.click(() => {
@@ -74,7 +74,7 @@
                     console.error('Error fetching products:', error);
                 }
 
-                const fun = (product) => {
+                const addToCart = (product) => {
                     if (user) {
                         // get the cart
                         $.ajax({
