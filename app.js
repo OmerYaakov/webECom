@@ -144,9 +144,9 @@ const io = new SocketIOServer(server);
 
 io.on('connection', client => {
     console.log('New WS Connection...');
-    client.emit('newConnection', 'Welcome to the webapp!');
-    client.on('whatever', msg => {
-        console.log(msg);
+    client.on('message', (message) => {
+        console.log(message);
+        io.emit('message', message);
     });
 });
 

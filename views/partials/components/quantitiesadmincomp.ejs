@@ -1,61 +1,81 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="/socket.io/socket.io.js"></script>
 <script>
     $(document).ready(function () {
-        $.ajax({
-            url: `/api/products`,
-            type: 'GET',
-            success: function (products) {
-                console.log(products.length);
-                for (let i = 0; i < products.length; i++) {
-                    let product = products[i];
-                    var productCard = `
-                                    <div class="row product-item">
-                                        <div class="col-md-6">
-                                                <h5>${product.productName}</h5>
-                                                <p><strong>מק"ט:</strong> ${product.id}</p>
-                                                <p><strong>קטגוריה:</strong> ${product.category}</p>
-                                                <p><strong>מחיר:</strong> ₪${product.price}</p>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="row">
-                                                <div id="${product.id}" class="col-md-6 mt-4">
-                                                    <label for="quantity-${product.id}">כמות:</label>
-                                                    <br>
-                                                    <input type="number" id="quantity-${product.id}" name="quantity-${product.id}" value="${product.quantity}" min="0">
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <img src="${product.image}" alt="תמונת המוצר" style="max-height: 150px; aspect-ratio: 1" class="mt-2"/>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <hr>
-                    `;
-                    let updateBtn = $(`<button type="button" class="btn mybtn mt-4" style="width: 75%">עדכן</button>`)
-                    updateBtn.click(function () {
-                        let quantity = $(`#quantity-${product.id}`).val();
-                        $.ajax({
-                            url: `/api/products/${product.id}`,
-                            type: 'PUT',
-                            data: {
-                                quantity: quantity
-                            },
-                            success: function (res) {
-                                console.log(res);
-                                alert("המוצר עודכן בהצלחה!");
-                            },
-                            error: function (err) {
-                                console.log(err);
-                            }
-                        });
+        const displayProducts = (products) => {
+            $("#product-container").empty();
+            for (let i = 0; i < products.length; i++) {
+                let product = products[i]; var productCard = `
+                    <div class="row product-item">
+                        <div class="col-md-6">
+                            <h5>${product.productName}</h5>
+                            <p><strong>מק"ט:</strong> ${product.id}</p>
+                            <p><strong>קטגוריה:</strong> ${product.category}</p>
+                            <p><strong>מחיר:</strong> ₪${product.price}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div id="${product.id}" class="col-md-6 mt-4">
+                                    <label for="quantity-${product.id}">כמות:</label>
+                                    <br>
+                                    <input type="number" id="quantity-${product.id}" name="quantity-${product.id}"
+                                    value="${product.quantity}" min="0">
+                                </div>
+                            <div class="col-md-3">
+                                <img src="${product.image}" alt="תמונת המוצר" style="max-height: 150px; aspect-ratio: 1" class="mt-2" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                `;
+                let updateBtn = $(`<button type="button" class="btn mybtn mt-4" style="width: 75%">עדכן</button>`)
+                updateBtn.click(function () {
+                    let quantity = $(`#quantity-${product.id}`).val();
+                    $.ajax({
+                        url: `/api/products/${product.id}`,
+                        type: 'PUT',
+                        data: {
+                            quantity: quantity
+                        },
+                        success: function (res) {
+                            console.log(res);
+                            alert("המוצר עודכן בהצלחה!");
+                            socket.emit('storageUpdate', 'storageUpdate');
+                        },
+                        error: function (err) {
+                            console.log(err);
+                        }
                     });
-                    $("#product-container").append(productCard);
-                    $("#" + product.id).append(updateBtn);
-                }
+                });
+                $("#product-container").append(productCard);
+                $("#" + product.id).append(updateBtn);
+            }
+        }
+
+        $.ajax({
+            url: '/api/products',
+            type: 'GET',
+            success: function (res) {
+                displayProducts(res);
             },
             error: function (err) {
                 console.log(err);
             }
+        });
+
+        var socket = io();
+        socket.on('storageUpdate', function (msg) {
+            $.ajax({
+                url: '/api/products',
+                type: 'GET',
+                success: function (res) {
+                    displayProducts(res);
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            });
         });
     });
 </script>
